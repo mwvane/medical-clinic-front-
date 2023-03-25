@@ -1,1 +1,43 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://free.bboxtype.com/embedfonts/?family=FiraGO:400,600");
+* {
+  font-family: "FiraGO", sans-serif;
+}
+.round {
+  padding: 8px 20px !important;
+  border-radius: 30px !important;
+}
+.bg-cian-light {
+  background-color: #f0faff;
+}
+.content-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Inputs */
+.rounded-input{
+    padding: 8px 14px;
+    border-radius: 30px;
+    border: 2px solid transparent;
+    width: 100%;
+}
+.rounded-input:focus{
+    border: 2px solid red;
+}
+
+/* font-sizes */
+.text-sm {
+  font-size: 13px;
+}
+.text-md {
+  font-size: 15px;
+}
+.text.lg {
+  font-size: 16px;
+}
+
+/* colors */
+.text-default {
+  color: #053354;
+}
