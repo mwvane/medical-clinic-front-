@@ -1,0 +1,8 @@
+<div class="main-conatiner w-100">
+  <div class="position-relative py-3" (click)="onSelect()">
+    <span class="mx-2 text-default">{{
+      data.name
+    }}</span>
+    <div [ngClass]="data.isSelected ? 'divider' : ''"></div>
+  </div>
+</div>
