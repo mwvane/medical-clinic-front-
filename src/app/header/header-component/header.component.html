@@ -15,13 +15,13 @@
         </div>
       </div>
       <div class="col-7 content-center">
-        <app-navbar></app-navbar>
+        <app-navbar class="d-none d-lg-flex"></app-navbar>
       </div>
-      <div class="col-3 content-center">
+      <div class="col-3 content-center d-none d-md-flex">
         <div class="round bg-cian-light" style="font-size: 0.9rem">
           <div *ngIf="!isLoggedIn">
-            <a href="">ავტორიზაცია/</a>
-            <a href="">რეგისტრაცია</a>
+            <a (click)="onLogin()">ავტორიზაცია/</a>
+            <a href="register">რეგისტრაცია</a>
           </div>
           <div *ngIf="isLoggedIn" class="avatar" (click)="onAvatar()">
             <img src="assets/LogoRed.png" alt="" />
@@ -30,11 +30,12 @@
         </div>
       </div>
       <div class="col content-center">
-        <app-language-selector></app-language-selector>
+        <app-language-selector class="d-none d-lg-flex"></app-language-selector>
+        <i class="pi pi-bars d-md-none"></i>
       </div>
-    </div>
+    </div> 
   </div>
-  <div class="py-3" style="background-color: #ecf2f8">
+  <div class=" d-none d-md-block py-3" style="background-color: #ecf2f8">
     <div class="container">
       <div class="row">
         <div class="col-5 d-flex align-items-center">
@@ -57,7 +58,6 @@
               <input
                 type="text"
                 class="rounded-input text-sm mx-2"
-                style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1)"
                 placeholder="მოძებნე ექიმი სახელით"
               />
             </div>
@@ -65,7 +65,6 @@
               <input
                 type="text"
                 class="rounded-input text-sm mx-2"
-                style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1)"
                 placeholder="მოძებნე სპეციალობით"
               />
             </div>
@@ -83,3 +82,6 @@
     </div>
   </div>
 </div>
+
+<!-- Modals -->
+<app-login></app-login>

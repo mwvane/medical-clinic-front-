@@ -3,12 +3,11 @@
   font-family: "FiraGO", sans-serif;
 }
 .round {
-  padding: 8px 20px !important;
+  padding: 8px 15px !important;
   border-radius: 30px !important;
+  white-space: nowrap;
 }
-.bg-cian-light {
-  background-color: #f0faff;
-}
+
 .content-center {
   display: flex;
   justify-content: center;
@@ -16,14 +15,15 @@
 }
 
 /* Inputs */
-.rounded-input{
-    padding: 8px 14px;
-    border-radius: 30px;
-    border: 2px solid transparent;
-    width: 100%;
+.rounded-input {
+  padding: 8px 14px;
+  border-radius: 30px;
+  border: 2px solid rgba(200, 200, 200, 0.2);
+  width: 100%;
 }
-.rounded-input:focus{
-    border: 2px solid red;
+.rounded-input:focus {
+  outline: none;
+  border: 2px solid #bae4f6;
 }
 
 /* font-sizes */
@@ -31,17 +31,29 @@
   font-size: 13px;
 }
 .text-md {
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 .text.lg {
   font-size: 1rem;
 }
+.caption {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
 
-/* colors */
+/* Text colors */
 .text-default {
   color: #053354;
 }
 
-.text-cian-dark{
-  color: #18A4E1;
+.text-cian-dark {
+  color: #18a4e1;
+}
+
+/* Background colors */
+.bg-cian-light {
+  background-color: #f0faff;
+}
+.bg-default {
+  background-color: #053354 !important;
 }

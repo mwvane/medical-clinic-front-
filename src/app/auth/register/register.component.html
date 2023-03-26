@@ -3,19 +3,24 @@
     <div class="d-flex">
       <p class="caption text-cian-dark">რეგისტრაცია</p>
     </div>
-    <form [formGroup]="registerForm" autocomplete="off">
+    <form [formGroup]="registerForm" (submit)="onSubmit()" autocomplete="off">
       <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="form-input mx-2 my-3">
-            <label for="name" class="text-sm px-3">სახელი</label>
+            <label for="firstname" class="text-sm px-3">სახელი</label>
             <input
               class="rounded-input text-sm"
               type="text"
-              formControlName="name"
-              id="name"
+              formControlName="firstname"
+              id="firstname"
               placeholder="(მინიმუმ 5 სიმბოლო)"
               autocomplete="off"
             />
+            <span
+              *ngIf="firstnameValidation && firstnameValidation.invalid"
+              class="text-danger text-sm mx-3"
+              >firstname length must be minimum 5 symbols</span
+            >
           </div>
         </div>
 
@@ -25,16 +30,22 @@
             <input
               class="rounded-input text-sm"
               type="email"
-              formControlName="name"
+              formControlName="email"
               id="email"
+              autocomplete="off"
               placeholder="შეიყვანეთ მეილი"
             />
+            <span
+              *ngIf="!isEmailValid"
+              class="text-danger text-sm mx-3"
+              >*email requared</span
+            >
           </div>
         </div>
 
         <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="form-input mx-2 my-3">
-            <label for="email" class="text-sm px-3">პირადი ნომერი</label>
+            <label for="ID" class="text-sm px-3">პირადი ნომერი</label>
             <input
               class="rounded-input text-sm"
               type="number"
@@ -42,6 +53,10 @@
               id="ID"
               placeholder="00000000000"
             />
+             <span
+              *ngIf="!isIdentityNumberValid"
+              class="text-danger text-sm mx-3"
+              >ID length must be 11 digits</span>
           </div>
         </div>
 
@@ -51,8 +66,8 @@
             <input
               class="rounded-input text-sm"
               type="text"
-              formControlName="ID"
-              id="ID"
+              formControlName="lastname"
+              id="lastname"
               placeholder="შეიყვანეთ თქვენი გვარი"
               autocomplete="false"
             />
@@ -67,7 +82,7 @@
               type="text"
               formControlName="code"
               id="code"
-              placeholder="შეიყვანეთ თქვენი გვარი"
+              placeholder="შეიყვანეთ აქტივაციის კოდი"
             />
           </div>
         </div>
@@ -80,10 +95,23 @@
               type="password"
               formControlName="password"
               id="password"
+              autocomplete="off"
               placeholder="( მინიმუმ 8 სიმბოლო : @ 7 , )"
             />
+            <span
+              class="text-danger text-sm mx-3"
+              >{{isPasswordValid === true ? '': isPasswordValid.join('\n')}} </span
+            >
           </div>
         </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button
+          [disabled]="registerForm.touched && registerForm.invalid"
+          pButton
+          label="რეგისტრაცია"
+          class="p-button-sm p-button-rounded bg-default"
+        ></button>
       </div>
     </form>
   </div>
