@@ -1,0 +1,90 @@
+<div class="main-container">
+  <div class="container my-5">
+    <div class="d-flex">
+      <p class="caption text-cian-dark">რეგისტრაცია</p>
+    </div>
+    <form [formGroup]="registerForm" autocomplete="off">
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="form-input mx-2 my-3">
+            <label for="name" class="text-sm px-3">სახელი</label>
+            <input
+              class="rounded-input text-sm"
+              type="text"
+              formControlName="name"
+              id="name"
+              placeholder="(მინიმუმ 5 სიმბოლო)"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="form-input mx-2 my-3">
+            <label for="email" class="text-sm px-3">Email</label>
+            <input
+              class="rounded-input text-sm"
+              type="email"
+              formControlName="name"
+              id="email"
+              placeholder="შეიყვანეთ მეილი"
+            />
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="form-input mx-2 my-3">
+            <label for="email" class="text-sm px-3">პირადი ნომერი</label>
+            <input
+              class="rounded-input text-sm"
+              type="number"
+              formControlName="ID"
+              id="ID"
+              placeholder="00000000000"
+            />
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="form-input mx-2 my-3">
+            <label for="lastname" class="text-sm px-3">გვარი</label>
+            <input
+              class="rounded-input text-sm"
+              type="text"
+              formControlName="ID"
+              id="ID"
+              placeholder="შეიყვანეთ თქვენი გვარი"
+              autocomplete="false"
+            />
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="form-input mx-2 my-3">
+            <label for="code" class="text-sm px-3">აქტივაციის კოდი</label>
+            <input
+              class="rounded-input text-sm"
+              type="text"
+              formControlName="code"
+              id="code"
+              placeholder="შეიყვანეთ თქვენი გვარი"
+            />
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="form-input mx-2 my-3">
+            <label for="password" class="text-sm px-3">პაროლი</label>
+            <input
+              class="rounded-input text-sm"
+              type="password"
+              formControlName="password"
+              id="password"
+              placeholder="( მინიმუმ 8 სიმბოლო : @ 7 , )"
+            />
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
