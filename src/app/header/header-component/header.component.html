@@ -19,8 +19,14 @@
       </div>
       <div class="col-3 content-center">
         <div class="round bg-cian-light" style="font-size: 0.9rem">
-          <a href="">ავტორიზაცია/</a>
-          <a href="">რეგისტრაცია</a>
+          <div *ngIf="!isLoggedIn">
+            <a href="">ავტორიზაცია/</a>
+            <a href="">რეგისტრაცია</a>
+          </div>
+          <div *ngIf="isLoggedIn" class="avatar" (click)="onAvatar()">
+            <img src="assets/LogoRed.png" alt="" />
+            <span class="mx-3">leo</span>
+          </div>
         </div>
       </div>
       <div class="col content-center">
@@ -32,11 +38,17 @@
     <div class="container">
       <div class="row">
         <div class="col-5 d-flex align-items-center">
-          <div class="mx-2">
-            <div>phone 032 2 100 100</div>
+          <div class="d-flex align-items-center">
+            <div class="circle content-center mx-2">
+              <i class="pi pi-phone text-cian-dark"></i>
+            </div>
+            <div class="text-md">032 2 100 100</div>
           </div>
-          <div>
-            <div class="mx-2">place იაკობ ნიკოლაძე №10</div>
+          <div class="mx-2 d-flex align-items-center">
+            <div class="circle content-center mx-4">
+              <i class="pi pi-map-marker text-cian-dark"></i>
+            </div>
+            <div class="text-md">იაკობ ნიკოლაძე №10</div>
           </div>
         </div>
         <div class="col">
@@ -44,19 +56,26 @@
             <div class="col-5">
               <input
                 type="text"
-                class="rounded-input text-sm mx-2 shadow"
+                class="rounded-input text-sm mx-2"
+                style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1)"
                 placeholder="მოძებნე ექიმი სახელით"
               />
             </div>
             <div class="col-6">
               <input
                 type="text"
-                class="rounded-input text-sm mx-2 shadow"
+                class="rounded-input text-sm mx-2"
+                style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1)"
                 placeholder="მოძებნე სპეციალობით"
               />
             </div>
             <div class="col-1">
-              <button>S</button>
+              <button
+                pButton
+                icon="pi pi-search"
+                class="p-button-rounded"
+                style="width: 40px; height: 40px; background-color: black"
+              ></button>
             </div>
           </div>
         </div>

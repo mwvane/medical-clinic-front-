@@ -1,8 +1,23 @@
-
 .round a {
   text-decoration: none;
   color: #053354;
 }
 .round a:hover {
-  color: blue;
+  color: #18A4E1;
+}
+.avatar {
+  cursor: pointer;
+  user-select: none;
+}
+.avatar img {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid rgba(150, 150, 150, 0.1);
+}
+.circle{
+  width: 40px;
+  height: 40px;
+  background-color: white ;
+  border-radius: 50%;
 }

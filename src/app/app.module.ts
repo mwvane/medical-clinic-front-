@@ -7,6 +7,7 @@ import { HeaderComponent } from './header/header-component/header.component';
 import { NavbarComponent } from './header/navbar/navbar-component/navbar.component';
 import { LanguageSelectorComponent } from './header/language-selector/language-selector.component';
 import { NavbarItemComponent } from './header/navbar/navbar-item/navbar-item.component';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -14,13 +15,10 @@ import { NavbarItemComponent } from './header/navbar/navbar-item/navbar-item.com
     HeaderComponent,
     NavbarComponent,
     LanguageSelectorComponent,
-    NavbarItemComponent
+    NavbarItemComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, ButtonModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

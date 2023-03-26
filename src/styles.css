@@ -31,13 +31,17 @@
   font-size: 13px;
 }
 .text-md {
-  font-size: 15px;
+  font-size: .9rem;
 }
 .text.lg {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 /* colors */
 .text-default {
   color: #053354;
+}
+
+.text-cian-dark{
+  color: #18A4E1;
 }
