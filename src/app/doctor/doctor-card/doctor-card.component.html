@@ -1,0 +1,67 @@
+<div class="main-container">
+  <div class="shadow-small custom-card p-1 text-default">
+    <div
+      class="card-head d-flex w-100 p-1"
+      style="justify-content: space-between"
+    >
+      <div
+        class="round bg-light px-2 py-0 content-center text-sm text-secondary"
+      >
+        <i class="pi pi-eye" style="font-size: 12px"></i>
+        <span class="mx-2">{{ doctor.view }}</span>
+      </div>
+      <i
+        [ngClass]="doctor.isPinned ? 'text-cian-dark' : 'text-secondary'"
+        class="pi pi-paperclip text-sm btn-pin"
+        (click)="onPin()"
+      ></i>
+    </div>
+    <div class="cart-body text-center" style="width: 45%">
+      <app-avatar [name]="doctor.name"></app-avatar>
+    </div>
+    <div class="category mb-2">
+      <span class="text-secondary text-md">{{ doctor.category }}</span>
+    </div>
+    <div>
+      <p-rating
+        [cancel]="false"
+        [disabled]="true"
+        [(ngModel)]="doctor.rating"
+        [iconOnStyle]="{ color: '#fcad00' }"
+      ></p-rating>
+    </div>
+
+    <div *ngIf="booking" class="btn-booking my-2 mt-3">
+      <button
+        class="round custom-btn text-sm content-center bg-light text-default"
+        (click)="onBooking()"
+      >
+        მიღებაზე ჩაწერა <i class="pi pi-chevron-right text-md mx-1"></i>
+      </button>
+    </div>
+
+    <div *ngIf="details" class="text-center my-2">
+      <div>
+        <span class="text-bold">პირადი ნომერი :</span>
+        <p class="text-secondary">
+          {{ doctor.ID ? doctor.ID : "00000000000" }}
+        </p>
+      </div>
+      <div>
+        <span class="text-bold">Email :</span>
+        <p class="text-secondary">
+          {{ doctor.email ? doctor.email : "N/A" }}
+        </p>
+      </div>
+      <div class="mb-2">
+        <a href="" style="text-decoration: none;">პაროლის შეცვლა</a>
+      </div>
+      <div>
+        <span class="text-bold">დაჯავშნილია :</span>
+        <p class="text-secondary">
+          {{ doctor.booked ? doctor.booked : "( 0 )" }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
