@@ -2,7 +2,11 @@
   <div class="container">
     <div class="row py-2">
       <div class="col-1">
-        <div class="d-flex align-items-center">
+        <div
+          class="d-flex align-items-center"
+          (click)="onHome()"
+          style="cursor: pointer"
+        >
           <img
             src="assets/LogoRed.png"
             alt=""
@@ -33,9 +37,9 @@
         <app-language-selector class="d-none d-lg-flex"></app-language-selector>
         <i class="pi pi-bars d-md-none"></i>
       </div>
-    </div> 
+    </div>
   </div>
-  <div class=" d-none d-md-block py-3" style="background-color: #ecf2f8">
+  <div class="d-none d-md-block py-3" style="background-color: #ecf2f8">
     <div class="container">
       <div class="row">
         <div class="col-5 d-flex align-items-center">

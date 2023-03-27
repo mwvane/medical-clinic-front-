@@ -30,13 +30,13 @@
 
 /* font-sizes */
 .text-sm {
-  font-size: 13px;
+  font-size: 13px !important;
 }
 .text-md {
-  font-size: 0.9rem;
+  font-size: 0.9rem !important;
 }
 .text.lg {
-  font-size: 1rem;
+  font-size: 1rem !important;
 }
 .caption {
   font-size: 1.1rem;
@@ -51,6 +51,9 @@
 .text-cian-dark {
   color: #18a4e1;
 }
+.text-bold{
+  font-weight: 600;
+}
 
 /* Background colors */
 .bg-cian-light {
@@ -61,6 +64,9 @@
 }
 .bg-white{
   background-color: white;
+}
+.bg-light{
+  background-color: #e4edf6;
 }
 
 /* Shadows */

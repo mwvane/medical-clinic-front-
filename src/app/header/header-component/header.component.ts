@@ -19,4 +19,8 @@ export class HeaderComponent {
   onLogin(){
     this.modalService.loginModal = true
   }
+
+  onHome(){
+    this.router.navigateByUrl("home");
+  }
 }

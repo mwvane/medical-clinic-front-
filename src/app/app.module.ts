@@ -16,6 +16,9 @@ import { DialogModule } from 'primeng/dialog';
 import { HomeComponent } from './home/home.component';
 import { CategoriesComponent } from './categories/categories/categories.component';
 import { CategoryItemComponent } from './categories/category-item/category-item.component';
+import { AvatarComponent } from './avatar/avatar.component';
+import { DoctorCardComponent } from './doctor/doctor-card/doctor-card.component';
+import { RatingModule } from 'primeng/rating';
 // import { ToastModule } from 'primeng/toast';
 
 @NgModule({
@@ -30,6 +33,8 @@ import { CategoryItemComponent } from './categories/category-item/category-item.
     HomeComponent,
     CategoriesComponent,
     CategoryItemComponent,
+    AvatarComponent,
+    DoctorCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +45,7 @@ import { CategoryItemComponent } from './categories/category-item/category-item.
     FormsModule,
     ReactiveFormsModule,
     DialogModule,
+    RatingModule,
     // ToastModule,
   ],
   providers: [],
