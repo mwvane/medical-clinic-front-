@@ -1,0 +1,8 @@
+.main-container:hover{
+    cursor: pointer;
+    color: #3ACF99;
+}
+.selected{
+    background-color: #F5F8FB;
+    color: #3ACF99;
+}
