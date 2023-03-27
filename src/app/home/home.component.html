@@ -1,42 +1,47 @@
-<div class="main-container position-relative">
-  <img src="assets/banner.png" alt="" class="w-100" />
-  <div
-    class="w-100 py-5 d-flex align-items-center"
-    style="
-      background-color: rgba(8, 109, 153, 0.3);
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-    "
-  >
-    <div class="container d-none d-md-block">
-      <div class="row">
-        <div
-          class="col-sm-12 col-md-9 col-lg-4 my-md-2 my-lg-5"
-          style="color: white"
-        >
-          <h3 style="font-weight: 600">
-            აირჩიე კლინიკა რომელსაც შეგიძლია ენდო
-          </h3>
+<div class="main-container">
+  <div class="position-relative">
+    <img src="assets/banner.png" alt="" class="w-100" />
+    <div
+      class="w-100 py-5 d-flex align-items-center"
+      style="
+        background-color: rgba(8, 109, 153, 0.3);
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+      "
+    >
+      <div class="container d-none d-md-block">
+        <div class="row">
+          <div
+            class="col-sm-12 col-md-9 col-lg-4 my-md-2 my-lg-5"
+            style="color: white"
+          >
+            <h3 style="font-weight: 600">
+              აირჩიე კლინიკა რომელსაც შეგიძლია ენდო
+            </h3>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12 col-md-8 col-lg-5 my-5" style="color: white">
-          <div class="round bg-white d-flex content-center w-50">
-            <i class="pi pi-map-marker text-cian-dark mx-2"></i>
-            <span class="text-md align-items-center" style="color: black"
-              >იაკობ ნიკოლაძე №10</span
-            >
+        <div class="row">
+          <div class="col-sm-12 col-md-8 col-lg-5 my-5" style="color: white">
+            <div class="round bg-white d-flex content-center w-50">
+              <i class="pi pi-map-marker text-cian-dark mx-2"></i>
+              <span class="text-md align-items-center" style="color: black"
+                >იაკობ ნიკოლაძე №10</span
+              >
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  
   <div class="container">
-    <div class="row">
-      <div class="col-3"></div>
-      <div class="col-9 bg-cian-light px-2">hello</div>
+    <div class="row py-5">
+      <div class="col-md-6 col-lg-3">
+        <app-categories></app-categories>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg-9" style="padding-left: 2rem;">hello</div>
     </div>
   </div>
 </div>

@@ -14,6 +14,8 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { DialogModule } from 'primeng/dialog';
 import { HomeComponent } from './home/home.component';
+import { CategoriesComponent } from './categories/categories/categories.component';
+import { CategoryItemComponent } from './categories/category-item/category-item.component';
 // import { ToastModule } from 'primeng/toast';
 
 @NgModule({
@@ -26,6 +28,8 @@ import { HomeComponent } from './home/home.component';
     RegisterComponent,
     LoginComponent,
     HomeComponent,
+    CategoriesComponent,
+    CategoryItemComponent,
   ],
   imports: [
     BrowserModule,
