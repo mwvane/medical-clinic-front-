@@ -13,6 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { DialogModule } from 'primeng/dialog';
+import { HomeComponent } from './home/home.component';
 // import { ToastModule } from 'primeng/toast';
 
 @NgModule({
@@ -24,6 +25,7 @@ import { DialogModule } from 'primeng/dialog';
     NavbarItemComponent,
     RegisterComponent,
     LoginComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

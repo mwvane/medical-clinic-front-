@@ -26,6 +26,8 @@
   border: 2px solid #bae4f6;
 }
 
+/* Buttons */
+
 /* font-sizes */
 .text-sm {
   font-size: 13px;
@@ -56,4 +58,7 @@
 }
 .bg-default {
   background-color: #053354 !important;
+}
+.bg-white{
+  background-color: white;
 }

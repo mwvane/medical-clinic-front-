@@ -21,11 +21,23 @@ export class RegisterComponent {
   isFormValid: boolean = true;
 
   constructor(private authService: AuthService) {}
+
   onSubmit() {
-    console.log(this.registerForm.value);
     this.authService.register(this.registerForm).subscribe((data) => {
       console.log(data.res);
     });
+  }
+
+  onEmail(){
+    const emailTo = this.registerForm.value.email
+    if(Validations.isEmailValid(emailTo)){
+    this.authService.sendEmail(emailTo).subscribe(data => {
+      console.log(data)
+    })
+    }
+    else{
+      alert("email is invalid")
+    }
   }
 
   get firstnameValidation() {

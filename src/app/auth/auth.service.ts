@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Form } from '@angular/forms';
 import { Result } from '../models/result';
+import { Email } from './models/email';
 import { User } from './models/user';
 
 @Injectable({
@@ -28,5 +29,11 @@ export class AuthService {
       password: form.value.password,
     };
     return this.http.post<Result>(`${this.baseUrl}login`,user)
+  }
+
+  sendEmail(emailTo: string){
+    debugger
+    const email:Email = {emailFrom: "bzishvili57@gmail.com", emailTo: [emailTo]}
+    return this.http.post(`${this.baseUrl}sendMail`,email)
   }
 }
