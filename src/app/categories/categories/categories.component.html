@@ -1,0 +1,31 @@
+<div class="main-container">
+  <div class="shadow-small d-none d-md-block py-3" style="border-radius: 10px">
+    <div
+      class="text-md text-center py-2"
+      style="border-bottom: 1px solid rgba(200, 200, 200, 0.2)"
+    >
+      კატეგორიები
+    </div>
+    <div class="categorise-container my-3 text-center">
+      <div
+        *ngIf="isLoading"
+        class="spinner-border text-secondary"
+        role="status"
+      >
+        <span class="sr-only"></span>
+      </div>
+      <div *ngIf="!isLoading && categories.length"></div>
+      <app-category-item
+        *ngFor="let item of categories"
+        [item]="item"
+        (open)="onOpen($event)"
+      ></app-category-item>
+      <div
+        *ngIf="!isLoading && !categories.length"
+        class="content-center text-md text-secondary"
+      >
+        კატეგორიები ცარიელია
+      </div>
+    </div>
+  </div>
+</div>
