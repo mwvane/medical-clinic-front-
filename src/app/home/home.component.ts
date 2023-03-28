@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Doctor } from '../doctor/models/doctor';
+import { Doctor } from '../user/models/doctor';
 
 @Component({
   selector: 'app-home',

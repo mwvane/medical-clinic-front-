@@ -1,6 +1,7 @@
 <div class="main-container">
   <div class="shadow-small custom-card p-1 text-default">
     <div
+    *ngIf="headerActions"
       class="card-head d-flex w-100 p-1"
       style="justify-content: space-between"
     >
@@ -8,25 +9,26 @@
         class="round bg-light px-2 py-0 content-center text-sm text-secondary"
       >
         <i class="pi pi-eye" style="font-size: 12px"></i>
-        <span class="mx-2">{{ doctor.view }}</span>
+        <span class="mx-2">{{ user.view }}</span>
       </div>
       <i
-        [ngClass]="doctor.isPinned ? 'text-cian-dark' : 'text-secondary'"
+        [ngClass]="user.isPinned ? 'text-cian-dark' : 'text-secondary'"
         class="pi pi-paperclip text-sm btn-pin"
         (click)="onPin()"
       ></i>
     </div>
     <div class="cart-body text-center" style="width: 45%">
-      <app-avatar [name]="doctor.name"></app-avatar>
+      <app-avatar [name]="user.name"></app-avatar>
     </div>
     <div class="category mb-2">
-      <span class="text-secondary text-md">{{ doctor.category }}</span>
+      <span class="text-secondary text-md">{{ user.category }}</span>
     </div>
     <div>
       <p-rating
+        *ngIf="rating"
         [cancel]="false"
         [disabled]="true"
-        [(ngModel)]="doctor.rating"
+        [(ngModel)]="user.rating"
         [iconOnStyle]="{ color: '#fcad00' }"
       ></p-rating>
     </div>
@@ -44,22 +46,22 @@
       <div>
         <span class="text-bold">პირადი ნომერი :</span>
         <p class="text-secondary">
-          {{ doctor.ID ? doctor.ID : "00000000000" }}
+          {{ user.ID ? user.ID : "00000000000" }}
         </p>
       </div>
       <div>
         <span class="text-bold">Email :</span>
         <p class="text-secondary">
-          {{ doctor.email ? doctor.email : "N/A" }}
+          {{ user.email ? user.email : "N/A" }}
         </p>
       </div>
       <div class="mb-2">
-        <a href="" style="text-decoration: none;">პაროლის შეცვლა</a>
+        <a href="" style="text-decoration: none">პაროლის შეცვლა</a>
       </div>
       <div>
         <span class="text-bold">დაჯავშნილია :</span>
         <p class="text-secondary">
-          {{ doctor.booked ? doctor.booked : "( 0 )" }}
+          {{ user.booked ? user.booked : "( 0 )" }}
         </p>
       </div>
     </div>

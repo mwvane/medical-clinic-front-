@@ -17,8 +17,8 @@ import { HomeComponent } from './home/home.component';
 import { CategoriesComponent } from './categories/categories/categories.component';
 import { CategoryItemComponent } from './categories/category-item/category-item.component';
 import { AvatarComponent } from './avatar/avatar.component';
-import { DoctorCardComponent } from './doctor/doctor-card/doctor-card.component';
 import { RatingModule } from 'primeng/rating';
+import { DoctorCardComponent } from './user/user-card/user-card.component';
 // import { ToastModule } from 'primeng/toast';
 
 @NgModule({
