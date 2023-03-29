@@ -1,0 +1,25 @@
+<div class="main-container">
+    <div class="container">
+      <div class="row py-5">
+        <div class="d-none d-lg-block col-lg-3">
+          <app-categories></app-categories>
+        </div>
+        <div class="col-md-12 col-lg-9" style="padding-left: 2rem">
+          <div class="row">
+            <app-user-card
+              class="col-12"
+              [user]="doctor"
+              [vertical]="false"
+              [headerActions]="false"
+              [rating]="true"
+              [ratingReadOnly]="true"
+              [footerActions]="false"
+              [details]="false"
+              [experience]="true"
+            ></app-user-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
