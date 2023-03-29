@@ -1,6 +1,5 @@
 <div class="main-container">
   <div class="position-relative">
-    <div class="position-relative"></div>
     <img src="assets/banner.png" alt="" class="w-100" />
     <div
       class="w-100 py-5 d-flex align-items-center"
@@ -38,19 +37,23 @@
   </div>
 
   <div class="container">
-    <div class="row py-5">
+    <div class="row py-5 ">
       <div class="d-none d-lg-block col-lg-3">
         <app-categories></app-categories>
       </div>
-      <div class="col-md-12 col-lg-9" style="padding-left: 2rem">
-        <div class="row">
+      <div class="col-md-12 col-lg-9" style="padding-left: 2rem;">
+        <div class="row gx-4 gy-3">
           <app-user-card
-            class="col-sm-12 col-md-6 col-lg-4 my-1"
+            class="col-sm-12 col-md-6 col-lg-4"
             *ngFor="let doctor of doctors"
             [user]="doctor"
+            [headerActions]="true"
             [rating]="true"
-            [booking]="true"
+            [ratingReadOnly]="true"
+            [footerActions]="true"
             [details]="false"
+            (booking)="onBooking($event)"
+            (pin)="onPin($event)"
           ></app-user-card>
         </div>
       </div>

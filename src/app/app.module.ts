@@ -19,6 +19,10 @@ import { CategoryItemComponent } from './categories/category-item/category-item.
 import { AvatarComponent } from './avatar/avatar.component';
 import { RatingModule } from 'primeng/rating';
 import { DoctorCardComponent } from './user/user-card/user-card.component';
+import { BookingComponent } from './booking/booking.component';
+import { UserProfileComponent } from './user/user-profile/user-profile.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TokenInterceptor } from './ingterceptors/token.interceptor';
 // import { ToastModule } from 'primeng/toast';
 
 @NgModule({
@@ -35,6 +39,8 @@ import { DoctorCardComponent } from './user/user-card/user-card.component';
     CategoryItemComponent,
     AvatarComponent,
     DoctorCardComponent,
+    BookingComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,9 +52,14 @@ import { DoctorCardComponent } from './user/user-card/user-card.component';
     ReactiveFormsModule,
     DialogModule,
     RatingModule,
+    ConfirmDialogModule
     // ToastModule,
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true,
+  },],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

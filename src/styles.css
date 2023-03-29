@@ -1,6 +1,7 @@
 @import url("https://free.bboxtype.com/embedfonts/?family=FiraGO:400,600");
 * {
   font-family: "FiraGO", sans-serif;
+  
 }
 .round {
   padding: 8px 15px !important;
@@ -11,6 +12,12 @@
 .content-center {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.align-vertical-center{
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -27,6 +34,13 @@
 }
 
 /* Buttons */
+.btn-single{
+  cursor: pointer;
+  font-weight: 600 !important;
+}
+.btn-single:hover{
+  color: red;
+}
 
 /* font-sizes */
 .text-sm {
@@ -71,5 +85,5 @@
 
 /* Shadows */
 .shadow-small{
-  box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
+  box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 12px 0px;
 }

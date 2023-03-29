@@ -17,10 +17,8 @@
 .custom-card{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     border-radius: 10px;
-    border: 1px solid transparent
+    border: 1px solid transparent;
 }
 .custom-card:hover{
     border: 1px solid #BAE4F6;

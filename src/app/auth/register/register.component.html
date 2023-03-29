@@ -87,7 +87,7 @@
         </div>
 
         <div class="col-sm-12 col-md-6 col-lg-4">
-          <div class="form-input mx-2 my-3">
+          <div class="form-input mx-2 my-3 position-relative">
             <label for="code" class="text-sm px-3">აქტივაციის კოდი</label>
             <input
               class="rounded-input text-sm"
@@ -96,6 +96,20 @@
               id="code"
               placeholder="შეიყვანეთ აქტივაციის კოდი"
             />
+            <button
+              pButton
+              icon="{{verificationStatusIcon}}"
+              type="button"
+              class="p-button-text p-button-rounded"
+              (click)="onVerification()"
+              style="
+                position: absolute;
+                right: 6px;
+                top: 26px;
+                width: 26px;
+                height: 26px;
+              "
+            ></button>
           </div>
         </div>
 
@@ -118,7 +132,7 @@
       </div>
       <div class="d-flex justify-content-end">
         <button
-          [disabled]="registerForm.touched && registerForm.invalid"
+          [disabled]="!isFormValid"
           type="submit"
           pButton
           label="რეგისტრაცია"

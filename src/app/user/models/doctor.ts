@@ -8,4 +8,5 @@ export interface Doctor {
   email?: string;
   booked?: number;
   view: number;
+  image: string;
 }

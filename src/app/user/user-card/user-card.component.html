@@ -1,8 +1,8 @@
-<div class="main-container">
-  <div class="shadow-small custom-card p-1 text-default">
+<div class="main-container px-2 h-100">
+  <div class="shadow-small custom-card py-2 text-default row h-100">
     <div
-    *ngIf="headerActions"
-      class="card-head d-flex w-100 p-1"
+      *ngIf="headerActions"
+      class="col-12 card-head d-flex w-100 p-1"
       style="justify-content: space-between"
     >
       <div
@@ -13,55 +13,93 @@
       </div>
       <i
         [ngClass]="user.isPinned ? 'text-cian-dark' : 'text-secondary'"
-        class="pi pi-paperclip text-sm btn-pin"
+        class="pi pi-paperclip text-sm btn-pin mx-2"
         (click)="onPin()"
       ></i>
     </div>
-    <div class="cart-body text-center" style="width: 45%">
-      <app-avatar [name]="user.name"></app-avatar>
-    </div>
-    <div class="category mb-2">
-      <span class="text-secondary text-md">{{ user.category }}</span>
-    </div>
-    <div>
-      <p-rating
-        *ngIf="rating"
-        [cancel]="false"
-        [disabled]="true"
-        [(ngModel)]="user.rating"
-        [iconOnStyle]="{ color: '#fcad00' }"
-      ></p-rating>
-    </div>
 
-    <div *ngIf="booking" class="btn-booking my-2 mt-3">
-      <button
-        class="round custom-btn text-sm content-center bg-light text-default"
-        (click)="onBooking()"
+    <div
+      [ngClass]="
+        vertical ? 'align-vertical-center' : 'd-flex align-items-center'
+      "
+      class="w-100"
+    >
+      <div
+        [ngClass]="!vertical ? ' d-none d-lg-block' : ''"
+        style="width: 40%; max-width: 170px"
       >
-        მიღებაზე ჩაწერა <i class="pi pi-chevron-right text-md mx-1"></i>
-      </button>
-    </div>
+        <img
+          src="{{ user.image ? user.image : 'assets/doctorDefault.png' }}"
+          alt=""
+          class="w-100"
+        />
+      </div>
+      <div
+        [ngClass]="!vertical ? 'col-sm-6 col-md-6 col-lg-3' : ''"
+      >
+        <div class="align-vertical-center">
+          <div>
+            <p class="mt-2 mb-0 text-md" style="font-weight: 600">
+              {{ user.name ? user.name : "N/A" }}
+            </p>
+          </div>
+          <div class="category mb-2">
+            <span class="text-secondary text-md">{{ user.category }}</span>
+          </div>
+          <div>
+            <p-rating
+              *ngIf="rating"
+              [cancel]="false"
+              [disabled]="ratingReadOnly"
+              [(ngModel)]="user.rating"
+              [iconOnStyle]="{ color: '#fcad00' }"
+            ></p-rating>
+          </div>
+        </div>
+      </div>
 
-    <div *ngIf="details" class="text-center my-2">
-      <div>
-        <span class="text-bold">პირადი ნომერი :</span>
-        <p class="text-secondary">
-          {{ user.ID ? user.ID : "00000000000" }}
-        </p>
+      <div *ngIf="footerActions" class="btn-booking my-1 mt-3 content-center">
+        <button
+          class="round custom-btn text-sm content-center bg-light text-default"
+          (click)="onBooking()"
+        >
+          მიღებაზე ჩაწერა <i class="pi pi-chevron-right text-md mx-1"></i>
+        </button>
       </div>
-      <div>
-        <span class="text-bold">Email :</span>
-        <p class="text-secondary">
-          {{ user.email ? user.email : "N/A" }}
-        </p>
+
+      <div *ngIf="details" class="text-center my-2">
+        <div>
+          <span class="text-bold">პირადი ნომერი :</span>
+          <p class="text-secondary">
+            {{ user.ID ? user.ID : "00000000000" }}
+          </p>
+        </div>
+        <div>
+          <span class="text-bold">Email :</span>
+          <p class="text-secondary">
+            {{ user.email ? user.email : "N/A" }}
+          </p>
+        </div>
+        <div class="mb-2">
+          <a href="" style="text-decoration: none">პაროლის შეცვლა</a>
+        </div>
+        <div>
+          <span class="text-bold">დაჯავშნილია :</span>
+          <p class="text-secondary">
+            {{ user.booked ? user.booked : "( 0 )" }}
+          </p>
+        </div>
       </div>
-      <div class="mb-2">
-        <a href="" style="text-decoration: none">პაროლის შეცვლა</a>
-      </div>
-      <div>
-        <span class="text-bold">დაჯავშნილია :</span>
-        <p class="text-secondary">
-          {{ user.booked ? user.booked : "( 0 )" }}
+
+      <div
+        [ngClass]="!vertical ? 'col-6' : ''"
+        *ngIf="experience"
+        class="experience text-sm"
+        style="border-left: 1px solid rgba(200, 200, 200, 0.3)"
+      >
+        <p class="m-2">
+          <span class="text-cian-dark">2017 - დღემდე</span>, ჩვენი კლინიკის
+          გენერალური დირექტორი
         </p>
       </div>
     </div>

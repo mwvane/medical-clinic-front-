@@ -8,6 +8,8 @@
 .avatar {
   cursor: pointer;
   user-select: none;
+  display: flex;
+  align-items: center;
 }
 .avatar img {
   width: 25px;

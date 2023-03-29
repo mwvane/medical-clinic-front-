@@ -1,4 +1,4 @@
-<div class="main-container w-100">
+<div class="main-container w-100 bg-white">
   <div class="container">
     <div class="row py-2">
       <div class="col-1">
@@ -23,13 +23,16 @@
       </div>
       <div class="col-3 content-center d-none d-md-flex">
         <div class="round bg-cian-light" style="font-size: 0.9rem">
-          <div *ngIf="!isLoggedIn">
+          <div *ngIf="!loggedUser">
             <a (click)="onLogin()">ავტორიზაცია/</a>
             <a href="register">რეგისტრაცია</a>
           </div>
-          <div *ngIf="isLoggedIn" class="avatar" (click)="onAvatar()">
-            <img src="assets/LogoRed.png" alt="" />
-            <span class="mx-3">leo</span>
+          <div *ngIf="loggedUser" class="avatar" (click)="onAvatar()">
+            <img src="assets/doctorDefault.png" alt="" />
+            <span class="mx-3 text-center">{{
+              loggedUser.firstname + " " + loggedUser.lastname
+            }}</span>
+            <i class="pi pi-sign-out text-md btn-single" (click)="onLogout($event)"></i>
           </div>
         </div>
       </div>
@@ -39,10 +42,10 @@
       </div>
     </div>
   </div>
-  <div class="d-none d-md-block py-3" style="background-color: #ecf2f8">
+  <div class="py-3" style="background-color: #ecf2f8">
     <div class="container">
       <div class="row">
-        <div class="col-5 d-flex align-items-center">
+        <div class="d-none d-lg-flex col-5 d-flex align-items-center">
           <div class="d-flex align-items-center">
             <div class="circle content-center mx-2">
               <i class="pi pi-phone text-cian-dark"></i>
@@ -89,3 +92,5 @@
 
 <!-- Modals -->
 <app-login></app-login>
+
+<p-confirmDialog [style]="{width: '40vw'}"></p-confirmDialog>
