@@ -1,0 +1,21 @@
+<div class="main-container">
+  <div class="container">
+    <div class="row py-5">
+      <div class="d-none d-lg-block col-lg-3">
+        <app-categories></app-categories>
+      </div>
+      <div class="d-none d-md-block col-md-6 col-lg-3" style="padding-left: 2rem">
+        <app-user-card
+          class="my-1"
+          [user]="user"
+          [headerActions]="false"
+          [rating]="user.role === 'client' ? false : true"
+          [ratingReadOnly]="true"
+          [footerActions]="false"
+          [details]="true"
+        ></app-user-card>
+      </div>
+      <div col-sm-12 col-md-6 col-lg-5></div>
+    </div>
+  </div>
+</div>
