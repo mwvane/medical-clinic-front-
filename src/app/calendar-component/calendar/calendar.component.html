@@ -1,0 +1,53 @@
+<div class="main-container" style="margin-left: 10px">
+  <div class="calendar-header row">
+    <div class="col-12 d-flex align-items-center">
+      <span class="text-bold">2023</span>
+      <div class="d-flex align-items-center mx-4">
+        <div>
+          <i class="pi pi-chevron-left round shadow-small p-2 text-sm"></i>
+        </div>
+        <button
+          pButton
+          class="p-button-rounded p-button-outlined text-cian-dark text-bold py-0 text-md mx-3"
+        >
+          <span>{{ currentMonth }}</span>
+        </button>
+        <div>
+          <i class="pi pi-chevron-right round shadow-small p-2 text-sm"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="calendar-body mt-2 shadow-small custom-card row">
+    <div class="bg-gray py-2 w-100 col-12" style="border-radius: 10px 10px 0 0">
+      <div class="row w-100">
+        <div class="col content-center">
+          <div class="mx-1" (click)="ondaysPreviousPage()">
+            <i class="pi pi-chevron-left round shadow-small p-1 text-xsm"></i>
+          </div>
+          <div class="mx-1" (click)="ondaysNextPage()">
+            <i class="pi pi-chevron-right round shadow-small p-1 text-xsm"></i>
+          </div>
+        </div>
+        <div
+          *ngFor="let day of daysDisplayed"
+          class="col content-center text-sm p-0"
+        >
+          <span class="text-cian-dark mx-1">{{ day.number }}</span>
+          <span class="text-sm">({{ day.weekDay.slice(0, 3) }})</span>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let hour of hours" class="row g-0 w-100 text-sm">
+      <div class="col content-center border-light">{{ hour }}:00</div>
+      <div *ngFor="let day of daysDisplayed" class="col">
+        <app-calendar-item
+          [hour]="hour"
+          [day]="day"
+          (onDay)="onDay($event)"
+        ></app-calendar-item>
+      </div>
+    </div>
+  </div>
+</div>
