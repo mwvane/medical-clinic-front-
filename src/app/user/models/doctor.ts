@@ -1,12 +1,8 @@
-export interface Doctor {
-  id?: number;
-  name: string;
+import { User } from "./user";
+
+export interface Doctor extends User{
   category: string[];
   isPinned: boolean;
   rating: number;
-  ID?: number;
-  email?: string;
-  booked?: number;
-  view: number;
-  image: string;
+  views: number;
 }

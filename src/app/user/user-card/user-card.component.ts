@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Doctor } from '../models/doctor';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-user-card',
@@ -14,16 +15,16 @@ export class DoctorCardComponent {
   @Input() ratingReadOnly: boolean = false;
   @Input() details: boolean = false;
   @Input() experience: boolean = false;
-  @Input() user: Doctor = {
-    name: '',
-    image: '',
-    rating: 3,
-    isPinned: false,
-    category: ['ექიმი'],
-    view: 0,
-  };
+  @Input() user: any
   @Output() booking = new EventEmitter();
   @Output() pin = new EventEmitter();
+
+  get loading(){
+   if(!this.user){
+    return true
+   }
+   return false
+  }
 
   onPin() {
     this.user.isPinned = !this.user.isPinned;
@@ -31,7 +32,6 @@ export class DoctorCardComponent {
   }
 
   onBooking() {
-    console.log('booking');
     this.booking.emit(this.user);
   }
 }

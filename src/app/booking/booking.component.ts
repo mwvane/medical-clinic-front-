@@ -4,21 +4,20 @@ import { Doctor } from '../user/models/doctor';
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html',
-  styleUrls: ['./booking.component.css']
+  styleUrls: ['./booking.component.css'],
 })
-export class BookingComponent implements OnInit {
- 
+export class BookingComponent {
   doctor: Doctor = {
     id: 2,
-    name: 'ანა დვალი',
+    firstname: 'ანა',
+    lastname: 'დვალი',
+    role: 'doctor',
+    bookCount: 501,
+    email: 'doctor@gmail.com',
     image: '',
     rating: 5,
     isPinned: false,
     category: ['კარდიოლოგი / არითმოლოგი'],
-    view: 333,
-  }
-
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+    views: 333,
+  };
 }

@@ -1,15 +1,17 @@
-<div class="main-container px-2 h-100">
-  <div class="shadow-small custom-card py-2 text-default row h-100">
-    <div
+<div class="main-container h-100 content-center">
+  <div class="shadow-small w-100 custom-card text-default h-100">
+    <app-user-card-skeleton *ngIf="loading"></app-user-card-skeleton>
+    <div *ngIf="!loading" class="row py-2">
+      <div
       *ngIf="headerActions"
-      class="col-12 card-head d-flex w-100 p-1"
+      class="col-12 card-head content-center px-3"
       style="justify-content: space-between"
     >
       <div
         class="round bg-light px-2 py-0 content-center text-sm text-secondary"
       >
         <i class="pi pi-eye" style="font-size: 12px"></i>
-        <span class="mx-2">{{ user.view }}</span>
+        <span class="mx-2">{{ user.views }}</span>
       </div>
       <i
         [ngClass]="user.isPinned ? 'text-cian-dark' : 'text-secondary'"
@@ -39,8 +41,8 @@
       >
         <div class="align-vertical-center">
           <div>
-            <p class="mt-2 mb-0 text-md" style="font-weight: 600">
-              {{ user.name ? user.name : "N/A" }}
+            <p class="mt-2 mb-0 text-md text-cian-dark" style="font-weight: 600">
+              {{ user.firstname ? user.firstname + " "+ user.lastname: "N/A" }}
             </p>
           </div>
           <div class="category mb-2">
@@ -86,7 +88,7 @@
         <div>
           <span class="text-bold">დაჯავშნილია :</span>
           <p class="text-secondary">
-            {{ user.booked ? user.booked : "( 0 )" }}
+            {{ user.bookCount ? user.bookCount : "( 0 )" }}
           </p>
         </div>
       </div>
@@ -102,6 +104,7 @@
           გენერალური დირექტორი
         </p>
       </div>
+    </div>
     </div>
   </div>
 </div>

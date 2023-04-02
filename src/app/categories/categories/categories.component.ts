@@ -28,5 +28,6 @@ export class CategoriesComponent implements OnInit {
         item.isSelected = false;
       }
     }
+    console.log(category)
   }
 }

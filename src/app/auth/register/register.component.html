@@ -125,7 +125,7 @@
               placeholder="( მინიმუმ 8 სიმბოლო : @ 7 , )"
             />
             <span class="text-danger text-sm mx-3"
-              >{{ isPasswordValid === true ? "" : isPasswordValid.join("\n") }}
+              >{{ isPasswordValid === true ? "" : isPasswordValid.join(",\n") }}
             </span>
           </div>
         </div>
@@ -142,3 +142,6 @@
     </form>
   </div>
 </div>
+
+<!-- toast -->
+<p-toast position="top-center"></p-toast>

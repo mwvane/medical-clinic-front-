@@ -23,7 +23,11 @@ import { BookingComponent } from './booking/booking.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TokenInterceptor } from './ingterceptors/token.interceptor';
-// import { ToastModule } from 'primeng/toast';
+import { ToastModule } from 'primeng/toast';
+import { CalendarComponent } from './calendar-component/calendar/calendar.component';
+import { CalendarItemComponent } from './calendar-component/calendar-item/calendar-item.component';
+import { SkeletonModule } from 'primeng/skeleton';
+import { UserCardSkeletonComponent } from './user/user-card-skeleton/user-card-skeleton.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +45,9 @@ import { TokenInterceptor } from './ingterceptors/token.interceptor';
     DoctorCardComponent,
     BookingComponent,
     UserProfileComponent,
+    CalendarComponent,
+    CalendarItemComponent,
+    UserCardSkeletonComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,8 +59,9 @@ import { TokenInterceptor } from './ingterceptors/token.interceptor';
     ReactiveFormsModule,
     DialogModule,
     RatingModule,
-    ConfirmDialogModule
-    // ToastModule,
+    ConfirmDialogModule,
+    ToastModule,
+    SkeletonModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

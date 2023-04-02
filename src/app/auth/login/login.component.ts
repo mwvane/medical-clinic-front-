@@ -10,7 +10,6 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-
   @Input() openDialog: boolean = false;
   loginForm: any = new FormGroup({
     username: new FormControl(),
@@ -28,14 +27,22 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    this.authService.login(this.loginForm).subscribe((data) => {
-      if (data.res) {
-        this.authService.storeToken(data.res.token);
-        this.modalaService.loginModal = false;
-        this.router.navigate(["userProfile/",this.authService.loggedUser.id])
-      } else {
-        alert(data.errors.join('\n'));
-      }
-    });
+    this.authService
+      .login({
+        username: this.loginForm.value.username,
+        password: this.loginForm.value.password,
+      })
+      .subscribe((data) => {
+        if (data.res) {
+          this.authService.storeToken(data.res.token);
+          this.modalaService.loginModal = false;
+          this.router.navigate([
+            'userProfile/',
+            this.authService.loggedUser.id,
+          ]);
+        } else {
+          alert(data.errors.join('\n'));
+        }
+      });
   }
 }

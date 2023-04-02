@@ -19,13 +19,13 @@ export class Validations {
     if (password) {
       if (password) {
         if (password.length < 8) {
-          errors.push('Your password must be at least 8 characters');
+          errors.push('პაროლი უნდა შეიცავდეს მინიმუმ 8 სიმბოლოს');
         }
-        if (password.search(/[a-z]/i) < 0) {
-          errors.push('Your password must contain at least one letter.');
+        if (password.search(/[A-Z]/) < 0) {
+          errors.push('პაროლი უნდა შეიცავდეს კაპიტალურ სიმბოლოს');
         }
         if (password.search(/[0-9]/) < 0) {
-          errors.push('Your password must contain at least one digit.');
+          errors.push('პაროლი უნდა შეიცავდეს ციფრს');
         }
       }
     }

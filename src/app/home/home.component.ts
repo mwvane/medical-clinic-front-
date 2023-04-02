@@ -1,70 +1,37 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Doctor } from '../user/models/doctor';
+import { DoctorService } from '../user/services/doctor.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  constructor(private router: Router, private doctorService: DoctorService) {}
 
-  constructor(private router: Router){}
+  doctors: Doctor[] = [];
 
-  doctors: Doctor[] = [
-    {
-      id: 1,
-      name: 'გიორგი ხორავა',
-      image: '',
-      rating: 3,
-      isPinned: true,
-      category: ['ექიმი'],
-      view: 4965,
-    },
-    {
-      id: 2,
-      name: 'ანა დვალი',
-      image: '',
-      rating: 5,
-      isPinned: false,
-      category: ['კარდიოლოგი / არითმოლოგი'],
-      view: 333,
-    },
-    {
-      id: 3,
-      name: '',
-      image: '',
-      rating: 3,
-      isPinned: false,
-      category: ['ექიმი'],
-      view: 495,
-    },
-    {
-      id: 4,
-      name: '',
-      image: '',
-      rating: 3,
-      isPinned: false,
-      category: ['ექიმი'],
-      view: 496665,
-    },
-    {
-      id: 5,
-      name: '',
-      image: '',
-      rating: 3,
-      isPinned: false,
-      category: ['ექიმი'],
-      view: 4,
-    },
-  ];
-
-  onBooking(user: any){
-    this.router.navigateByUrl("booking")
+  ngOnInit(): void {
+    this.doctorService.getDoctors(0).subscribe((data) => {
+      if (data.res) {
+        this.doctors = data.res;
+      }
+    });
   }
 
-  onPin(pinStatus:boolean){
-    console.log(pinStatus)
+  onBooking(user: any) {
+    this.router.navigateByUrl('booking');
+    this.doctorService.increaseDeoctorView(user.id).subscribe((data) => {
+      if (data.res) {
+      } else {
+      }
+    });
+  }
+
+  onPin(pinStatus: boolean) {
+    console.log(pinStatus);
   }
 }

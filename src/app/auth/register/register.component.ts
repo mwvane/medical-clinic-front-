@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { AuthService } from '../auth.service';
 import { Validations } from '../validations';
 
@@ -7,6 +9,7 @@ import { Validations } from '../validations';
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
+  providers: [MessageService],
 })
 export class RegisterComponent {
   registerForm: any = new FormGroup({
@@ -27,22 +30,47 @@ export class RegisterComponent {
   verificationStatus: string = '';
   verificationStatusIcon: string = 'pi pi-check';
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
 
   onSubmit() {
     this.authService.register(this.registerForm).subscribe((data) => {
-      console.log(data.res);
+      if (data.res) {
+        this.authService
+          .login({ username: data.res.email, password: data.res.password })
+          .subscribe((data) => {
+            this.authService.storeToken(data.res.token);
+            this.router.navigate([
+              'userProfile/',
+              this.authService.loggedUser.id,
+            ]);
+          });
+      } else {
+        alert(data.errors.join('\n'));
+      }
     });
   }
 
   onEmail() {
     const emailTo = this.registerForm.value.email;
     if (Validations.isEmailValid(emailTo)) {
-      this.authService.sendEmail(emailTo).subscribe((data) => {
-        console.log(data);
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Email',
+        detail: 'იმეილი გაიგზავნა წარმატებით',
+        life: 3000,
       });
+      this.authService.sendEmail(emailTo).subscribe((data) => {});
     } else {
-      alert('email is invalid');
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Email',
+        detail: "არასწორი ფორმატი",
+        life: 3000,
+      });
     }
   }
 

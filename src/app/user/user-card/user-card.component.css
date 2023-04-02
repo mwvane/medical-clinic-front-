@@ -14,13 +14,3 @@
     border: 1px solid #3ACF99;
     color: #3ACF99;
 }
-.custom-card{
-    display: flex;
-    flex-direction: column;
-    border-radius: 10px;
-    border: 1px solid transparent;
-}
-.custom-card:hover{
-    border: 1px solid #BAE4F6;
-    transition: .3s;
-}

@@ -1,21 +1,23 @@
 <div class="main-container">
   <div class="container">
-    <div class="row py-5">
+    <div class="row py-5 g-4">
       <div class="d-none d-lg-block col-lg-3">
         <app-categories></app-categories>
       </div>
-      <div class="d-none d-md-block col-md-6 col-lg-3" style="padding-left: 2rem">
+      <div class="d-none d-md-block col-md-5 col-lg-3 content-center">
         <app-user-card
           class="my-1"
           [user]="user"
           [headerActions]="false"
-          [rating]="user.role === 'client' ? false : true"
+          [rating]="user.role === 'doctor' ? true : false"
           [ratingReadOnly]="true"
           [footerActions]="false"
           [details]="true"
         ></app-user-card>
       </div>
-      <div col-sm-12 col-md-6 col-lg-5></div>
+      <div class="col-sm-12 col-md-7 col-lg-6">
+        <app-calendar></app-calendar>
+      </div>
     </div>
   </div>
 </div>

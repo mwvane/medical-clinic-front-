@@ -23,17 +23,15 @@ export class AuthService {
       email: form.value.email,
       firstname: form.value.firstname,
       lastname: form.value.lastname,
-      identityNumber: form.value.ID,
+      identityNumber: String(form.value.ID),
       password: form.value.password,
+      role: "doctor"
     };
     return this.http.post<Result>(`${this.baseUrl}register`, user);
   }
 
-  login(form: any) {
-    const user = {
-      username: form.value.username,
-      password: form.value.password,
-    };
+  login(user: any) {
+    debugger
     return this.http.post<Result>(`${this.baseUrl}login`, user);
   }
 
@@ -70,6 +68,8 @@ export class AuthService {
   decodeToken() {
     const jwtHelper = new JwtHelperService();
     const token: any = this.getToken();
-    return jwtHelper.decodeToken(token);
+    if(token !== 'null'){
+      return jwtHelper.decodeToken(token);
+    }
   }
 }
