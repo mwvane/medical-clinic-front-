@@ -3,7 +3,7 @@
     <div class="col-12 d-flex align-items-center">
       <span class="text-bold">2023</span>
       <div class="d-flex align-items-center mx-4">
-        <div>
+        <div (click)="decreaseMonth()">
           <i class="pi pi-chevron-left round shadow-small p-2 text-sm"></i>
         </div>
         <button
@@ -12,7 +12,7 @@
         >
           <span>{{ currentMonth }}</span>
         </button>
-        <div>
+        <div (click)="increaseMonth()">
           <i class="pi pi-chevron-right round shadow-small p-2 text-sm"></i>
         </div>
       </div>
@@ -34,8 +34,8 @@
           *ngFor="let day of daysDisplayed"
           class="col content-center text-sm p-0"
         >
-          <span class="text-cian-dark mx-1">{{ day.number }}</span>
-          <span class="text-sm">({{ day.weekDay.slice(0, 3) }})</span>
+          <span class="text-cian-dark mx-1">{{day.date.getDate()}}</span>
+          <span class="text-sm">({{ weekDays[day.date.getDay()].slice(0,3) }})</span>
         </div>
       </div>
     </div>

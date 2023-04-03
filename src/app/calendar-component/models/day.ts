@@ -1,8 +1,5 @@
 export interface Day {
-  index: number;
-  weekDay: string;
-  number: number;
-  month: string;
+  date: Date
   isBooked?: boolean;
   isRestDay?: boolean;
 }

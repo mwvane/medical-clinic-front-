@@ -11,51 +11,50 @@ import { Day } from '../models/day';
 export class CalendarComponent implements OnInit {
   daysDisplayed: Day[] = [];
   dayPageCounter = 0;
-  hours = [9,10,11,12,13,14,15,16,17,18];
+  hours = DateHelper.hours;
+  weekDays = DateHelper.weekDays;
+
   ngOnInit(): void {
-    for (let i = 1; i <= 7; i++) {
-      const day = DateHelper.getDayAfter(i);
-      let formatedDay: Day = {
-        index: 0,
-        number: day.getDate(),
-        weekDay: DateHelper.getWeekDay(day.getDay()),
-        month: DateHelper.getMonth(day.getMonth()),
-        isRestDay: DateHelper.isRestDay(DateHelper.getWeekDay(day.getDay()))
-      };
-      this.daysDisplayed.push(formatedDay);
-    }
-    console.log(this.daysDisplayed);
+    const starterDay = DateHelper.getStarterDay();
+    this.daysDisplayed = DateHelper.getWeek(starterDay);
   }
 
-  get currentMonth(){
-    const month = this.daysDisplayed[0].month
-    return month
+  get currentMonth() {
+    const monthInNumber = this.daysDisplayed[0].date.getMonth();
+    const monthInString = DateHelper.getMonth(monthInNumber);
+    return monthInString;
   }
 
-  updateDayPage() {
-    this.daysDisplayed = [];
-    for (let i = 1; i <= 7; i++) {
-      const day = DateHelper.getDayAfter(i + this.dayPageCounter * 7);
-      let formatedDay: Day = {
-        index: i,
-        number: day.getDate(),
-        weekDay: DateHelper.getWeekDay(day.getDay()),
-        month: DateHelper.getMonth(day.getMonth()),
-        isRestDay: DateHelper.isRestDay(DateHelper.getWeekDay(day.getDay()))
-      };
-      this.daysDisplayed.push(formatedDay);
+  increaseMonth() {
+    debugger
+    let date = new Date();
+    date.setDate(1)
+    date.setMonth(this.daysDisplayed[0].date.getMonth() + 1 )
+    if (date) {
+      const starterDay = DateHelper.getStarterDay(date);
+      this.daysDisplayed = DateHelper.getWeek(starterDay);
     }
   }
-  
+  decreaseMonth() {
+    let date = this.daysDisplayed[0].date;
+    if (date) {
+      date.setMonth(date.getMonth() - 1);
+    }
+  }
 
   ondaysNextPage() {
-    this.dayPageCounter++;
-    this.updateDayPage();
+    this.daysDisplayed = DateHelper.getWeek(
+      DateHelper.addDay(
+        this.daysDisplayed[this.daysDisplayed.length - 1].date,
+        1
+      )
+    );
   }
 
   ondaysPreviousPage() {
-    this.dayPageCounter--;
-    this.updateDayPage();
+    this.daysDisplayed = DateHelper.getWeek(
+      DateHelper.addDay(this.daysDisplayed[0].date, -7)
+    );
   }
 
   onDay(day: Day) {

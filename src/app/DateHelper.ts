@@ -1,5 +1,8 @@
+import { CalendarConstants } from './calendar-component/constants';
+import { Day } from './calendar-component/models/day';
+
 export class DateHelper {
-  private static weekDays: any = [
+  public static weekDays: any = [
     'კვირა',
     'ორშაბათი',
     'სამშაბათი',
@@ -23,33 +26,61 @@ export class DateHelper {
     'დეკემბერი',
   ];
 
-  public static restDayes: string[] = [
-    "შაბათი",
-    "კვირა"
-  ]
+  public static restDayes: string[] = ['შაბათი', 'კვირა'];
+  public static hours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
 
-  public static isRestDay(day:string){
-    let isRest = false
-    for(let item of this.restDayes){
-      if(day === item){
-        isRest = true
+  public static isRestDay(date: Date) {
+    let isRest = false;
+    for (let item of this.restDayes) {
+      if (this.getWeekDay(date) === item) {
+        isRest = true;
       }
     }
-    return isRest
+    return isRest;
   }
 
-  
   public static getMonth(monthNumber: number) {
     return this.monthes[monthNumber];
   }
 
-  public static getWeekDay(day: number) {
-    return this.weekDays[day];
+  public static getWeekDay(date: Date) {
+    return this.weekDays[date.getDay()];
   }
 
-  public static getDayAfter(day: number){
-    let date = new Date();
+  public static getDayAfter(day: number) {
+    let date: Date = this.getStarterDay();
     date.setDate(date.getDate() + day);
-    return date
+    return date;
+  }
+
+  public static addDay(dayFrom: Date, dayCount: number) {
+    let date = new Date(dayFrom.getTime());
+    date.setDate(dayFrom.getDate() + dayCount);
+    return date;
+  }
+
+  public static getWeek(dayFrom: Date = new Date()) {
+    let weekDays: Day[] = [];
+    for (let i = 0; i < 7; i++) {
+      let nextDay = new Date(dayFrom.getTime());
+      nextDay.setDate(dayFrom.getDate() + i);
+      let day: Day = {
+        date: nextDay,
+      };
+      day.isRestDay = DateHelper.isRestDay(day.date);
+      weekDays.push(day);
+    }
+    return weekDays;
+  }
+
+  public static getStarterDay(date: Date = new Date()): Date {
+    debugger
+    let number =
+      date.getDate() - (date.getDay() - CalendarConstants.STARTER_DAY);
+    // if (number < 0) {
+    //   number = number * -1;
+    // }
+    date.setDate(number);
+    return date;
   }
 }

@@ -28,6 +28,8 @@ import { CalendarComponent } from './calendar-component/calendar/calendar.compon
 import { CalendarItemComponent } from './calendar-component/calendar-item/calendar-item.component';
 import { SkeletonModule } from 'primeng/skeleton';
 import { UserCardSkeletonComponent } from './user/user-card-skeleton/user-card-skeleton.component';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { UserCardSkeletonComponent } from './user/user-card-skeleton/user-card-s
     RatingModule,
     ConfirmDialogModule,
     ToastModule,
-    SkeletonModule
+    SkeletonModule,
+    ConfirmPopupModule,
+    TooltipModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

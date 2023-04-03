@@ -1,3 +1,13 @@
-<div class="main-container calendar-day content-center {{getStatus}}" (click)="onDayClick()">
-    <span style="color:transparent; padding: 10px 0;">.</span>
+<div
+  class="main-container calendar-day content-center {{ getStatus }}"
+  pTooltip="{{getDetails}}"
+  (click)="onDayClick()"
+>
+<div  *ngIf="!isRestDay" class="d-flex" style="padding: 10px 0;">
+  <span class="text-green-light">+</span>
+  <span class="text-xsm d-none d-lg-flex" style="color: rgba(100,100,100,.4);"> დაჯავშნა</span>
+</div>  
+<div  *ngIf="isRestDay" class="d-flex" style="padding: 10px 0;">
+  <span class="text-xsm" style="color: transparent;">დაჯავშნა</span>
+</div>   
 </div>

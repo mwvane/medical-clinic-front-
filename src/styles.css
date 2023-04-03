@@ -82,8 +82,14 @@
 .text-bold{
   font-weight: 600;
 }
+.text-green-light{
+  color: #3ACF99;
+}
 
 /* Background colors */
+.bg-green-light{
+  background-color: #3ACF99;
+}
 .bg-cian-light {
   background-color: #f0faff;
 }
