@@ -12,8 +12,20 @@
     background-color: white;
 }
 .booked{
-    background-color: #DAFAEE;
+    background-color: #FF93A6;
 }
 .restDay{
     background-color: #FFF1F4;
 }
+.currentUserBook{
+    background-color: #DAFAEE;
+}
+.btn-remove{
+    cursor: pointer;
+}
+.btn-remove:hover{
+    background-color: rgb(224, 1, 1);
+    color: white;
+}
+
+

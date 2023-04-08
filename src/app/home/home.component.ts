@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Doctor } from '../user/models/doctor';
 import { DoctorService } from '../user/services/doctor.service';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -15,15 +16,20 @@ export class HomeComponent implements OnInit {
   doctors: Doctor[] = [];
 
   ngOnInit(): void {
-    this.doctorService.getDoctors(0).subscribe((data) => {
-      if (data.res) {
-        this.doctors = data.res;
+    this.doctorService.getDoctors(0).subscribe({
+      next: data => {
+        if(data.res){
+          this.doctors = data.res
+        }
+      },
+      error: error => {
+        console.log(error)
       }
     });
   }
 
   onBooking(user: any) {
-    this.router.navigateByUrl('booking');
+    this.router.navigate(["booking/", user.id]);
     this.doctorService.increaseDeoctorView(user.id).subscribe((data) => {
       if (data.res) {
       } else {

@@ -9,23 +9,25 @@ import { DateHelper } from 'src/app/DateHelper';
   styleUrls: ['./calendar-item.component.css'],
 })
 export class CalendarItemComponent {
-  @Input() hour: number = 0;
-  @Input() day: Day = {
+  @Input() day: any = {
     date: new Date(),
     isBooked: false,
     isRestDay: false,
   };
 
-  tooltipDelay:number = 1000
+  tooltipDelay: number = 1000;
 
   @Output() onDay = new EventEmitter();
+  @Output() removeBook = new EventEmitter();
 
-  onDayClick() {
-    this.day.date.setHours(this.hour, 0, 0);
+  onDayClick(day:Day) {
+    debugger
     if (
       !(this.day.isBooked || this.day.isRestDay) &&
       this.day.date > new Date()
     ) {
+      const hour = this.day.date.getHours()
+      debugger
       this.onDay.emit(this.day);
     }
   }
@@ -38,16 +40,25 @@ export class CalendarItemComponent {
     return `დღე: ${DateHelper.getWeekDay(this.day.date)},
      თარიღი: ${this.day.date.getDate()} ${DateHelper.getMonth(
       this.day.date.getMonth()
-    )} საათი: ${this.hour}სთ`;
+    )},\n საათი: ${this.day.date.getHours()}სთ`;
   }
 
   get getStatus() {
-    if (this.day.isBooked) {
+    
+    if (this.day.bookId) {
+      if(this.day.isCurrentUserBook){
+        return DayStatus.currentUserBook
+      }
       return DayStatus.booked;
     }
     if (this.day.isRestDay) {
       return DayStatus.restDay;
     }
     return DayStatus.free;
+  }
+
+  onBookRemove(e:any){
+    e.stopPropagation()
+    this.removeBook.emit(this.day.bookId)
   }
 }

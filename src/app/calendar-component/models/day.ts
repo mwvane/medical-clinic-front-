@@ -1,5 +1,6 @@
 export interface Day {
   date: Date
-  isBooked?: boolean;
+  bookId?: number;
+  isCurrentUserBook?: boolean;
   isRestDay?: boolean;
 }

@@ -31,23 +31,32 @@
           </div>
         </div>
         <div
-          *ngFor="let day of daysDisplayed"
+          *ngFor="let day of currentWeekDays"
           class="col content-center text-sm p-0"
         >
-          <span class="text-cian-dark mx-1">{{day.date.getDate()}}</span>
-          <span class="text-sm">({{ weekDays[day.date.getDay()].slice(0,3) }})</span>
+          <span class="text-cian-dark mx-1">{{ day.date.getDate() }}</span>
+          <span class="text-sm"
+            >({{ weekDays[day.date.getDay()].slice(0, 3) }})</span
+          >
         </div>
       </div>
     </div>
-    <div *ngFor="let hour of hours" class="row g-0 w-100 text-sm">
-      <div class="col content-center border-light">{{ hour }}:00</div>
-      <div *ngFor="let day of daysDisplayed" class="col">
+    <div *ngFor="let item of calendarItems" class="row g-0 w-100 text-sm">
+      <div class="col content-center border-light">
+        {{ item[0].date.getHours() }}:00
+      </div>
+      <div *ngFor="let day of item" class="col">
         <app-calendar-item
-          [hour]="hour"
           [day]="day"
           (onDay)="onDay($event)"
+          (removeBook)="onRemoveBook($event)"
         ></app-calendar-item>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Dialog -->
+
+<p-confirmDialog [style]="{width: '40vw'}"></p-confirmDialog>
+

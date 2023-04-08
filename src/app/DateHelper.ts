@@ -74,12 +74,8 @@ export class DateHelper {
   }
 
   public static getStarterDay(date: Date = new Date()): Date {
-    debugger
     let number =
       date.getDate() - (date.getDay() - CalendarConstants.STARTER_DAY);
-    // if (number < 0) {
-    //   number = number * -1;
-    // }
     date.setDate(number);
     return date;
   }
