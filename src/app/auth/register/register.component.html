@@ -23,6 +23,7 @@
             >
           </div>
         </div>
+        
         <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="form-input mx-2 my-3 position-relative">
             <label for="email" class="text-sm px-3">Email</label>
@@ -110,6 +111,10 @@
                 height: 26px;
               "
             ></button>
+            <span
+              class="text-danger text-sm mx-3"
+              >{{emailVerifyValidation === true ? "" : emailVerifyValidation.join(',\n')}}</span
+            >
           </div>
         </div>
 

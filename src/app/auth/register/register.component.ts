@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../auth.service';
 import { Validations } from '../validations';
+import { Result } from 'src/app/models/result';
 
 @Component({
   selector: 'app-register',
@@ -25,10 +26,12 @@ export class RegisterComponent {
   isNameTouched: boolean = false;
   isPasswordTouched: boolean = false;
   isIDTouched: boolean = false;
+  isEmailConfirmTouched: boolean = false;
 
   isFormValidErrors: boolean = true;
   verificationStatus: string = '';
   verificationStatusIcon: string = 'pi pi-check';
+  emailVerifyStatus: Result = {};
 
   constructor(
     private authService: AuthService,
@@ -68,7 +71,7 @@ export class RegisterComponent {
       this.messageService.add({
         severity: 'warn',
         summary: 'Email',
-        detail: "არასწორი ფორმატი",
+        detail: 'არასწორი ფორმატი',
         life: 3000,
       });
     }
@@ -84,13 +87,13 @@ export class RegisterComponent {
           code: this.registerForm.value.code,
         })
         .subscribe((data) => {
-          console.log(data.res);
+          this.emailVerifyStatus = data;
           if (data.res) {
             this.verificationStatus = 'done';
             this.verificationStatusIcon = 'pi pi-check-circle';
           } else {
             this.verificationStatus = '';
-            this.verificationStatusIcon = 'pi pi-check-circle';
+            this.verificationStatusIcon = 'pi pi-check';
           }
         });
     }
@@ -145,8 +148,25 @@ export class RegisterComponent {
     return true;
   }
 
+  get emailVerifyValidation() {
+    let field = this.registerForm.controls['code'];
+    if (field.touched) {
+      this.isEmailConfirmTouched = true
+      if (this.emailVerifyStatus) {
+        if (this.emailVerifyStatus.res) {
+          field.setErrors(null);
+          return true;
+        } else {
+          field.setErrors({ incorect: true });
+          return this.emailVerifyStatus.errors;
+        }
+      }
+    }
+    return true;
+  }
+
   get isFormValid() {
-    if (!this.isEmailTouched || !this.isIDTouched || !this.isPasswordTouched) {
+    if (!this.isEmailTouched || !this.isIDTouched || !this.isPasswordTouched || !this.isEmailConfirmTouched) {
       return false;
     }
     if (!this.registerForm.valid) {
