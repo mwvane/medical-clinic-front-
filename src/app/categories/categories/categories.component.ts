@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CategoryService } from '../category.service';
 import { Category } from '../models/category';
 
@@ -8,6 +8,7 @@ import { Category } from '../models/category';
   styleUrls: ['./categories.component.css'],
 })
 export class CategoriesComponent implements OnInit {
+  @Output() open = new EventEmitter()
   categories: Category[] = [];
   isLoading: boolean = true;
   constructor(private categoryService: CategoryService) {}
@@ -28,6 +29,6 @@ export class CategoriesComponent implements OnInit {
         item.isSelected = false;
       }
     }
-    console.log(category)
+    this.open.emit(category)
   }
 }

@@ -26,7 +26,7 @@ export class BookingComponent implements OnInit {
     image: '',
     rating: 5,
     isPinned: false,
-    category: ['კარდიოლოგი / არითმოლოგი'],
+    category: {name:"",},
     views: 333,
   };
 
@@ -60,17 +60,19 @@ export class BookingComponent implements OnInit {
     });
   }
 
-  onBooking(day: Day) {
+  onBooking(payload: any) {
+    debugger
     if (this.doctor.id) {
       const book: Book = {
-        date: day.date,
+        date: payload.day.date,
+        description: payload.description,
         doctorId: this.doctor.id,
         userId: this.authService.loggedUser.id,
       };
       this.bookService.addBook(book).subscribe((data) => {
-        console.log(data);
         if (data.res) {
-          day.bookId = data.res.id;
+          payload.day.isCurrentUserBook = true;
+          payload.day.bookId = data.res.id;
           this.messageService.add({
             severity: 'success',
             summary: 'Booking',

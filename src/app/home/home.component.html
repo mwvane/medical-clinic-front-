@@ -39,13 +39,13 @@
   <div class="container">
     <div class="row py-5 ">
       <div class="d-none d-lg-block col-lg-3">
-        <app-categories></app-categories>
+        <app-categories (open)="onCategorySelect($event)"></app-categories>
       </div>
       <div class="col-md-12 col-lg-9" style="padding-left: 2rem;">
         <div class="row gx-4 gy-3">
           <app-user-card
             class="col-sm-12 col-md-6 col-lg-4"
-            *ngFor="let doctor of doctors"
+            *ngFor="let doctor of filteredDoctors"
             [user]="doctor"
             [headerActions]="true"
             [rating]="true"

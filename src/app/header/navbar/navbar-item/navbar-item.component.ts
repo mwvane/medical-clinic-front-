@@ -7,10 +7,10 @@ import { NavbarItem } from '../../models/navbar-item';
   styleUrls: ['./navbar-item.component.css'],
 })
 export class NavbarItemComponent {
-  @Input() data: NavbarItem = { id: 1, name: '', isSelected: false };
+  @Input() data: NavbarItem = { id: 1, name: '', isSelected: false , url: ""};
   @Output() select = new EventEmitter();
 
   onSelect() {
-    this.select.emit(this.data.id);
+    this.select.emit(this.data);
   }
 }

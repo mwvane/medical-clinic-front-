@@ -46,7 +46,7 @@
             </p>
           </div>
           <div class="category mb-2">
-            <span class="text-secondary text-md">{{ user.category }}</span>
+            <span *ngIf="user.category" class="text-secondary text-md">{{user.category.name}}</span>
           </div>
           <div>
             <p-rating

@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Doctor } from '../user/models/doctor';
 import { DoctorService } from '../user/services/doctor.service';
-import { catchError } from 'rxjs';
+import { Category } from '../categories/models/category';
 
 @Component({
   selector: 'app-home',
@@ -14,12 +13,14 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router, private doctorService: DoctorService) {}
 
   doctors: Doctor[] = [];
+  filteredDoctors: Doctor[] = []
 
   ngOnInit(): void {
     this.doctorService.getDoctors(0).subscribe({
       next: data => {
         if(data.res){
           this.doctors = data.res
+          this.filteredDoctors = this.doctors
         }
       },
       error: error => {
@@ -39,5 +40,9 @@ export class HomeComponent implements OnInit {
 
   onPin(pinStatus: boolean) {
     console.log(pinStatus);
+  }
+
+  onCategorySelect(category: Category){
+    this.filteredDoctors = this.doctors.filter(doctor => doctor.category.id === category.id)
   }
 }
