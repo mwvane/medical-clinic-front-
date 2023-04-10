@@ -1,0 +1,7 @@
+.footer-item{
+    cursor: pointer;
+}
+
+.footer-item:hover{
+   color: orange;
+}

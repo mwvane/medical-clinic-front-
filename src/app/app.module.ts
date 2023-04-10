@@ -30,6 +30,8 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { UserCardSkeletonComponent } from './user/user-card-skeleton/user-card-skeleton.component';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { TooltipModule } from 'primeng/tooltip';
+import { FooterComponent } from './footer-component/footer/footer.component';
+import { FooterItemComponent } from './footer-component/footer-item/footer-item.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { TooltipModule } from 'primeng/tooltip';
     CalendarComponent,
     CalendarItemComponent,
     UserCardSkeletonComponent,
+    FooterComponent,
+    FooterItemComponent,
   ],
   imports: [
     BrowserModule,

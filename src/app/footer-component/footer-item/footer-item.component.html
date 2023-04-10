@@ -1,0 +1,5 @@
+<div class="main-container text-white text-md">
+    <p>{{footerItem.caption}}</p>
+    <div class="w-100" style="height: 2px; background-color: rgba(200,200,200, .5); margin-bottom: 10px;"></div>
+    <p *ngFor="let item of footerItem.items" class="footer-item" (click)="onSelect(item)">{{item.name}}</p>
+</div>

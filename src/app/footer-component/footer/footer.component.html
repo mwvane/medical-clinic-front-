@@ -1,0 +1,25 @@
+<div class="main-container bg-default w-100 py-5 content-center">
+  <div class="container">
+    <div class="row g-0">
+      <div
+        class="d-none d-lg-block col-lg-2 mx-3"
+      >
+        <div class="w-50 content-center">
+          <img
+            src="assets/LogoWhite.png"
+            alt=""
+            class="w-100"
+            style="max-height: 50px"
+          />
+          <span style="font-weight: 600 !important; color: white">კლინიკა</span>
+        </div>
+      </div>
+      <app-footer-item
+        *ngFor="let item of footerItems"
+        [footerItem]="item"
+        (select)="onSelect($event)"
+        class="col"
+      ></app-footer-item>
+    </div>
+  </div>
+</div>
