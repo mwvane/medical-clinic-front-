@@ -1,4 +1,4 @@
-<div class="main-container" style="margin-left: 10px">
+<div class="main-container" style="margin-left: 10px; user-select: none;">
   <div class="calendar-header row">
     <div class="col-12 d-flex align-items-center">
       <span class="text-bold">2023</span>
@@ -69,7 +69,10 @@
   (onHide)="onBookDialogClose()"
 >
   <div class="">
-    <p class="text-green-light text-xsm">გსურთ ვიზიტის დაჯავნშნა ?</p>
+    <p class="text-green-light text-xsm">
+      გსურთ ვიზიტის
+      {{ this.selectedDay && selectedDay.book ? "განახლება" : "დაჯავნშნა" }} ?
+    </p>
     <p class="text-xsm">შეგიძლიათ მიუთუთოთ თქვენი პორბლემა</p>
     <textarea
       [(ngModel)]="description"
@@ -88,10 +91,12 @@
         (click)="onBookDialogClose()"
       ></button>
       <button
-        label="დაჯავნშნა"
+        label="{{
+          this.selectedDay && selectedDay.book ? 'განახლება' : 'დაჯავნშნა'
+        }}"
         pButton
         class="p-button-rounded p-button-sm py-2 text-sm p-button-success bg-green-light mx-1"
-        (click)="onBookModalConfirm()"
+        (click)="selectedDay.book ? onBookUpdate() : onBookModalConfirm()"
       ></button>
     </div>
   </div>

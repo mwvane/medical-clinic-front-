@@ -16,7 +16,14 @@ export class BookService {
   }
 
   addBook(book: Book) {
-    debugger;
     return this.http.post<Result>(`${this.baseUrl}addBook`, book);
+  }
+
+  updateBook(book:Book){
+    return this.http.post<Result>(`${this.baseUrl}updateBook`, book);
+  }
+
+  removeBook(bookId: number){
+    return this.http.post<Result>(`${this.baseUrl}removeBook`, bookId);
   }
 }

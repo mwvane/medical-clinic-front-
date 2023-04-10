@@ -22,10 +22,11 @@ export class CalendarComponent implements OnInit {
   bookModal = false;
   description: string = '';
   selectedDay: any;
-  loggedUser:any;
+  loggedUser: any;
 
   @Input() doctorId: any;
-  @Output() selectDay = new EventEmitter();
+  @Output() addBook = new EventEmitter();
+  @Output() updateBook = new EventEmitter();
 
   constructor(
     private bookService: BookService,
@@ -34,7 +35,7 @@ export class CalendarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loggedUser = this.authService.loggedUser
+    this.loggedUser = this.authService.loggedUser;
     this.getBookedDays();
     this.getCurrentPageDays();
   }
@@ -50,23 +51,22 @@ export class CalendarComponent implements OnInit {
         const newDay = { ...day };
         newDay.isRestDay = DateHelper.isRestDay(day.date);
         newDay.date = this.getDayCopy(day.date, hour);
-        newDay.bookId = this.getBookId(newDay);
+        newDay.book = this.getBook(newDay)!;
         items.push(newDay);
       }
       this.calendarItems.push(items);
     }
   }
 
-  getBookId(day: Day) {
+  getBook(day: Day): Book | null {
     for (let item of this.bookedDays) {
-      if (moment(item.date).format() == moment(day.date).format())
-        return item.id;
+      if (moment(item.date).format() == moment(day.date).format()) return item;
     }
-    return 0;
+    return null;
   }
 
   isCurentUserBook(day: Day, book: any): boolean {
-    if (day.bookId) {
+    if (day.book) {
       if (this.authService.loggedUser.id == book.userId) {
         return true;
       }
@@ -91,7 +91,7 @@ export class CalendarComponent implements OnInit {
         for (let day of item) {
           for (let bookedDay of this.bookedDays) {
             if (moment(bookedDay.date).format() == moment(day.date).format()) {
-              day.bookId = bookedDay.id;
+              day.book = bookedDay;
               day.isCurrentUserBook = this.isCurentUserBook(day, bookedDay);
             }
           }
@@ -123,7 +123,7 @@ export class CalendarComponent implements OnInit {
       const starterDay = DateHelper.getStarterDay(date);
     }
   }
-  
+
   decreaseMonth() {
     let date = this.currentWeekDays[0].date;
     if (date) {
@@ -144,7 +144,11 @@ export class CalendarComponent implements OnInit {
   }
 
   onDay(day: Day) {
+    this.description = '';
     this.selectedDay = day;
+    if (day.isCurrentUserBook) {
+      this.description = day.book!.description!;
+    }
     this.bookModal = true;
   }
 
@@ -155,12 +159,21 @@ export class CalendarComponent implements OnInit {
     return newDate;
   }
 
-  onRemoveBook(bookId: number) {
+  onRemoveBook(day: Day) {
     this.dialog.confirm({
       message: 'ნამდვილად გსურთ ჯავშნის გაუქმება?',
       header: 'Remove book',
       icon: 'pi pi-question',
-      accept: () => {},
+      accept: () => {
+        if (day.book) {
+          this.bookService.removeBook(day.book.id!).subscribe((data) => {
+            if (data.res) {
+              day.book = null;
+              day.isCurrentUserBook = false;
+            }
+          });
+        }
+      },
     });
   }
 
@@ -169,10 +182,16 @@ export class CalendarComponent implements OnInit {
   }
 
   onBookModalConfirm() {
-    this.selectDay.emit({
+    this.addBook.emit({
       day: this.selectedDay,
       description: this.description,
     });
+    this.onBookDialogClose();
+  }
+
+  onBookUpdate() {
+    this.selectedDay.book.description = this.description;
+    this.updateBook.emit(this.selectedDay);
     this.onBookDialogClose();
   }
 }

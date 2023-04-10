@@ -2,15 +2,15 @@
   class="main-container calendar-day content-center h-100 text-center {{
     getStatus
   }}"
-  pTooltip="{{ day.bookId || day.isRestDay ? '' : getDetails }}"
-  (click)="onDayClick(day)"
+  pTooltip="{{ day.book || day.isRestDay ? '' : getDetails }}"
+  (click)="onDayClick()"
 >
   <div
     *ngIf="!isRestDay"
     class="d-flex position-relative"
     style="padding: 10px 0"
   >
-    <span *ngIf="!day.bookId" class="text-green-light">+</span>
+    <span *ngIf="!day.book" class="text-green-light">+</span>
     <span
       class="text-xsm d-none d-lg-flex"
       style="color: rgba(100, 100, 100, 0.4)"
@@ -18,7 +18,7 @@
       <span *ngIf="day.isCurrentUserBook" class="text-green-light">{{
         loggedUserRole === "doctor" ? "დაჯავშნილია" : "ჩემი ჯავშანი"
       }}</span>
-      <span>{{ day.bookId ? "" : "დაჯავშნა" }}</span></span
+      <span>{{ day.book ? "" : "დაჯავშნა" }}</span></span
     >
     <div
       *ngIf="day.isCurrentUserBook"

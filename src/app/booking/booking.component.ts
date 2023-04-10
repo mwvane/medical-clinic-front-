@@ -61,7 +61,6 @@ export class BookingComponent implements OnInit {
   }
 
   onBooking(payload: any) {
-    debugger
     if (this.doctor.id) {
       const book: Book = {
         date: payload.day.date,
@@ -72,7 +71,7 @@ export class BookingComponent implements OnInit {
       this.bookService.addBook(book).subscribe((data) => {
         if (data.res) {
           payload.day.isCurrentUserBook = true;
-          payload.day.bookId = data.res.id;
+          payload.day.book = data.res;
           this.messageService.add({
             severity: 'success',
             summary: 'Booking',
@@ -82,5 +81,11 @@ export class BookingComponent implements OnInit {
         }
       });
     }
+  }
+
+  onBookUpdate( day: Day){
+    this.bookService.updateBook(day.book!).subscribe(data => {
+      alert(data.res)
+    })
   }
 }
