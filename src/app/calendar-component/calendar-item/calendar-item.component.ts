@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Day } from '../models/day';
 import { DayStatus } from '../dayStatus';
 import { DateHelper } from 'src/app/DateHelper';
+import { UserRole } from 'src/app/user/userRole';
 
 @Component({
   selector: 'app-calendar-item',
@@ -9,6 +10,7 @@ import { DateHelper } from 'src/app/DateHelper';
   styleUrls: ['./calendar-item.component.css'],
 })
 export class CalendarItemComponent {
+  @Input() loggedUserRole = UserRole.client;
   @Input() day: any = {
     date: new Date(),
     isBooked: false,
@@ -20,14 +22,12 @@ export class CalendarItemComponent {
   @Output() onDay = new EventEmitter();
   @Output() removeBook = new EventEmitter();
 
-  onDayClick(day:Day) {
-    debugger
+  onDayClick(day: Day) {
     if (
       !(this.day.isBooked || this.day.isRestDay) &&
       this.day.date > new Date()
     ) {
-      const hour = this.day.date.getHours()
-      debugger
+      const hour = this.day.date.getHours();
       this.onDay.emit(this.day);
     }
   }
@@ -44,10 +44,9 @@ export class CalendarItemComponent {
   }
 
   get getStatus() {
-    
     if (this.day.bookId) {
-      if(this.day.isCurrentUserBook){
-        return DayStatus.currentUserBook
+      if (this.day.isCurrentUserBook) {
+        return DayStatus.currentUserBook;
       }
       return DayStatus.booked;
     }
@@ -57,8 +56,8 @@ export class CalendarItemComponent {
     return DayStatus.free;
   }
 
-  onBookRemove(e:any){
-    e.stopPropagation()
-    this.removeBook.emit(this.day.bookId)
+  onBookRemove(e: any) {
+    e.stopPropagation();
+    this.removeBook.emit(this.day.bookId);
   }
 }

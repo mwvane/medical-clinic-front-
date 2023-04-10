@@ -15,12 +15,14 @@
       class="text-xsm d-none d-lg-flex"
       style="color: rgba(100, 100, 100, 0.4)"
     >
-      <span *ngIf="day.isCurrentUserBook" class="">ჩემი ჯავშანი</span>
+      <span *ngIf="day.isCurrentUserBook" class="text-green-light">{{
+        loggedUserRole === "doctor" ? "დაჯავშნილია" : "ჩემი ჯავშანი"
+      }}</span>
       <span>{{ day.bookId ? "" : "დაჯავშნა" }}</span></span
     >
     <div
       *ngIf="day.isCurrentUserBook"
-      class=" btn-remove position-absolute border-light p-2 content-center"
+      class="btn-remove position-absolute border-light p-2 content-center"
       style="
         height: 1rem;
         width: 1rem;

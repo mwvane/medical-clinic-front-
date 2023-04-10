@@ -48,6 +48,7 @@
       <div *ngFor="let day of item" class="col">
         <app-calendar-item
           [day]="day"
+          [loggedUserRole]="loggedUser.role"
           (onDay)="onDay($event)"
           (removeBook)="onRemoveBook($event)"
         ></app-calendar-item>
@@ -58,5 +59,40 @@
 
 <!-- Dialog -->
 
-<p-confirmDialog [style]="{width: '40vw'}"></p-confirmDialog>
+<p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
+<p-dialog
+  [(visible)]="bookModal"
+  [style]="{ width: '300px' }"
+  [modal]="false"
+  [closable]="false"
+  styleClass="p-fluid"
+  (onHide)="onBookDialogClose()"
+>
+  <div class="">
+    <p class="text-green-light text-xsm">გსურთ ვიზიტის დაჯავნშნა ?</p>
+    <p class="text-xsm">შეგიძლიათ მიუთუთოთ თქვენი პორბლემა</p>
+    <textarea
+      [(ngModel)]="description"
+      class="text-xsm custom-textarea w-100"
+      name="description"
+      id="description"
+      cols="40"
+      placeholder="აღწერა"
+    ></textarea>
 
+    <div class="d-flex justify-content-end mt-3">
+      <button
+        label="გაუქმება"
+        pButton
+        class="p-button-rounded p-button-sm py-2 text-sm p-button-secondary mx-1"
+        (click)="onBookDialogClose()"
+      ></button>
+      <button
+        label="დაჯავნშნა"
+        pButton
+        class="p-button-rounded p-button-sm py-2 text-sm p-button-success bg-green-light mx-1"
+        (click)="onBookModalConfirm()"
+      ></button>
+    </div>
+  </div>
+</p-dialog>

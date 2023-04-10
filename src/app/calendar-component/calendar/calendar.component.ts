@@ -11,7 +11,7 @@ import { ConfirmationService } from 'primeng/api';
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css'],
-  providers: [ConfirmationService]
+  providers: [ConfirmationService],
 })
 export class CalendarComponent implements OnInit {
   calendarItems: Day[][] = [];
@@ -19,6 +19,10 @@ export class CalendarComponent implements OnInit {
   hours = DateHelper.hours;
   weekDays = DateHelper.weekDays;
   bookedDays: Book[] = [];
+  bookModal = false;
+  description: string = '';
+  selectedDay: any;
+  loggedUser:any;
 
   @Input() doctorId: any;
   @Output() selectDay = new EventEmitter();
@@ -30,6 +34,7 @@ export class CalendarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loggedUser = this.authService.loggedUser
     this.getBookedDays();
     this.getCurrentPageDays();
   }
@@ -54,7 +59,8 @@ export class CalendarComponent implements OnInit {
 
   getBookId(day: Day) {
     for (let item of this.bookedDays) {
-      if (moment(item.date).format() == moment(day.date).format()) return item.id;
+      if (moment(item.date).format() == moment(day.date).format())
+        return item.id;
     }
     return 0;
   }
@@ -72,7 +78,7 @@ export class CalendarComponent implements OnInit {
     this.bookService.getBookedDays(this.doctorId).subscribe((data) => {
       if (data.res) {
         this.bookedDays = data.res;
-        this.setDayBookedStatus()
+        this.setDayBookedStatus();
       } else {
         console.log(data.errors);
       }
@@ -117,6 +123,7 @@ export class CalendarComponent implements OnInit {
       const starterDay = DateHelper.getStarterDay(date);
     }
   }
+  
   decreaseMonth() {
     let date = this.currentWeekDays[0].date;
     if (date) {
@@ -127,18 +134,18 @@ export class CalendarComponent implements OnInit {
   ondaysNextPage() {
     this.dayPageCounter++;
     this.getCurrentPageDays();
-    this.setDayBookedStatus()
+    this.setDayBookedStatus();
   }
 
   ondaysPreviousPage() {
     this.dayPageCounter--;
     this.getCurrentPageDays();
-    this.setDayBookedStatus()
+    this.setDayBookedStatus();
   }
 
   onDay(day: Day) {
-    console.log(day);
-    this.selectDay.emit(day);
+    this.selectedDay = day;
+    this.bookModal = true;
   }
 
   getDayCopy(date: Date, hour: number) {
@@ -148,14 +155,24 @@ export class CalendarComponent implements OnInit {
     return newDate;
   }
 
-  onRemoveBook(bookId: number){
+  onRemoveBook(bookId: number) {
     this.dialog.confirm({
       message: 'ნამდვილად გსურთ ჯავშნის გაუქმება?',
       header: 'Remove book',
       icon: 'pi pi-question',
-      accept: () => {
-        
-      },
+      accept: () => {},
     });
+  }
+
+  onBookDialogClose() {
+    this.bookModal = false;
+  }
+
+  onBookModalConfirm() {
+    this.selectDay.emit({
+      day: this.selectedDay,
+      description: this.description,
+    });
+    this.onBookDialogClose();
   }
 }
