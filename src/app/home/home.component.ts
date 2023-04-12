@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Doctor } from '../user/models/doctor';
 import { DoctorService } from '../user/services/doctor.service';
 import { Category } from '../categories/models/category';
+import { CalendarMode } from '../calendar-component/calendarMode';
 
 @Component({
   selector: 'app-home',

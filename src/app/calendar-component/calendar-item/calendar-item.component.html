@@ -2,7 +2,13 @@
   class="main-container calendar-day content-center h-100 text-center {{
     getStatus
   }}"
-  pTooltip="{{ day.book || day.isRestDay ? '' : getDetails }}"
+  pTooltip="{{
+    day.isCurrentUserBook
+      ? 'აღწერა: ' + day.book!.description!
+      : day.book || day.isRestDay
+      ? ''
+      : getDetails
+  }}"
   (click)="onDayClick()"
 >
   <div
@@ -16,7 +22,7 @@
       style="color: rgba(100, 100, 100, 0.4)"
     >
       <span *ngIf="day.isCurrentUserBook" class="text-green-light">{{
-        loggedUserRole === "doctor" ? "დაჯავშნილია" : "ჩემი ჯავშანი"
+        calendarMode === "doctor" ? "დაჯავშნილია" : "ჩემი ჯავშანი"
       }}</span>
       <span>{{ day.book ? "" : "დაჯავშნა" }}</span></span
     >

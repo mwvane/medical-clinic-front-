@@ -48,7 +48,7 @@
       <div *ngFor="let day of item" class="col">
         <app-calendar-item
           [day]="day"
-          [loggedUserRole]="loggedUser.role"
+          [calendarMode]="calendarMode"
           (onDay)="onDay($event)"
           (removeBook)="onRemoveBook($event)"
         ></app-calendar-item>

@@ -8,6 +8,7 @@ import { BookService } from '../services/book.service';
 import { Book } from '../models/book';
 import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
+import { CalendarMode } from '../calendar-component/calendarMode';
 
 @Component({
   selector: 'app-booking',
@@ -29,6 +30,9 @@ export class BookingComponent implements OnInit {
     category: {name:"",},
     views: 333,
   };
+
+  calendarMode = CalendarMode.default
+
 
   constructor(
     private authService: AuthService,

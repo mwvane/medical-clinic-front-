@@ -3,6 +3,7 @@ import { DayStatus } from '../dayStatus';
 import { DateHelper } from 'src/app/DateHelper';
 import { UserRole } from 'src/app/user/userRole';
 import { Day } from '../models/day';
+import { CalendarMode } from '../calendarMode';
 
 @Component({
   selector: 'app-calendar-item',
@@ -10,7 +11,7 @@ import { Day } from '../models/day';
   styleUrls: ['./calendar-item.component.css'],
 })
 export class CalendarItemComponent {
-  @Input() loggedUserRole = UserRole.client;
+  @Input() calendarMode:string = CalendarMode.default;
   @Input() day: Day = {
     date: new Date(),
     isRestDay: false,
@@ -23,6 +24,9 @@ export class CalendarItemComponent {
   @Output() removeBook = new EventEmitter();
 
   onDayClick() {
+    if (this.day.isRestDay) {
+      return;
+    }
     if (
       this.day.isCurrentUserBook ||
       (!this.day.book && this.day.date > new Date())
@@ -54,7 +58,7 @@ export class CalendarItemComponent {
     }
     return DayStatus.free;
   }
-
+  
   onBookRemove(e: any) {
     e.stopPropagation();
     this.removeBook.emit(this.day);

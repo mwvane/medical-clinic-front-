@@ -11,19 +11,23 @@ export class BookService {
 
   constructor(private http: HttpClient) {}
 
-  getBookedDays(doctorId: number) {
-    return this.http.get<Result>(`${this.baseUrl}getBookedDays?id=${doctorId}`);
+  getDoctorBookedDays(doctorId: number) {
+    return this.http.get<Result>(`${this.baseUrl}getDoctorBookedDays?id=${doctorId}`);
+  }
+
+  getClientBookedDays(userId: number) {
+    return this.http.get<Result>(`${this.baseUrl}getClientBookedDays?id=${userId}`);
   }
 
   addBook(book: Book) {
     return this.http.post<Result>(`${this.baseUrl}addBook`, book);
   }
 
-  updateBook(book:Book){
+  updateBook(book: Book) {
     return this.http.post<Result>(`${this.baseUrl}updateBook`, book);
   }
 
-  removeBook(bookId: number){
+  removeBook(bookId: number) {
     return this.http.post<Result>(`${this.baseUrl}removeBook`, bookId);
   }
 }
