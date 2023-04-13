@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ModalService } from 'src/app/modals/modal.service';
+import { UserRole } from 'src/app/user/userRole';
 
 @Component({
   selector: 'app-header',
@@ -24,8 +25,10 @@ export class HeaderComponent {
   ) {}
 
   onAvatar() {
-    console.log('clicked on avatar');
-    this.router.navigate(['userProfile/', this.loggedUser.id]);
+    this.router.navigate([
+      this.loggedUser.role === UserRole.admin ? 'admin/' : 'userProfile/',
+      this.loggedUser.id,
+    ]);
   }
 
   onLogin() {

@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DayStatus } from '../dayStatus';
 import { DateHelper } from 'src/app/DateHelper';
-import { UserRole } from 'src/app/user/userRole';
 import { Day } from '../models/day';
 import { CalendarMode } from '../calendarMode';
+import { User } from 'src/app/auth/models/user';
 
 @Component({
   selector: 'app-calendar-item',
@@ -12,16 +12,15 @@ import { CalendarMode } from '../calendarMode';
 })
 export class CalendarItemComponent {
   @Input() calendarMode:string = CalendarMode.default;
+  @Input() bookerUser: any
   @Input() day: Day = {
     date: new Date(),
     isRestDay: false,
     isCurrentUserBook: false,
   };
-
-  tooltipDelay: number = 1000;
-
   @Output() onDay = new EventEmitter();
   @Output() removeBook = new EventEmitter();
+  tooltipDelay: number = 1000;
 
   onDayClick() {
     if (this.day.isRestDay) {

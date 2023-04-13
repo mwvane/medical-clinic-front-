@@ -32,6 +32,9 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { TooltipModule } from 'primeng/tooltip';
 import { FooterComponent } from './footer-component/footer/footer.component';
 import { FooterItemComponent } from './footer-component/footer-item/footer-item.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { AdminNavbarComponent } from './admin/admin-navbar/admin-navbar.component';
+import { AdminPageComponent } from './admin/admin-page/admin-page.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +57,8 @@ import { FooterItemComponent } from './footer-component/footer-item/footer-item.
     UserCardSkeletonComponent,
     FooterComponent,
     FooterItemComponent,
+    AdminNavbarComponent,
+    AdminPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,7 +74,8 @@ import { FooterItemComponent } from './footer-component/footer-item/footer-item.
     ToastModule,
     SkeletonModule,
     ConfirmPopupModule,
-    TooltipModule
+    TooltipModule,
+    DropdownModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

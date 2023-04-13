@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../auth.service';
 import { Validations } from '../validations';
 import { Result } from 'src/app/models/result';
+import { UserRole } from 'src/app/user/userRole';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +21,11 @@ export class RegisterComponent {
     lastname: new FormControl(),
     code: new FormControl(),
     password: new FormControl(),
+    role: new FormControl(),
   });
+  roles = [UserRole.client, UserRole.doctor, UserRole.admin];
+  defaultRole = this.roles[0];
+  currentUserRole = UserRole.admin
 
   isEmailTouched: boolean = false;
   isNameTouched: boolean = false;
@@ -32,6 +37,8 @@ export class RegisterComponent {
   verificationStatus: string = '';
   verificationStatusIcon: string = 'pi pi-check';
   emailVerifyStatus: Result = {};
+
+  @ViewChild('roleSelector') roleSelector:any
 
   constructor(
     private authService: AuthService,
@@ -151,7 +158,7 @@ export class RegisterComponent {
   get emailVerifyValidation() {
     let field = this.registerForm.controls['code'];
     if (field.touched) {
-      this.isEmailConfirmTouched = true
+      this.isEmailConfirmTouched = true;
       if (this.emailVerifyStatus) {
         if (this.emailVerifyStatus.res) {
           field.setErrors(null);
@@ -166,7 +173,12 @@ export class RegisterComponent {
   }
 
   get isFormValid() {
-    if (!this.isEmailTouched || !this.isIDTouched || !this.isPasswordTouched || !this.isEmailConfirmTouched) {
+    if (
+      !this.isEmailTouched ||
+      !this.isIDTouched ||
+      !this.isPasswordTouched ||
+      !this.isEmailConfirmTouched
+    ) {
       return false;
     }
     if (!this.registerForm.valid) {

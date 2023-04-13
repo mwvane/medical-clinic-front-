@@ -23,7 +23,7 @@
             >
           </div>
         </div>
-        
+
         <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="form-input mx-2 my-3 position-relative">
             <label for="email" class="text-sm px-3">Email</label>
@@ -99,7 +99,7 @@
             />
             <button
               pButton
-              icon="{{verificationStatusIcon}}"
+              icon="{{ verificationStatusIcon }}"
               type="button"
               class="p-button-text p-button-rounded"
               (click)="onVerification()"
@@ -111,13 +111,57 @@
                 height: 26px;
               "
             ></button>
-            <span
-              class="text-danger text-sm mx-3"
-              >{{emailVerifyValidation === true ? "" : emailVerifyValidation.join(',\n')}}</span
-            >
+            <span class="text-danger text-sm mx-3">{{
+              emailVerifyValidation === true
+                ? ""
+                : emailVerifyValidation.join(",\n")
+            }}</span>
           </div>
         </div>
 
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="form-input mx-2 my-3">
+            <label for="password" class="text-sm px-3">პაროლი</label>
+            <input
+              class="rounded-input text-sm"
+              type="password"
+              formControlName="password"
+              id="password"
+              autocomplete="off"
+              placeholder="( მინიმუმ 8 სიმბოლო : @ 7 , )"
+            />
+            <span class="text-danger text-sm mx-3"
+              >{{ isPasswordValid === true ? "" : isPasswordValid.join(",\n") }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="currentUserRole === 'admin'" class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="form-input mx-2 my-3">
+            <label for="role" class="text-sm px-3">როლი</label>
+            <select #roleSelector formControlName="role" class="custom-dropdown text-md">
+              <option *ngFor="let item of roles" [value]="item">{{item}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="form-input mx-2 my-3">
+            <label for="password" class="text-sm px-3">პაროლი</label>
+            <input
+              class="rounded-input text-sm"
+              type="password"
+              formControlName="password"
+              id="password"
+              autocomplete="off"
+              placeholder="( მინიმუმ 8 სიმბოლო : @ 7 , )"
+            />
+            <span class="text-danger text-sm mx-3"
+              >{{ isPasswordValid === true ? "" : isPasswordValid.join(",\n") }}
+            </span>
+          </div>
+        </div>
         <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="form-input mx-2 my-3">
             <label for="password" class="text-sm px-3">პაროლი</label>

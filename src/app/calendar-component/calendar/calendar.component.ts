@@ -9,6 +9,7 @@ import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { CalendarMode } from '../calendarMode';
 import { UserRole } from 'src/app/user/userRole';
+import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
   selector: 'app-calendar',
@@ -34,6 +35,7 @@ export class CalendarComponent implements OnInit {
   constructor(
     private bookService: BookService,
     private authService: AuthService,
+    private userService: UserService,
     private dialog: ConfirmationService,
     private router: Router
   ) {}
@@ -61,6 +63,7 @@ export class CalendarComponent implements OnInit {
       this.calendarItems.push(items);
     }
   }
+
 
   getBook(day: Day): Book | null {
     for (let item of this.bookedDays) {

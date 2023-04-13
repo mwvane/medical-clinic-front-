@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalService } from 'src/app/modals/modal.service';
 import { AuthService } from '../auth.service';
+import { UserRole } from 'src/app/user/userRole';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +38,7 @@ export class LoginComponent {
           this.authService.storeToken(data.res.token);
           this.modalaService.loginModal = false;
           this.router.navigate([
-            'userProfile/',
+            this.authService.loggedUser.role === UserRole.admin ? 'admin/' : 'userProfile/',
             this.authService.loggedUser.id,
           ]);
         } else {
