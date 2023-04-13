@@ -35,6 +35,8 @@ import { FooterItemComponent } from './footer-component/footer-item/footer-item.
 import { DropdownModule } from 'primeng/dropdown';
 import { AdminNavbarComponent } from './admin/admin-navbar/admin-navbar.component';
 import { AdminPageComponent } from './admin/admin-page/admin-page.component';
+import { TableModule } from 'primeng/table';
+import { AvatarModule } from 'primeng/avatar';
 
 @NgModule({
   declarations: [
@@ -75,13 +77,17 @@ import { AdminPageComponent } from './admin/admin-page/admin-page.component';
     SkeletonModule,
     ConfirmPopupModule,
     TooltipModule,
-    DropdownModule
+    DropdownModule,
+    TableModule,
+    AvatarModule
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenInterceptor,
-    multi: true,
-  },],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

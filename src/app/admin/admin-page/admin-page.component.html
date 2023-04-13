@@ -1,12 +1,96 @@
 <div class="main-container">
   <div class="container">
-    <div class="row my-5">
+    <div class="row my-4">
       <div class="col-4">
         <div class="round bg-white shadow-small content-center nav-item">
-          <i class="pi pi-align-left text-cian-dark" style="margin-right: 1.5rem;"></i>
+          <i
+            class="pi pi-align-left text-cian-dark"
+            style="margin-right: 1.5rem"
+          ></i>
           <app-admin-navbar (select)="onSelect($event)"></app-admin-navbar>
         </div>
       </div>
+    </div>
+    <div class="custom-card shadow-small">
+      <p-table
+        #dt
+        class="custom-table"
+        [value]="doctors"
+        [rows]="10"
+        [paginator]="true"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [(selection)]="selectedItem"
+        [rowHover]="true"
+        selectionMode="single"
+        (onRowSelect)="onRowSelect($event)"
+        dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="firstname" style="min-width: 15rem">
+              სახელი <p-sortIcon field="firstname"></p-sortIcon>
+            </th>
+            <th pSortableColumn="category.name">
+              კატეგორია <p-sortIcon field="category.name"></p-sortIcon>
+            </th>
+            <th class="content-center">ფოტოსურათი</th>
+            <th pSortableColumn="rating" style="min-width: 10rem">
+              რეიტინგი <p-sortIcon field="rating"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-doctor>
+          <tr [pSelectableRow]="doctor" class="text-md text-default">
+            <td>{{ doctor.firstname + " " + doctor.lastname }}</td>
+            <td>{{ doctor.category.name }}</td>
+            <td class="text-center">
+              <p-avatar
+                *ngIf="!doctor.imageUrl"
+                shape="circle"
+                label="{{ doctor.firstname.slice(0, 1) }}"
+              ></p-avatar>
+              <p-avatar
+                *ngIf="doctor.imageUrl"
+                shape="circle"
+                image="{{ doctor.imageUrl }}"
+              ></p-avatar>
+            </td>
+            <td>
+              <p-rating
+                [ngModel]="doctor.rating"
+                [readonly]="true"
+                [cancel]="false"
+                [readonly]="true"
+                [iconOnStyle]="{ color: '#fcad00' }"
+              ></p-rating>
+            </td>
+            <td>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-success mx-2 bg-cian-light text-green-light"
+                (click)="editItem(doctor)"
+              ></button>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-warning"
+                (click)="deleteItem(doctor)"
+                style="background-color: #ff93a6"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="flex align-items-center justify-content-between">
+            In total there are {{ doctors ? doctors.length : 0 }} products.
+          </div>
+        </ng-template>
+      </p-table>
     </div>
   </div>
 </div>

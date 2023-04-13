@@ -8,9 +8,9 @@ import { NavbarItem } from 'src/app/header/models/navbar-item';
 })
 export class AdminNavbarComponent {
   @Input() navbarItems: NavbarItem[] = [
-    { id: 1, isSelected: true, name: 'რეგიტრაცია', url: 'register' },
+    { id: 1, isSelected: false, name: 'რეგიტრაცია', url: 'register' },
     { id: 2, isSelected: false, name: 'კატეგორიები', url: '' },
-    { id: 3, isSelected: false, name: 'ექიმები', url: '' },
+    { id: 3, isSelected: true, name: 'ექიმები', url: '' },
   ];
   @Output() select = new EventEmitter();
 
