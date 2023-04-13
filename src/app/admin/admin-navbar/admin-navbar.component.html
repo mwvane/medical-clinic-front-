@@ -1,0 +1,5 @@
+<div class="main-container d-flex text-default text-md">
+    <div *ngFor="let item of navbarItems" class="nav-item" (click)="onSelect(item)">
+        <span [ngClass]="item.isSelected ? 'text-cian-dark' : 'text-default'" class="mx-3">{{item.name}}</span>
+    </div>
+</div>
