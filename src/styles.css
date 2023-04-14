@@ -118,7 +118,24 @@
 }
 
 /* table */
-
+.custom-table td,tr{
+  padding: 7px 10px !important;
+  font-size: 0.9rem;
+  color: #053354
+}
+.custom-table tr{
+  background-color: #F0FAFF;
+}
+.custom-card .p-paginator{
+  padding: 2px;
+  font-size: 0.9rem;
+}
+.custom-card .p-paginator-pages button{
+  width: 35px !important;
+  min-width: 30px !important;
+  height: 35px !important;
+  padding: 0 !important;
+}
 
 
 

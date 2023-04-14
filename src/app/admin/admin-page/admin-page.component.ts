@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NavbarItem } from 'src/app/header/models/navbar-item';
 import { Doctor } from 'src/app/user/models/doctor';
 import { DoctorService } from 'src/app/user/services/doctor.service';
+import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
   selector: 'app-admin-page',
@@ -13,7 +14,11 @@ export class AdminPageComponent implements OnInit {
   doctors: Doctor[] = [];
   selectedItem: any;
 
-  constructor(private router: Router, private doctorService: DoctorService) {}
+  constructor(
+    private router: Router,
+    private doctorService: DoctorService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.loadDoctors();
@@ -37,9 +42,16 @@ export class AdminPageComponent implements OnInit {
     alert(item.firstname);
   }
 
-  deleteItem(item: any) {}
+  deleteItem(item: any) {
+    this.userService.deleteUser(item.id).subscribe((data) => {
+      if (data.res) {
+      } else {
+        alert(data.errors.join('\n'));
+      }
+    });
+  }
 
   onRowSelect(item: any) {
-    this.router.navigate(['userProfile/',item.data.id])
+    this.router.navigate(['userProfile/', item.data.id]);
   }
 }

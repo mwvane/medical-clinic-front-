@@ -16,7 +16,7 @@
         #dt
         class="custom-table"
         [value]="doctors"
-        [rows]="10"
+        [rows]="8"
         [paginator]="true"
         [tableStyle]="{ 'min-width': '75rem' }"
         [(selection)]="selectedItem"
@@ -39,6 +39,7 @@
             <th pSortableColumn="rating" style="min-width: 10rem">
               რეიტინგი <p-sortIcon field="rating"></p-sortIcon>
             </th>
+            <th></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-doctor>
@@ -73,6 +74,7 @@
                 icon="pi pi-pencil"
                 class="p-button-rounded p-button-success mx-2 bg-cian-light text-green-light"
                 (click)="editItem(doctor)"
+                style="width: 35px; height: 35px;"
               ></button>
               <button
                 pButton
@@ -80,7 +82,7 @@
                 icon="pi pi-trash"
                 class="p-button-rounded p-button-warning"
                 (click)="deleteItem(doctor)"
-                style="background-color: #ff93a6"
+                style="background-color: #ff93a6; width: 35px; height: 35px;"
               ></button>
             </td>
           </tr>
