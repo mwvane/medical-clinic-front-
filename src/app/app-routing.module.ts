@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'booking/:id', component: BookingComponent },
-  { path: 'userProfile/:id', component: UserProfileComponent },
+  { path: 'userProfile/:id/:role', component: UserProfileComponent },
   {
     path: 'admin/:id',
     component: AdminPageComponent,

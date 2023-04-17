@@ -146,9 +146,9 @@
             </select>
           </div>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-4">
+        <div *ngIf="getSelectedRole === 'doctor'" class="col-sm-12 col-md-6 col-lg-4">
           <div class="form-input mx-2 my-3">
-            <label for="password" class="text-sm px-3">პაროლი</label>
+            <label for="password" class="text-sm px-3">Photo</label>
             <input
               class="rounded-input text-sm"
               type="password"
@@ -162,9 +162,9 @@
             </span>
           </div>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-4">
+        <div *ngIf="getSelectedRole === 'doctor'" class="col-sm-12 col-md-6 col-lg-4">
           <div class="form-input mx-2 my-3">
-            <label for="password" class="text-sm px-3">პაროლი</label>
+            <label for="password" class="text-sm px-3">CV</label>
             <input
               class="rounded-input text-sm"
               type="password"

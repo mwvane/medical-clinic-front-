@@ -14,7 +14,7 @@
         <span class="mx-2">{{ user.views }}</span>
       </div>
       <i
-        [ngClass]="user.isPinned ? 'text-cian-dark' : 'text-secondary'"
+        [ngClass]="isUserPinned ? 'text-cian-dark' : 'text-secondary'"
         class="pi pi-paperclip text-sm btn-pin mx-2"
         (click)="onPin()"
       ></i>
@@ -73,7 +73,7 @@
         <div>
           <span class="text-bold">პირადი ნომერი :</span>
           <p class="text-secondary">
-            {{ user.ID ? user.ID : "00000000000" }}
+            {{ user.identityNumber ? user.identityNumber : "00000000000" }}
           </p>
         </div>
         <div>

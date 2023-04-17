@@ -29,6 +29,7 @@ export class BookingComponent implements OnInit {
     isPinned: false,
     category: {name:"",},
     views: 333,
+    
   };
 
   calendarMode = CalendarMode.default

@@ -3,11 +3,11 @@ import { DateHelper } from 'src/app/DateHelper';
 import { Day } from '../models/day';
 import { BookService } from 'src/app/services/book.service';
 import * as moment from 'moment';
-import { AuthService } from 'src/app/auth/auth.service';
 import { Book } from 'src/app/models/book';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { CalendarMode } from '../calendarMode';
+import { UserRole } from 'src/app/user/userRole';
 
 @Component({
   selector: 'app-calendar',
@@ -24,21 +24,19 @@ export class CalendarComponent implements OnInit {
   bookModal = false;
   description: string = '';
   selectedDay: any;
-  loggedUser: any;
   @Input() calendarMode: CalendarMode = CalendarMode.default;
+  @Input() user: any
   @Input() doctorId: any;
   @Output() addBook = new EventEmitter();
   @Output() updateBook = new EventEmitter();
 
   constructor(
     private bookService: BookService,
-    private authService: AuthService,
     private dialog: ConfirmationService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.loggedUser = this.authService.loggedUser;
     this.getBookedDays();
     this.getCurrentPageDays();
   }
@@ -70,8 +68,8 @@ export class CalendarComponent implements OnInit {
   }
 
   isCurentUserBook(day: Day, book: any): boolean {
-    if (day.book && this.authService.loggedUser) {
-      if (this.authService.loggedUser.id == book.userId) {
+    if (day.book && this.user) {
+      if (this.user.id == book.userId) {
         return true;
       }
     }
@@ -81,7 +79,7 @@ export class CalendarComponent implements OnInit {
   getBookedDays() {
     if (this.calendarMode === CalendarMode.clientMode) {
       this.bookService
-        .getClientBookedDays(this.loggedUser.id)
+        .getClientBookedDays(this.user.id)
         .subscribe((data) => {
           if (data.res) {
             this.bookedDays = data.res;
@@ -102,7 +100,7 @@ export class CalendarComponent implements OnInit {
 
     if (this.calendarMode === CalendarMode.doctorMode) {
       this.bookService
-        .getDoctorBookedDays(this.loggedUser.id)
+        .getDoctorBookedDays(this.user.id)
         .subscribe((data) => {
           if (data.res) {
             this.bookedDays = data.res;
@@ -175,7 +173,7 @@ export class CalendarComponent implements OnInit {
   }
 
   onDay(day: Day) {
-    if (this.loggedUser) {
+    if (this.user) {
       this.description = '';
       this.selectedDay = day;
       if (day.isCurrentUserBook) {

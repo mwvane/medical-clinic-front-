@@ -23,6 +23,7 @@
             [doctorId]="doctorId | async"
             (addBook)="onBooking($event)"
             (updateBook)="onBookUpdate($event)"
+            [user]="doctor"
             [calendarMode]="calendarMode"
           ></app-calendar>
         </div>

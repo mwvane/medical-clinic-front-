@@ -53,6 +53,19 @@
   color: red;
 }
 
+.custom-btn {
+  border: none;
+  cursor: pointer !important;
+}
+.custom-btn:hover{
+  background-color: #F0FAFF !important; 
+}
+.custom-btn:active{
+  background-color: #F0FAFF !important; 
+}
+
+
+
 /* font-sizes */
 .text-xsm{
   font-size: 12px !important;

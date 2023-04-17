@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Doctor } from '../models/doctor';
 import { User } from '../models/user';
+import { Pin } from '../models/pin';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-user-card',
@@ -15,20 +17,36 @@ export class DoctorCardComponent {
   @Input() ratingReadOnly: boolean = false;
   @Input() details: boolean = false;
   @Input() experience: boolean = false;
-  @Input() user: any
+  @Input() user: any;
   @Output() booking = new EventEmitter();
   @Output() pin = new EventEmitter();
+  constructor(private authService: AuthService) {}
 
-  get loading(){
-   if(!this.user){
-    return true
-   }
-   return false
+  get loading() {
+    if (!this.user) {
+      return true;
+    }
+    return false;
   }
 
   onPin() {
-    this.user.isPinned = !this.user.isPinned;
-    this.pin.emit(this.user.isPinned);
+    if (this.authService.loggedUser) {
+      const pin: Pin = {
+        doctorId: this.user.id,
+        userId: this.authService.loggedUser.id,
+        isPinned: !this.isUserPinned,
+        pinDate: new Date(),
+      };
+      this.user.pin = pin
+      this.pin.emit(pin);
+    }
+  }
+
+  get isUserPinned(){
+    if(this.user.pin && this.user.pin.isPinned){
+      return true
+    }
+    return false
   }
 
   onBooking() {

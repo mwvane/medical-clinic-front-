@@ -172,6 +172,12 @@ export class RegisterComponent {
     return true;
   }
 
+  get getSelectedRole(){
+    const role = this.registerForm.value.role
+    debugger
+    return role
+  }
+
   get isFormValid() {
     if (
       !this.isEmailTouched ||

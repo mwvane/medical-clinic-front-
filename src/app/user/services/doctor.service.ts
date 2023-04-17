@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Result } from 'src/app/models/result';
+import { Pin } from '../models/pin';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +17,9 @@ export class DoctorService {
 
   increaseDeoctorView(doctorId:number){
     return this.http.post<Result>(`${this.baseUrl}increaseDoctorViews`,doctorId)
+  }
+
+  pin(pin: Pin){
+    return this.http.post<Result>(`${this.baseUrl}pin`,pin)
   }
 }

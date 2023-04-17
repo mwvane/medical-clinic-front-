@@ -1,10 +1,7 @@
 <div class="main-container">
   <div class="container">
-    <div class="row py-5 g-4">
-      <div class="d-none d-lg-block col">
-        <app-categories></app-categories>
-      </div>
-      <div class="d-none d-md-block col content-center">
+    <div class="row py-5 g-5">
+      <div class="d-none d-md-block col-4 content-center">
         <app-user-card
           class="my-1"
           [user]="user"
@@ -15,8 +12,8 @@
           [details]="true"
         ></app-user-card>
       </div>
-      <div class="col-sm-12 col-md-8 col-lg-7">
-        <app-calendar [calendarMode]="calendarMode"></app-calendar>
+      <div class="col">
+        <app-calendar [user]="user" [calendarMode]="calendarmode"></app-calendar>
       </div>
     </div>
   </div>
