@@ -71,25 +71,25 @@
       >
         <ng-template pTemplate="header">
           <tr>
-            <th pSortableColumn="firstname" style="min-width: 15rem">
+            <th pSortableColumn="firstname" style="min-width: 15rem" class="text-center">
               სახელი <p-sortIcon field="firstname"></p-sortIcon>
             </th>
-            <th pSortableColumn="{{ categoryOrID }}">
+            <th pSortableColumn="{{ categoryOrID }}" class="text-center">
               {{ userTableFor === "doctor" ? "კატეგორია" : "პირადი ნომერი" }}
               <p-sortIcon field="{{ categoryOrID }}"></p-sortIcon>
             </th>
             <th class="content-center">ფოტოსურათი</th>
-            <th pSortableColumn="{{ ratingOrEmail }}" style="min-width: 10rem">
+            <th pSortableColumn="{{ ratingOrEmail }}" style="min-width: 10rem" class="text-center">
               {{ userTableFor === "doctor" ? "რეიტინგი" : "Email" }}
               <p-sortIcon field="{{ ratingOrEmail }}"></p-sortIcon>
             </th>
-            <th>Actions</th>
+            <th class="text-center">Actions</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-user>
           <tr [pSelectableRow]="user" class="text-md text-default">
-            <td>{{ user.firstname + " " + user.lastname }}</td>
-            <td>
+            <td class="text-center">{{ user.firstname + " " + user.lastname }}</td>
+            <td class="text-center">
               {{
                 userTableFor === "doctor"
                   ? user.category.name
@@ -116,10 +116,11 @@
                 [cancel]="false"
                 [readonly]="true"
                 [iconOnStyle]="{ color: '#fcad00' }"
+                class="text-center"
               ></p-rating>
-              <span *ngIf="userTableFor !== 'doctor'">{{ user.email }}</span>
+              <span *ngIf="userTableFor !== 'doctor'" class="content-center">{{ user.email }}</span>
             </td>
-            <td>
+            <td class="text-center">
               <button
                 pButton
                 pRipple
