@@ -9,6 +9,7 @@ import { Book } from '../models/book';
 import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { CalendarMode } from '../calendar-component/calendarMode';
+import { ModalService } from '../modals/modal.service';
 
 @Component({
   selector: 'app-booking',
@@ -27,13 +28,11 @@ export class BookingComponent implements OnInit {
     image: '',
     rating: 5,
     isPinned: false,
-    category: {name:"",},
+    category: { name: '' },
     views: 333,
-    
   };
 
-  calendarMode = CalendarMode.default
-
+  calendarMode = CalendarMode.default;
 
   constructor(
     private authService: AuthService,
@@ -60,7 +59,7 @@ export class BookingComponent implements OnInit {
     return new Observable<number>((observer) => {
       this.route.params.subscribe((params) => {
         const id = params['id'];
-        observer.next(id)
+        observer.next(id);
       });
     });
   }
@@ -88,9 +87,9 @@ export class BookingComponent implements OnInit {
     }
   }
 
-  onBookUpdate( day: Day){
-    this.bookService.updateBook(day.book!).subscribe(data => {
-      alert(data.res)
-    })
+  onBookUpdate(day: Day) {
+    this.bookService.updateBook(day.book!).subscribe((data) => {
+      alert(data.res);
+    });
   }
 }

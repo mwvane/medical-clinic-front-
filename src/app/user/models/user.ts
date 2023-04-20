@@ -3,7 +3,7 @@ export interface User {
   id?: number;
   firstname: string;
   lastname: string;
-  ID?: string;
+  identityNumber?: string;
   email?: string;
   image?: string;
   role: string;

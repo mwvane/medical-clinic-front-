@@ -1,11 +1,22 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../auth.service';
 import { Validations } from '../validations';
 import { Result } from 'src/app/models/result';
 import { UserRole } from 'src/app/user/userRole';
+import { UserService } from 'src/app/user/services/user.service';
+import { ActionMode } from './actionMode';
+import { Category } from 'src/app/categories/models/category';
+import { CategoryService } from 'src/app/categories/category.service';
+import { DoctorService } from 'src/app/user/services/doctor.service';
 
 @Component({
   selector: 'app-register',
@@ -13,19 +24,24 @@ import { UserRole } from 'src/app/user/userRole';
   styleUrls: ['./register.component.css'],
   providers: [MessageService],
 })
-export class RegisterComponent {
-  registerForm: any = new FormGroup({
+export class RegisterComponent implements OnInit {
+  registerForm: FormGroup = new FormGroup({
     firstname: new FormControl(null, [Validators.minLength(5)]),
     email: new FormControl(),
-    ID: new FormControl(),
+    identityNumber: new FormControl(),
     lastname: new FormControl(),
     code: new FormControl(),
     password: new FormControl(),
+    imageUrl: new FormControl(),
     role: new FormControl(),
+    category: new FormControl(),
+    id: new FormControl(),
   });
+
+  user: any;
+
   roles = [UserRole.client, UserRole.doctor, UserRole.admin];
   defaultRole = this.roles[0];
-  currentUserRole = UserRole.admin
 
   isEmailTouched: boolean = false;
   isNameTouched: boolean = false;
@@ -38,30 +54,95 @@ export class RegisterComponent {
   verificationStatusIcon: string = 'pi pi-check';
   emailVerifyStatus: Result = {};
 
-  @ViewChild('roleSelector') roleSelector:any
+  loggedUser: any;
+  role = UserRole.client;
+  action = ActionMode.create;
+  disabaled = true
+  categories: Category[] = [];
+
+  @ViewChild('roleSelector') roleSelector: any;
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private messageService: MessageService
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private doctorService: DoctorService,
+    private messageService: MessageService,
+    private categoriService: CategoryService
   ) {}
 
-  onSubmit() {
-    this.authService.register(this.registerForm).subscribe((data) => {
-      if (data.res) {
-        this.authService
-          .login({ username: data.res.email, password: data.res.password })
-          .subscribe((data) => {
-            this.authService.storeToken(data.res.token);
-            this.router.navigate([
-              'userProfile/',
-              this.authService.loggedUser.id,
-            ]);
+  ngOnInit(): void {
+    this.loggedUser = this.authService.loggedUser;
+    this.role = this.loggedUser.role;
+    if (this.loggedUser && this.loggedUser.role === UserRole.admin) {
+      this.loadCategories();
+    }
+    this.route.params.subscribe((params) => {
+      const id = params['id'];
+      const role = params['role'];
+      if (id) {
+        this.action = ActionMode.update;
+        if (role == UserRole.doctor) {
+          this.doctorService.getDoctors(id).subscribe((data) => {
+            if (data.res) {
+              this.registerForm.patchValue(data.res)
+            }
           });
-      } else {
-        alert(data.errors.join('\n'));
+        }
+
+        
+        this.userService.getUser(id).subscribe((data) => {
+          if (data.res) {
+            this.registerForm.patchValue(data.res)
+          }
+        });
       }
     });
+  }
+
+  findCategory(id: number){
+    return this.categories.find(item => item.id === id);
+  }
+
+  loadCategories() {
+    this.categoriService.getCategories().subscribe((data) => {
+      if (data.res) {
+        this.categories = data.res;
+      }
+    });
+  }
+
+  onSubmit() {
+    if (this.action === ActionMode.update) {
+      this.registerForm.value.identityNumber = String(
+        this.registerForm.value.identityNumber
+      );
+      this.userService.editUser(this.registerForm.value).subscribe((data) => {
+        if (data.res) {
+          alert(data.res);
+        } else {
+          alert(data.errors.join('\n'));
+        }
+      });
+    }
+    if (this.action === ActionMode.create) {
+      this.authService.register(this.registerForm).subscribe((data) => {
+        if (data.res) {
+          this.authService
+            .login({ username: data.res.email, password: data.res.password })
+            .subscribe((data) => {
+              this.authService.storeToken(data.res.token);
+              this.router.navigate([
+                'userProfile/',
+                this.authService.loggedUser.id,
+              ]);
+            });
+        } else {
+          alert(data.errors.join('\n'));
+        }
+      });
+    }
   }
 
   onEmail() {
@@ -106,6 +187,16 @@ export class RegisterComponent {
     }
   }
 
+  get showEmailVerificationField() {
+    if (
+      this.authService.loggedUser &&
+      this.authService.loggedUser.role === UserRole.admin
+    ) {
+      return false;
+    }
+    return true;
+  }
+
   get firstnameValidation() {
     return this.registerForm.get('firstname');
   }
@@ -126,7 +217,7 @@ export class RegisterComponent {
   }
 
   get isIdentityNumberValid() {
-    let field = this.registerForm.controls['ID'];
+    let field = this.registerForm.controls['identityNumber'];
     if (!field.pristine) {
       this.isIDTouched = true;
       const valid = Validations.isIdentityNumberValid(field.value);
@@ -172,13 +263,19 @@ export class RegisterComponent {
     return true;
   }
 
-  get getSelectedRole(){
-    const role = this.registerForm.value.role
-    debugger
-    return role
+  get getSelectedRole() {
+    const role = this.registerForm.value.role;
+    return role;
   }
 
   get isFormValid() {
+    if (
+      this.action === ActionMode.update &&
+      this.registerForm.touched &&
+      this.registerForm.valid
+    ) {
+      return true;
+    }
     if (
       !this.isEmailTouched ||
       !this.isIDTouched ||

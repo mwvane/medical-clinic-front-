@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { Form } from '@angular/forms';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Result } from '../models/result';
 import { Email } from './models/email';
 import { EmailConfirm } from './models/emailConfirm';
-import { User } from './models/user';
+import { UserRole } from '../user/userRole';
 
 @Injectable({
   providedIn: 'root',
@@ -19,19 +18,15 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   register(form: any) {
-    let user: User = {
-      email: form.value.email,
-      firstname: form.value.firstname,
-      lastname: form.value.lastname,
-      identityNumber: String(form.value.ID),
-      password: form.value.password,
-      role: "doctor"
-    };
-    return this.http.post<Result>(`${this.baseUrl}register`, user);
+    form.value.identityNumber = String(form.value.identityNumber)
+    form.value.id = 0
+    if(!form.value.role){
+      form.value.role = UserRole.client
+    }
+    return this.http.post<Result>(`${this.baseUrl}register`, form.value);
   }
 
   login(user: any) {
-    debugger
     return this.http.post<Result>(`${this.baseUrl}login`, user);
   }
 

@@ -14,4 +14,16 @@ export class CategoryService {
   getCategories(){
     return this.http.get<Result>(`${this.baseUrl}getCategories`)
   }
+
+  deleteCategory(id: number){
+    return this.http.post<Result>(`${this.baseUrl}delete`,id)
+  }
+
+  addCategory(category: Category){
+    return this.http.post<Result>(`${this.baseUrl}add`,category)
+  }
+
+  updateCategory(category: Category){
+    return this.http.post<Result>(`${this.baseUrl}update`,category)
+  }
 }

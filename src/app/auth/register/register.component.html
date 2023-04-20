@@ -1,7 +1,7 @@
 <div class="main-container">
   <div class="container my-5">
     <div class="d-flex">
-      <p class="caption text-cian-dark">რეგისტრაცია</p>
+      <p class="caption text-cian-dark">{{ action }}</p>
     </div>
     <form [formGroup]="registerForm" (submit)="onSubmit()" autocomplete="off">
       <div class="row">
@@ -36,6 +36,7 @@
               placeholder="შეიყვანეთ მეილი"
             />
             <button
+              *ngIf="showEmailVerificationField"
               pButton
               icon="pi pi-envelope"
               type="button"
@@ -57,11 +58,13 @@
 
         <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="form-input mx-2 my-3">
-            <label for="ID" class="text-sm px-3">პირადი ნომერი</label>
+            <label for="identityNumber" class="text-sm px-3"
+              >პირადი ნომერი</label
+            >
             <input
               class="rounded-input text-sm"
               type="number"
-              formControlName="ID"
+              formControlName="identityNumber"
               id="ID"
               placeholder="00000000000"
             />
@@ -87,7 +90,10 @@
           </div>
         </div>
 
-        <div class="col-sm-12 col-md-6 col-lg-4">
+        <div
+          *ngIf="showEmailVerificationField"
+          class="col-sm-12 col-md-6 col-lg-4"
+        >
           <div class="form-input mx-2 my-3 position-relative">
             <label for="code" class="text-sm px-3">აქტივაციის კოდი</label>
             <input
@@ -135,18 +141,38 @@
             </span>
           </div>
         </div>
-      </div>
-
-      <div *ngIf="currentUserRole === 'admin'" class="row">
-        <div class="col-sm-12 col-md-6 col-lg-4">
+        <div *ngIf="role === 'admin'" class="col-sm-12 col-md-6 col-lg-4">
           <div class="form-input mx-2 my-3">
             <label for="role" class="text-sm px-3">როლი</label>
-            <select #roleSelector formControlName="role" class="custom-dropdown text-md">
-              <option *ngFor="let item of roles" [value]="item">{{item}}</option>
+            <select
+              #roleSelector
+              formControlName="role"
+              class="custom-dropdown text-md"
+            >
+              <option *ngFor="let item of roles" [value]="item">
+                {{ item }}
+              </option>
             </select>
           </div>
         </div>
-        <div *ngIf="getSelectedRole === 'doctor'" class="col-sm-12 col-md-6 col-lg-4">
+      </div>
+
+      <div *ngIf="role === 'admin' && getSelectedRole === 'doctor'" class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="form-input mx-2 my-3">
+            <label for="category" class="text-sm px-3">კატეგორია</label>
+            <select
+              #roleSelector
+              formControlName="category"
+              class="custom-dropdown text-md"
+            >
+              <option *ngFor="let item of categories" [value]="item">
+                {{ item.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="form-input mx-2 my-3">
             <label for="password" class="text-sm px-3">Photo</label>
             <input
@@ -162,7 +188,7 @@
             </span>
           </div>
         </div>
-        <div *ngIf="getSelectedRole === 'doctor'" class="col-sm-12 col-md-6 col-lg-4">
+        <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="form-input mx-2 my-3">
             <label for="password" class="text-sm px-3">CV</label>
             <input
@@ -184,7 +210,7 @@
           [disabled]="!isFormValid"
           type="submit"
           pButton
-          label="რეგისტრაცია"
+          label="{{ action }}"
           class="p-button-sm p-button-rounded bg-default"
         ></button>
       </div>

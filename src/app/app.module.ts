@@ -37,6 +37,7 @@ import { AdminNavbarComponent } from './admin/admin-navbar/admin-navbar.componen
 import { AdminPageComponent } from './admin/admin-page/admin-page.component';
 import { TableModule } from 'primeng/table';
 import { AvatarModule } from 'primeng/avatar';
+import { CreateOrUpdateCategoryComponent } from './categories/create-or-update-category/create-or-update-category.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { AvatarModule } from 'primeng/avatar';
     FooterItemComponent,
     AdminNavbarComponent,
     AdminPageComponent,
+    CreateOrUpdateCategoryComponent,
   ],
   imports: [
     BrowserModule,

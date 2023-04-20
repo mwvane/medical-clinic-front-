@@ -8,6 +8,8 @@ import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { CalendarMode } from '../calendarMode';
 import { UserRole } from 'src/app/user/userRole';
+import { AuthService } from 'src/app/auth/auth.service';
+import { ModalService } from 'src/app/modals/modal.service';
 
 @Component({
   selector: 'app-calendar',
@@ -33,7 +35,9 @@ export class CalendarComponent implements OnInit {
   constructor(
     private bookService: BookService,
     private dialog: ConfirmationService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
+    private modalService: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -173,15 +177,18 @@ export class CalendarComponent implements OnInit {
   }
 
   onDay(day: Day) {
-    if (this.user) {
-      this.description = '';
-      this.selectedDay = day;
-      if (day.isCurrentUserBook) {
-        this.description = day.book!.description!;
+    if(this.authService.loggedUser){
+      if (this.user) {
+        this.description = '';
+        this.selectedDay = day;
+        if (day.isCurrentUserBook) {
+          this.description = day.book!.description!;
+        }
+        this.bookModal = true;
       }
-      this.bookModal = true;
-    } else {
-      this.router.navigateByUrl('register');
+    }
+    else{
+      this.modalService.loginModal = true
     }
   }
 

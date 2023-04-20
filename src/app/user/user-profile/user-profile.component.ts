@@ -3,7 +3,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { CalendarMode } from 'src/app/calendar-component/calendarMode';
 import { Book } from 'src/app/models/book';
 import { UserRole } from '../userRole';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DoctorService } from '../services/doctor.service';
 import { UserService } from '../services/user.service';
 
@@ -18,15 +18,18 @@ export class UserProfileComponent implements OnInit {
   calendarMode = CalendarMode.clientMode;
 
   constructor(
-      private route: ActivatedRoute,
+    private route: ActivatedRoute,
     private doctorService: DoctorService,
-    private UserService: UserService
+    private UserService: UserService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       const id = params['id'];
-      const role = params['role'];
+      let role = params['role']
+        ? params['role']
+        : this.authService.loggedUser.role;
       if (id) {
         if (role === UserRole.client) {
           this.UserService.getUser(id).subscribe((data) => {
@@ -51,13 +54,13 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  get calendarmode(){
-    if(this.user.role === UserRole.client){
-      return CalendarMode.clientMode
+  get calendarmode() {
+    if (this.user.role === UserRole.client) {
+      return CalendarMode.clientMode;
     }
-    if(this.user.role === UserRole.doctor){
-      return CalendarMode.doctorMode
+    if (this.user.role === UserRole.doctor) {
+      return CalendarMode.doctorMode;
     }
-    return CalendarMode.default
+    return CalendarMode.default;
   }
 }
