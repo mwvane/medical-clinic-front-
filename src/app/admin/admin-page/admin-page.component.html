@@ -38,6 +38,15 @@
           </div>
         </div>
       </div>
+      <div *ngIf="selectedNavbarItem.name === 'კატეგორიები'" class="col">
+        <button
+          pButton
+          label="დამატება"
+          icon="pi pi-plus"
+          class="p-button-rounded p-button-sm py-2 text-sm p-button-success bg-green-light mx-1"
+          (click)="onAddCategory()"
+        ></button>
+      </div>
     </div>
 
     <!-- doctorTable -->
@@ -48,7 +57,7 @@
       <p-table
         #DoctorTable
         class="custom-table"
-        [value]="userTableFor === 'doctor' ? doctors: users "
+        [value]="userTableFor === 'doctor' ? doctors : users"
         [rows]="8"
         [paginator]="true"
         [tableStyle]="{ 'min-width': '75rem' }"
@@ -65,12 +74,14 @@
             <th pSortableColumn="firstname" style="min-width: 15rem">
               სახელი <p-sortIcon field="firstname"></p-sortIcon>
             </th>
-            <th pSortableColumn="{{categoryOrID}}">
-              {{userTableFor === 'doctor' ? 'კატეგორია':'პირადი ნომერი' }} <p-sortIcon field="{{categoryOrID}}"></p-sortIcon>
+            <th pSortableColumn="{{ categoryOrID }}">
+              {{ userTableFor === "doctor" ? "კატეგორია" : "პირადი ნომერი" }}
+              <p-sortIcon field="{{ categoryOrID }}"></p-sortIcon>
             </th>
             <th class="content-center">ფოტოსურათი</th>
-            <th pSortableColumn="rating" style="min-width: 10rem">
-              რეიტინგი <p-sortIcon field="rating"></p-sortIcon>
+            <th pSortableColumn="{{ ratingOrEmail }}" style="min-width: 10rem">
+              {{ userTableFor === "doctor" ? "რეიტინგი" : "Email" }}
+              <p-sortIcon field="{{ ratingOrEmail }}"></p-sortIcon>
             </th>
             <th>Actions</th>
           </tr>
@@ -78,7 +89,13 @@
         <ng-template pTemplate="body" let-user>
           <tr [pSelectableRow]="user" class="text-md text-default">
             <td>{{ user.firstname + " " + user.lastname }}</td>
-            <td>{{ userTableFor === 'doctor'? user.category.name : user.identityNumber }}</td>
+            <td>
+              {{
+                userTableFor === "doctor"
+                  ? user.category.name
+                  : user.identityNumber
+              }}
+            </td>
             <td class="text-center">
               <p-avatar
                 *ngIf="!user.imageUrl"
@@ -93,12 +110,14 @@
             </td>
             <td>
               <p-rating
+                *ngIf="userTableFor === 'doctor'"
                 [ngModel]="user.rating"
                 [readonly]="true"
                 [cancel]="false"
                 [readonly]="true"
                 [iconOnStyle]="{ color: '#fcad00' }"
               ></p-rating>
+              <span *ngIf="userTableFor !== 'doctor'">{{ user.email }}</span>
             </td>
             <td>
               <button
@@ -130,19 +149,19 @@
 
     <!-- categories -->
 
-    <div *ngIf="selectedNavbarItem.name === 'კატეგორიები'" class="w-100 content-center">
-      <div class="row w-75 bg-dange text-center">
-        <div class="col-6">
-          <div
-            class="custom-card shadow-small"
-          >
+    <div
+      *ngIf="selectedNavbarItem.name === 'კატეგორიები'"
+      class="w-100 content-center"
+    >
+      <div class="row w-100 bg-dange text-center">
+        <div class="col">
+          <div class="custom-card shadow-small">
             <p-table
               #DoctorTable
               class="custom-table"
               [value]="categories"
               [rows]="8"
               [paginator]="true"
-              [tableStyle]="{ 'min-width': '20rem' }"
               [(selection)]="selectedItem"
               [rowHover]="true"
               selectionMode="single"
@@ -151,22 +170,29 @@
             >
               <ng-template pTemplate="header">
                 <tr>
-                  <th pSortableColumn="firstname" style="min-width: 15rem">
-                    სახელი <p-sortIcon field="firstname"></p-sortIcon>
+                  <th pSortableColumn="name" class="text-center">
+                    სახელი <p-sortIcon field="name"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="doctorCount" class="text-center">
+                    ექიმების რაოდენოაბ
+                    <p-sortIcon field="doctorCount"></p-sortIcon>
                   </th>
                   <th class="text-center">Actions</th>
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-category>
                 <tr class="text-md text-default">
-                  <td>{{ category.name }}</td>
+                  <td class="text-center">{{ category.name }}</td>
+                  <td class="text-center">
+                    {{ category.doctorCount ? category.doctorCount : 0 }}
+                  </td>
                   <td class="content-center">
                     <button
                       pButton
                       pRipple
                       icon="pi pi-pencil"
                       class="p-button-rounded p-button-success mx-2 bg-cian-light text-green-light"
-                      (click)="editItem(category)"
+                      (click)="onEditCategory(category)"
                       style="width: 35px; height: 35px"
                     ></button>
                     <button
@@ -174,7 +200,7 @@
                       pRipple
                       icon="pi pi-trash"
                       class="p-button-rounded p-button-warning"
-                      (click)="deleteItem(category)"
+                      (click)="onDeleteCategory(category)"
                       style="
                         background-color: #ff93a6;
                         width: 35px;
@@ -193,16 +219,14 @@
             </p-table>
           </div>
         </div>
-        <div class="col-6">
-          <button
-            label="დამატება"
-            icon="pi pi-plus"
-            pButton
-            class="p-button-rounded p-button-sm py-2 text-sm p-button-success bg-green-light mx-1"
-            (click)="onAddCategory()"
-          ></button>
-        </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- dialog -->
+<p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
+<app-create-or-update-category
+  [category]="categoryForUpdate"
+  (result)="onCategoryChange($event)"
+></app-create-or-update-category>

@@ -16,7 +16,6 @@ export class AdminNavbarComponent implements OnInit {
   @Output() select = new EventEmitter();
 
   ngOnInit(): void {
-    debugger
     const selectedItem = this.navbarItems.find(item => item.isSelected)
     if(selectedItem){
       this.select.emit(selectedItem)
