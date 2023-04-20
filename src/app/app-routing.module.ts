@@ -10,9 +10,11 @@ import { RoleGuard } from './guards/role.guard';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'update/:id/:role', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'booking/:id', component: BookingComponent },
   { path: 'userProfile/:id/:role', component: UserProfileComponent },
+  { path: 'userProfile/:id', component: UserProfileComponent },
   {
     path: 'admin/:id',
     component: AdminPageComponent,
