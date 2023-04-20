@@ -10,6 +10,7 @@
           [ratingReadOnly]="true"
           [footerActions]="false"
           [details]="true"
+          (forgetPassword)="onForgetPassword()"
         ></app-user-card>
       </div>
       <div class="col">
@@ -18,3 +19,6 @@
     </div>
   </div>
 </div>
+
+<!-- dialog -->
+<app-forget-password></app-forget-password>

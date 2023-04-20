@@ -20,6 +20,7 @@ export class DoctorCardComponent {
   @Input() user: any;
   @Output() booking = new EventEmitter();
   @Output() pin = new EventEmitter();
+  @Output() forgetPassword = new EventEmitter();
   constructor(private authService: AuthService) {}
 
   get loading() {
@@ -27,6 +28,10 @@ export class DoctorCardComponent {
       return true;
     }
     return false;
+  }
+
+  onForgetPassword() {
+    this.forgetPassword.emit();
   }
 
   onPin() {
@@ -37,16 +42,16 @@ export class DoctorCardComponent {
         isPinned: !this.isUserPinned,
         pinDate: new Date(),
       };
-      this.user.pin = pin
+      this.user.pin = pin;
       this.pin.emit(pin);
     }
   }
 
-  get isUserPinned(){
-    if(this.user.pin && this.user.pin.isPinned){
-      return true
+  get isUserPinned() {
+    if (this.user.pin && this.user.pin.isPinned) {
+      return true;
     }
-    return false
+    return false;
   }
 
   onBooking() {

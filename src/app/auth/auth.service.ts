@@ -60,6 +60,11 @@ export class AuthService {
     }
   }
 
+  changePassword(email: string, password: string, confirmPassword: string){
+    return this.http.post<Result>(`${this.baseUrl}changePassword`, {email,password,confirmPassword});
+
+  }
+
   decodeToken() {
     const jwtHelper = new JwtHelperService();
     const token: any = this.getToken();
@@ -67,4 +72,5 @@ export class AuthService {
       return jwtHelper.decodeToken(token);
     }
   }
+
 }

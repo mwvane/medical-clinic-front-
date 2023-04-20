@@ -6,6 +6,7 @@ import { UserRole } from '../userRole';
 import { ActivatedRoute } from '@angular/router';
 import { DoctorService } from '../services/doctor.service';
 import { UserService } from '../services/user.service';
+import { ModalService } from 'src/app/modals/modal.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -21,7 +22,8 @@ export class UserProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private doctorService: DoctorService,
     private UserService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private modalService: ModalService,
   ) {}
 
   ngOnInit(): void {
@@ -62,5 +64,9 @@ export class UserProfileComponent implements OnInit {
       return CalendarMode.doctorMode;
     }
     return CalendarMode.default;
+  }
+
+  onForgetPassword(){
+    this.modalService.forgetPasswordModal = true
   }
 }

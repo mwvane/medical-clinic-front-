@@ -6,4 +6,5 @@ import { Injectable } from '@angular/core';
 export class ModalService {
   loginModal: boolean = false;
   craeteOrUpdateCategoryModal: boolean = false;
+  forgetPasswordModal: Boolean = false;
 }

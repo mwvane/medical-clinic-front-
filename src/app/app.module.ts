@@ -38,6 +38,7 @@ import { AdminPageComponent } from './admin/admin-page/admin-page.component';
 import { TableModule } from 'primeng/table';
 import { AvatarModule } from 'primeng/avatar';
 import { CreateOrUpdateCategoryComponent } from './categories/create-or-update-category/create-or-update-category.component';
+import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { CreateOrUpdateCategoryComponent } from './categories/create-or-update-c
     AdminNavbarComponent,
     AdminPageComponent,
     CreateOrUpdateCategoryComponent,
+    ForgetPasswordComponent,
   ],
   imports: [
     BrowserModule,
