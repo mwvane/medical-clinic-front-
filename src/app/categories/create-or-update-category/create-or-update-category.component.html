@@ -1,0 +1,44 @@
+<p-dialog
+  [(visible)]="modalService.craeteOrUpdateCategoryModal"
+  [style]="{ width: '500px' }"
+  [modal]="true"
+  styleClass="p-fluid"
+  (onHide)="onClose()"
+  [closable]="false"
+>
+  <div class="main-container">
+    <div class="modal-header text-default">
+      <p>
+        {{ !category.id ? "კატეგორიის დამატება" : "კატეგორიის განახლება" }}
+      </p>
+    </div>
+    <div class="modalBody">
+      <label for="name" class="text-sm px-3">კატეგორიის სახელი</label>
+      <input
+        class="rounded-input text-sm"
+        type="text"
+        [(ngModel)]="category.name"
+        autocomplete="off"
+        placeholder="( მინიმუმ 3 სიმბოლო )"
+      />
+      <span class="text-danger text-sm mx-3"
+        >{{ isNameValid ? "" : "სახელი უნდა შედგებოდეს მინიმუმ სამბოლოსგან" }}
+      </span>
+    </div>
+    <div class="modal-action d-flex justify-content-between">
+      <button
+        pButton
+        label="გაუქმება"
+        class="p-button-sm p-button-rounded p-button-secondary bg-secondary mt-5 mx-3"
+        (click)="onClose()"
+      ></button>
+      <button
+        pButton
+        label="შენახვა"
+        class="p-button-sm p-button-rounded p-button-success bg-green-light mt-5 mx-3"
+        (click)="onSubmit()"
+        [disabled]="!isNameValid"
+      ></button>
+    </div>
+  </div>
+</p-dialog>
