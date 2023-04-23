@@ -1,0 +1,30 @@
+<p-dialog
+  [(visible)]="modalService.usersModal"
+  [style]="{ width: '90%' }"
+  [modal]="true"
+  styleClass="p-fluid"
+  (onHide)="onClose()"
+>
+  <div class="main-container" sty>
+    <div class="container">
+      <div
+        *ngIf="!data.length"
+        class="content-center text-cian-dark text-xlg mb-5"
+      >
+        <i class="pi pi-exclamation-circle mx-3"></i> ექიმი ვერ მოიძებნა
+      </div>
+      <div class="row g-3">
+        <app-user-card
+          *ngFor="let item of data"
+          class="col-sm-6 col-md-4 col-lg-3"
+          [details]="false"
+          [rating]="true"
+          [ratingReadOnly]="true"
+          [footerActions]="true"
+          [user]="item"
+          (booking)="onBooking(item)"
+        ></app-user-card>
+      </div>
+    </div>
+  </div>
+</p-dialog>
