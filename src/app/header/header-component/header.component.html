@@ -21,7 +21,7 @@
       <div class="col-7 content-center">
         <app-navbar class="d-none d-lg-flex"></app-navbar>
       </div>
-      <div class="col-3 content-center d-none d-md-flex">
+      <div class="col-2 content-center d-none d-md-flex">
         <div class="round bg-cian-light" style="font-size: 0.9rem">
           <div *ngIf="!loggedUser">
             <a (click)="onLogin()">ავტორიზაცია/</a>
@@ -32,12 +32,24 @@
             <span class="mx-3 text-center">{{
               loggedUser.firstname + " " + loggedUser.lastname
             }}</span>
-            <i class="pi pi-sign-out text-sm btn-single" (click)="onLogout($event)"></i>
+            <i
+              class="pi pi-sign-out text-sm btn-single"
+              (click)="onLogout($event)"
+            ></i>
           </div>
         </div>
       </div>
-      <div class="col content-center">
-        <app-language-selector class="d-none d-lg-flex"></app-language-selector>
+      <div class="col d-flex align-items-center justify-content-end">
+        <app-language-selector
+          class="d-none d-lg-block"
+        ></app-language-selector>
+        <button
+          pButton
+          icon="pi pi-cog"
+          class="p-button-rounded p-button-secondary mx-1"
+          style="width: 2.2rem; height: 2.2rem"
+          (click)="onSettings()"
+        ></button>
         <i class="pi pi-bars d-md-none"></i>
       </div>
     </div>
@@ -59,31 +71,39 @@
             <div class="text-md">იაკობ ნიკოლაძე №10</div>
           </div>
         </div>
+
         <div class="col">
-          <div class="row">
-            <div class="col-5">
-              <input
-                type="text"
-                class="rounded-input text-sm mx-2"
-                placeholder="მოძებნე ექიმი სახელით"
-              />
+          <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+            <div class="row">
+              <div class="col-5">
+                <input
+                  formControlName="doctorName"
+                  id="doctorName"
+                  type="text"
+                  class="rounded-input text-sm mx-2"
+                  placeholder="მოძებნე ექიმი სახელით"
+                />
+              </div>
+              <div class="col-6">
+                <input
+                  formControlName="category"
+                  id="category"
+                  type="text"
+                  class="rounded-input text-sm mx-2"
+                  placeholder="მოძებნე სპეციალობით"
+                />
+              </div>
+              <div class="col-1">
+                <button
+                  pButton
+                  icon="pi pi-search"
+                  class="p-button-rounded"
+                  style="width: 40px; height: 40px; background-color: black"
+                  (click)="onSearch()"
+                ></button>
+              </div>
             </div>
-            <div class="col-6">
-              <input
-                type="text"
-                class="rounded-input text-sm mx-2"
-                placeholder="მოძებნე სპეციალობით"
-              />
-            </div>
-            <div class="col-1">
-              <button
-                pButton
-                icon="pi pi-search"
-                class="p-button-rounded"
-                style="width: 40px; height: 40px; background-color: black"
-              ></button>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -92,5 +112,10 @@
 
 <!-- Modals -->
 <app-login></app-login>
+<app-settings></app-settings>
+<app-users-modal
+  [data]="searchedDoctors"
+  (booking)="onBooking($event)"
+></app-users-modal>
 
-<p-confirmDialog [style]="{width: '40vw'}"></p-confirmDialog>
+<p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>

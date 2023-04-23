@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ModalService } from 'src/app/modals/modal.service';
+import { Doctor } from 'src/app/user/models/doctor';
+import { DoctorService } from 'src/app/user/services/doctor.service';
 import { UserRole } from 'src/app/user/userRole';
 
 @Component({
@@ -11,8 +14,14 @@ import { UserRole } from 'src/app/user/userRole';
   styleUrls: ['./header.component.css'],
   providers: [ConfirmationService],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
+  searchedDoctors:Doctor[] = []
+  searchForm: FormGroup = new FormGroup({
+    doctorName: new FormControl(),
+    category: new FormControl()
+  })
+
   get loggedUser() {
     return this.authService.loggedUser;
   }
@@ -21,8 +30,25 @@ export class HeaderComponent {
     private router: Router,
     private modalService: ModalService,
     private authService: AuthService,
-    private dialog: ConfirmationService
+    private dialog: ConfirmationService,
+    private doctorService: DoctorService
   ) {}
+
+  ngOnInit(): void {
+    this.searchForm.patchValue({
+      doctorName: "",
+      category: ""
+    })
+  }
+
+  onSearch(){
+    this.doctorService.search(this.searchForm.value).subscribe(data => {
+      if(data.res){
+        this.searchedDoctors = data.res
+      }
+      this.modalService.usersModal = true
+    })
+  }
 
   onAvatar() {
     this.router.navigate([
@@ -38,6 +64,16 @@ export class HeaderComponent {
   onHome() {
     this.router.navigateByUrl('home');
   }
+
+  onBooking(user: any) {
+    this.router.navigate(['booking/', user.id]);
+    this.doctorService.increaseDeoctorView(user.id).subscribe((data) => {
+      if (data.res) {
+      } else {
+      }
+    });
+  }
+
   onLogout(e: any) {
     e.stopPropagation();
     this.dialog.confirm({
@@ -49,5 +85,9 @@ export class HeaderComponent {
         this.router.navigateByUrl('home');
       },
     });
+  }
+
+  onSettings(){
+    this.modalService.settingsModal = true
   }
 }
