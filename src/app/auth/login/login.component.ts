@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalService } from 'src/app/modals/modal.service';
@@ -17,6 +17,10 @@ export class LoginComponent {
     password: new FormControl(),
   });
 
+  verifyStatus: string = '';
+  isTwoFactory: boolean = false;
+  token: string = ""
+
   constructor(
     public modalaService: ModalService,
     private authService: AuthService,
@@ -27,6 +31,11 @@ export class LoginComponent {
     this.modalaService.loginModal = false;
   }
 
+  onVerifyDone(email: string) {
+    this.verifyStatus = 'done';
+    this.saveUserAndNavigate(this.token)
+  }
+
   onSubmit() {
     this.authService
       .login({
@@ -34,16 +43,31 @@ export class LoginComponent {
         password: this.loginForm.value.password,
       })
       .subscribe((data) => {
+        debugger
         if (data.res) {
           this.authService.storeToken(data.res.token);
-          this.modalaService.loginModal = false;
-          this.router.navigate([
-            this.authService.loggedUser.role === UserRole.admin ? 'admin/' : 'userProfile/',
-            this.authService.loggedUser.id,
-          ]);
+          if (this.authService.loggedUser.twoFactory === 'True') {
+            this.authService.logOut();
+            this.token = data.res.token
+            this.isTwoFactory = true;
+          } else {
+            this.saveUserAndNavigate(data.res.token)
+          }
         } else {
           alert(data.errors.join('\n'));
         }
       });
+  }
+
+  saveUserAndNavigate(token:string){
+    debugger
+    this.authService.storeToken(token);
+    this.modalaService.loginModal = false;
+    this.router.navigate([
+      this.authService.loggedUser.role === UserRole.admin
+        ? 'admin/'
+        : 'userProfile/',
+      this.authService.loggedUser.id,
+    ]);
   }
 }

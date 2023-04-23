@@ -64,6 +64,14 @@
   background-color: #F0FAFF !important; 
 }
 
+.custom-link{
+  color: #18a4e1;
+  cursor: pointer;
+}
+.custom-link:hover{
+  color: #6ec0e3;
+}
+
 
 
 /* font-sizes */
@@ -78,6 +86,9 @@
 }
 .text.lg {
   font-size: 1rem !important;
+}
+.text-xlg{
+  font-size: 1.2rem !important;
 }
 .caption {
   font-size: 1.1rem;
@@ -152,7 +163,7 @@
 
 
 
-
+/* modify primeng */
 .p-tooltip .p-tooltip-text {
   background-color: rgba(255, 255, 255,.9) !important;
   color:black !important;

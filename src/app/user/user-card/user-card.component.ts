@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class DoctorCardComponent {
   @Input() vertical: boolean = true;
   @Input() footerActions: boolean = false;
+  @Input() footerActionText: string = "მიღებაზე ჩაწერა";
   @Input() headerActions: boolean = false;
   @Input() rating: boolean = false;
   @Input() ratingReadOnly: boolean = false;

@@ -22,4 +22,8 @@ export class DoctorService {
   pin(pin: Pin){
     return this.http.post<Result>(`${this.baseUrl}pin`,pin)
   }
+
+  search(payload: any){
+    return this.http.post<Result>(`${this.baseUrl}search`,payload)
+  }
 }

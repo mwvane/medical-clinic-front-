@@ -7,4 +7,6 @@ export class ModalService {
   loginModal: boolean = false;
   craeteOrUpdateCategoryModal: boolean = false;
   forgetPasswordModal: Boolean = false;
+  settingsModal: boolean = false;
+  usersModal: boolean = false;
 }

@@ -11,7 +11,8 @@
         <p class="caption text-cian-dark">ავტორიზაცია</p>
       </div>
       <div class="login-body">
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <app-email-onfirm *ngIf="isTwoFactory" (done)="onVerifyDone($event)"></app-email-onfirm>
+        <form *ngIf="!isTwoFactory" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <div class="form-input mx-2 my-3">
             <label for="username" class="text-sm px-3">Email</label>
             <input

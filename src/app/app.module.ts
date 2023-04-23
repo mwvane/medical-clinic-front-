@@ -39,6 +39,11 @@ import { TableModule } from 'primeng/table';
 import { AvatarModule } from 'primeng/avatar';
 import { CreateOrUpdateCategoryComponent } from './categories/create-or-update-category/create-or-update-category.component';
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
+import { SettingsComponent } from './header/settings/settings.component';
+import { CheckboxModule } from 'primeng/checkbox'; 
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { EmailOnfirmComponent } from './auth/email-onfirm/email-onfirm.component';
+import { UsersModalComponent } from './user/users-modal/users-modal.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +70,9 @@ import { ForgetPasswordComponent } from './auth/forget-password/forget-password.
     AdminPageComponent,
     CreateOrUpdateCategoryComponent,
     ForgetPasswordComponent,
+    SettingsComponent,
+    EmailOnfirmComponent,
+    UsersModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,7 +91,9 @@ import { ForgetPasswordComponent } from './auth/forget-password/forget-password.
     TooltipModule,
     DropdownModule,
     TableModule,
-    AvatarModule
+    AvatarModule,
+    CheckboxModule,
+    InputSwitchModule
   ],
   providers: [
     {
