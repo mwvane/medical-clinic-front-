@@ -1,0 +1,53 @@
+<p-dialog
+  [(visible)]="modalService.settingsModal"
+  [style]="{ width: '500px' }"
+  [modal]="true"
+  [closable]="false"
+  styleClass="p-fluid"
+  (onHide)="onClose()"
+>
+  <div class="main-container">
+    <div class="container">
+      <div class="modal-header">
+        <p class="text-cian-dark">პარამეტრები</p>
+      </div>
+      <div class="modal-body text-md">
+        <p class="text-md text-secondary">უსაფრთხოება</p>
+        <div class="shadow-small p-3">
+          <div class="row border-light py-2 align-items-center mt-1">
+            <div class="col-3">
+              <p-inputSwitch
+                [(ngModel)]="twoFactory"
+                (onChange)="onTwoFactoryVahnge()"
+                class="content-center"
+              ></p-inputSwitch>
+            </div>
+            <div class="col">
+              <span>Two Factory Authentication</span>
+            </div>
+          </div>
+          <div class="row border-light py-2 align-items-center mt-1">
+            <div class="col-3 content-center"><i class="pi pi-key text-xlg" style="font-size: 2rem;"></i></div>
+            <div class="col">
+              <span class="custom-link" (click)="onCangePassword()">პაროლის შეცვლა</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-end mt-4">
+        <div class="w-25">
+          <button
+            pButton
+            label="დახურვა"
+            class="p-button-sm p-button-rounded bg-default"
+            (click)="onClose()"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>
+
+<!-- other dialogs -->
+
+<app-forget-password></app-forget-password>
