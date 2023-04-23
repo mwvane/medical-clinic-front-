@@ -1,0 +1,66 @@
+<div class="main-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-input mx-2 my-3 position-relative">
+      <div class="d-flex" style="justify-content: space-between;">
+        <label for="email" class="text-sm px-3">Email</label>
+        <span *ngIf="!canSentMail" class="mx-3 text-sm">{{emailTic}}</span>
+      </div>
+      <input
+        class="rounded-input text-sm"
+        type="email"
+        formControlName="email"
+        id="email"
+        autocomplete="off"
+        placeholder="შეიყვანეთ მეილი"
+        [autofocus]="true"
+      />
+      <button
+        *ngIf="canSentMail && isEmailValid"
+        pButton
+        icon="pi pi-envelope"
+        type="button"
+        class="p-button-text p-button-rounded"
+        (click)="onEmail()"
+        style="
+          position: absolute;
+          right: 6px;
+          top: 1.7rem;
+          width: 26px;
+          height: 26px;
+        "
+      ></button>
+      <span *ngIf="!isEmailValid" class="text-danger text-sm mx-3"
+        >მეილი აუცილებელია</span
+      >
+    </div>
+    <div *ngIf="isCodeSent" class="form-input mx-2 my-3 position-relative">
+      <label for="code" class="text-sm px-3">აქტივაციის კოდი</label>
+      <input
+        class="rounded-input text-sm"
+        type="text"
+        formControlName="code"
+        id="code"
+        placeholder="შეიყვანეთ აქტივაციის კოდი"
+      />
+      <button
+        pButton
+        icon="{{ verificationStatusIcon }}"
+        type="button"
+        class="p-button-text p-button-rounded"
+        (click)="onVerification()"
+        style="
+          position: absolute;
+          right: 6px;
+          top: 1.85rem;
+          width: 26px;
+          height: 26px;
+        "
+      ></button>
+      <span class="text-danger text-sm mx-3">{{
+        emailVerifyValidation === true ? "" : emailVerifyValidation.join(",\n")
+      }}</span>
+    </div>
+  </form>
+</div>
+<!-- toast -->
+<p-toast position="top-center"></p-toast>
