@@ -1,0 +1,30 @@
+<div class="main-container rounded-input text-sm py-2">
+  <input
+    type="file"
+    accept="{{ fileType }}"
+    id="{{ fileType }}"
+    (change)="onFileUpload($event)"
+  />
+  <div class="row">
+    <div class="col m-0">
+      <div class="d-flex m-0">
+        <p-chip
+          *ngIf="selectedFile"
+          label="{{ selectedFile.name }}"
+          [removable]="true"
+          (onRemove)="onRemove()"
+          class="text-sm"
+        ></p-chip>
+      </div>
+    </div>
+    <div class="col-1">
+      <label for="{{ fileType }}"
+        ><i
+          class="{{
+            fileType === 'Image/*' ? 'pi pi-image' : 'pi pi-file-pdf'
+          }} text-cian-dark mx-"
+        ></i
+      ></label>
+    </div>
+  </div>
+</div>
