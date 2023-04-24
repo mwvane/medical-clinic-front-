@@ -74,6 +74,7 @@ export class AuthService {
   }
 
   decodeToken() {
+
     const jwtHelper = new JwtHelperService();
     const token: any = this.getToken();
     if (token !== 'null') {

@@ -34,19 +34,16 @@ export class EmailOnfirmComponent {
   onEmail() {
     const emailTo = this.form.value.email;
     if (Validations.isEmailValid(emailTo)) {
-      this.authService.sendEmail(emailTo).subscribe((data) => {
-        if (data) {
-          this.emailTimeout();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Email',
-            detail: 'იმეილი გაიგზავნა წარმატებით',
-            life: 3000,
-          });
-          this.isCodeSent = true;
-          this.canSentMail = false;
-        }
+      this.emailTimeout();
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Email',
+        detail: 'იმეილი გაიგზავნა წარმატებით',
+        life: 3000,
       });
+      this.isCodeSent = true;
+      this.canSentMail = false;
+      this.authService.sendEmail(emailTo).subscribe((data) => {});
     }
   }
 

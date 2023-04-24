@@ -183,3 +183,8 @@
   border: 2px solid #bae4f6;
 }
 
+.p-chip{
+  font-size: 0.8rem !important;
+  height: 1.29rem !important;
+}
+

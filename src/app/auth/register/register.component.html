@@ -1,4 +1,5 @@
 <div class="main-container">
+  <button (click)="onSubmit()">image</button>
   <div class="container my-5">
     <div class="d-flex">
       <p class="caption text-cian-dark">{{ action }}</p>
@@ -174,34 +175,14 @@
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="form-input mx-2 my-3">
-            <label for="password" class="text-sm px-3">Photo</label>
-            <input
-              class="rounded-input text-sm"
-              type="password"
-              formControlName="password"
-              id="password"
-              autocomplete="off"
-              placeholder="( მინიმუმ 8 სიმბოლო : @ 7 , )"
-            />
-            <span class="text-danger text-sm mx-3"
-              >{{ isPasswordValid === true ? "" : isPasswordValid.join(",\n") }}
-            </span>
+            <label for="Photo" class="text-sm px-3">Photo</label>
+            <app-upload-file (select)="onSelectImage($event)"></app-upload-file>
           </div>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="form-input mx-2 my-3">
-            <label for="password" class="text-sm px-3">CV</label>
-            <input
-              class="rounded-input text-sm"
-              type="password"
-              formControlName="password"
-              id="password"
-              autocomplete="off"
-              placeholder="( მინიმუმ 8 სიმბოლო : @ 7 , )"
-            />
-            <span class="text-danger text-sm mx-3"
-              >{{ isPasswordValid === true ? "" : isPasswordValid.join(",\n") }}
-            </span>
+            <label for="cv" class="text-sm px-3">CV</label>
+            <app-upload-file [fileType]="documentType" (select)="onSelectDocument($event)"></app-upload-file>
           </div>
         </div>
       </div>

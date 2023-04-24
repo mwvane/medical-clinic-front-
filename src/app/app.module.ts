@@ -44,6 +44,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { EmailOnfirmComponent } from './auth/email-onfirm/email-onfirm.component';
 import { UsersModalComponent } from './user/users-modal/users-modal.component';
+import { UploadFileComponent } from './upload-file/upload-file.component';
+import { ChipModule } from 'primeng/chip';
 
 @NgModule({
   declarations: [
@@ -73,6 +75,7 @@ import { UsersModalComponent } from './user/users-modal/users-modal.component';
     SettingsComponent,
     EmailOnfirmComponent,
     UsersModalComponent,
+    UploadFileComponent,
   ],
   imports: [
     BrowserModule,
@@ -93,7 +96,8 @@ import { UsersModalComponent } from './user/users-modal/users-modal.component';
     TableModule,
     AvatarModule,
     CheckboxModule,
-    InputSwitchModule
+    InputSwitchModule,
+    ChipModule
   ],
   providers: [
     {

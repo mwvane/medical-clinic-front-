@@ -17,6 +17,8 @@ import { ActionMode } from './actionMode';
 import { Category } from 'src/app/categories/models/category';
 import { CategoryService } from 'src/app/categories/category.service';
 import { DoctorService } from 'src/app/user/services/doctor.service';
+import { FileType } from 'src/app/upload-file/enum/fileType';
+import { FileService } from 'src/app/upload-file/file.service';
 
 @Component({
   selector: 'app-register',
@@ -59,17 +61,19 @@ export class RegisterComponent implements OnInit {
   action = ActionMode.create;
   disabaled = true
   categories: Category[] = [];
+  selectedImage:any
+  selectedDocument:any
 
   @ViewChild('roleSelector') roleSelector: any;
 
   constructor(
     private authService: AuthService,
-    private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
     private doctorService: DoctorService,
     private messageService: MessageService,
-    private categoriService: CategoryService
+    private categoriService: CategoryService,
+    private fileService: FileService
   ) {}
 
   ngOnInit(): void {
@@ -113,36 +117,48 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  onSelectImage(file: File){
+    this.selectedImage = file
+  }
+
+  onSelectDocument(file: File){
+    this.selectedDocument = file
+  }
+
   onSubmit() {
-    if (this.action === ActionMode.update) {
-      this.registerForm.value.identityNumber = String(
-        this.registerForm.value.identityNumber
-      );
-      this.userService.editUser(this.registerForm.value).subscribe((data) => {
-        if (data.res) {
-          alert(data.res);
-        } else {
-          alert(data.errors.join('\n'));
-        }
-      });
-    }
-    if (this.action === ActionMode.create) {
-      this.authService.register(this.registerForm).subscribe((data) => {
-        if (data.res) {
-          this.authService
-            .login({ username: data.res.email, password: data.res.password })
-            .subscribe((data) => {
-              this.authService.storeToken(data.res.token);
-              this.router.navigate([
-                'userProfile/',
-                this.authService.loggedUser.id,
-              ]);
-            });
-        } else {
-          alert(data.errors.join('\n'));
-        }
-      });
-    }
+    this.fileService.uploadImage({userId: 9,file: this.selectedImage}).subscribe(data => {
+      debugger
+    })
+
+    // if (this.action === ActionMode.update) {
+    //   this.registerForm.value.identityNumber = String(
+    //     this.registerForm.value.identityNumber
+    //   );
+    //   this.userService.editUser(this.registerForm.value).subscribe((data) => {
+    //     if (data.res) {
+    //       alert(data.res);
+    //     } else {
+    //       alert(data.errors.join('\n'));
+    //     }
+    //   });
+    // }
+    // if (this.action === ActionMode.create) {
+    //   this.authService.register(this.registerForm).subscribe((data) => {
+    //     if (data.res) {
+    //       this.authService
+    //         .login({ username: data.res.email, password: data.res.password })
+    //         .subscribe((data) => {
+    //           this.authService.storeToken(data.res.token);
+    //           this.router.navigate([
+    //             'userProfile/',
+    //             this.authService.loggedUser.id,
+    //           ]);
+    //         });
+    //     } else {
+    //       alert(data.errors.join('\n'));
+    //     }
+    //   });
+    // }
   }
 
   onEmail() {
@@ -288,5 +304,9 @@ export class RegisterComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  get documentType(){
+    return FileType.Pdf
   }
 }
