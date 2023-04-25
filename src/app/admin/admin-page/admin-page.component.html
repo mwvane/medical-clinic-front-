@@ -58,7 +58,7 @@
         #DoctorTable
         class="custom-table"
         [value]="userTableFor === 'doctor' ? doctors : users"
-        [rows]="8"
+        [rows]="6"
         [paginator]="true"
         [tableStyle]="{ 'min-width': '75rem' }"
         [(selection)]="selectedItem"
@@ -71,7 +71,11 @@
       >
         <ng-template pTemplate="header">
           <tr>
-            <th pSortableColumn="firstname" style="min-width: 15rem" class="text-center">
+            <th
+              pSortableColumn="firstname"
+              style="min-width: 15rem"
+              class="text-center"
+            >
               სახელი <p-sortIcon field="firstname"></p-sortIcon>
             </th>
             <th pSortableColumn="{{ categoryOrID }}" class="text-center">
@@ -79,16 +83,23 @@
               <p-sortIcon field="{{ categoryOrID }}"></p-sortIcon>
             </th>
             <th class="content-center">ფოტოსურათი</th>
-            <th pSortableColumn="{{ ratingOrEmail }}" style="min-width: 10rem" class="text-center">
+            <th
+              pSortableColumn="{{ ratingOrEmail }}"
+              style="min-width: 10rem"
+              class="text-center"
+            >
               {{ userTableFor === "doctor" ? "რეიტინგი" : "Email" }}
               <p-sortIcon field="{{ ratingOrEmail }}"></p-sortIcon>
             </th>
+            <th *ngIf="userTableFor === 'doctor'" class="text-center">CV</th>
             <th class="text-center">Actions</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-user>
           <tr [pSelectableRow]="user" class="text-md text-default">
-            <td class="text-center">{{ user.firstname + " " + user.lastname }}</td>
+            <td class="text-center">
+              {{ user.firstname + " " + user.lastname }}
+            </td>
             <td class="text-center">
               {{
                 userTableFor === "doctor"
@@ -118,7 +129,25 @@
                 [iconOnStyle]="{ color: '#fcad00' }"
                 class="text-center"
               ></p-rating>
-              <span *ngIf="userTableFor !== 'doctor'" class="content-center">{{ user.email }}</span>
+              <span *ngIf="userTableFor !== 'doctor'" class="content-center">{{
+                user.email
+              }}</span>
+            </td>
+            <td *ngIf="userTableFor === 'doctor'" class="text-center">
+              <a
+                *ngIf="user.cv"
+                pButton
+                icon="pi pi-download"
+                class="p-button-rounded p-button-text text-center"
+                href="{{user.cv}}"
+                target="_blank"
+                style="width: 35px !important; height: 35px !important; text-decoration: none;"
+              ></a>
+              <span
+                *ngIf="!user.cv"
+                class="italic text-center text-md text-secondary"
+                >N/A</span
+              >
             </td>
             <td class="text-center">
               <button
@@ -142,7 +171,7 @@
         </ng-template>
         <ng-template pTemplate="summary">
           <div class="flex align-items-center justify-content-between">
-            In total there are {{ doctors ? doctors.length : 0 }} products.
+            In total there are {{ doctors ? doctors.length : 0 }} docotors.
           </div>
         </ng-template>
       </p-table>
@@ -161,7 +190,7 @@
               #DoctorTable
               class="custom-table"
               [value]="categories"
-              [rows]="8"
+              [rows]="6"
               [paginator]="true"
               [(selection)]="selectedItem"
               [rowHover]="true"
@@ -212,9 +241,9 @@
                 </tr>
               </ng-template>
               <ng-template pTemplate="summary">
-                <div class="flex align-items-center justify-content-between">
+                <div class="d-flex">
                   In total there are
-                  {{ doctors ? doctors.length : 0 }} products.
+                  {{ categories ? categories.length : 0 }} categories
                 </div>
               </ng-template>
             </p-table>

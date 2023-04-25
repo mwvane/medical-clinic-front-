@@ -5,6 +5,8 @@ import { DoctorService } from '../user/services/doctor.service';
 import { Category } from '../categories/models/category';
 import { CalendarMode } from '../calendar-component/calendarMode';
 import { Pin } from '../user/models/pin';
+import { Constants } from '../constants';
+import { ModalService } from '../modals/modal.service';
 
 @Component({
   selector: 'app-home',
@@ -12,17 +14,29 @@ import { Pin } from '../user/models/pin';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private router: Router, private doctorService: DoctorService) {}
+  constructor(
+    private router: Router,
+    private doctorService: DoctorService,
+    private modalService: ModalService
+  ) {}
 
+  allDoctors: Doctor[] = []
   doctors: Doctor[] = [];
   filteredDoctors: Doctor[] = [];
+  showAll: boolean = false;
+  showDocotrModal = false
 
   ngOnInit(): void {
     this.doctorService.getDoctors(0).subscribe({
       next: (data) => {
         if (data.res) {
-          debugger
-          this.doctors = data.res;
+          if (data.res.length > Constants.DOCTORS_COUNT_ON_HOME) {
+            this.doctors = data.res.slice(0, 6);
+            this.allDoctors = data.res
+            this.showAll = true;
+          } else {
+            this.doctors = data.res;
+          }
           this.filteredDoctors = this.doctors;
         }
       },
@@ -30,6 +44,15 @@ export class HomeComponent implements OnInit {
         console.log(error);
       },
     });
+  }
+
+  onShowAll() {
+    this.showDocotrModal = true
+    this.modalService.usersModal = true
+  }
+
+  onDoctorModalClose(){
+    this.showDocotrModal = false
   }
 
   onBooking(user: any) {
@@ -45,16 +68,16 @@ export class HomeComponent implements OnInit {
     this.doctorService.pin(pin).subscribe((data) => {
       if (data.res != null) {
         const fromIndex = this.getIndexById(pin.doctorId, this.doctors);
-        this.doctors = this.changePosition(this.doctors,fromIndex,data.res)
+        this.doctors = this.changePosition(this.doctors, fromIndex, data.res);
       } else {
         console.log(data.errors);
       }
     });
   }
 
-  changePosition(array: any[], from: number, to:number){
-    array.splice(to,0,array.splice(from,1)[0])
-    return array
+  changePosition(array: any[], from: number, to: number) {
+    array.splice(to, 0, array.splice(from, 1)[0]);
+    return array;
   }
 
   getIndexById(id: number, array: any[]) {

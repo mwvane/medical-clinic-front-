@@ -1,5 +1,4 @@
 <div class="main-container">
-  <button (click)="onSubmit()">image</button>
   <div class="container my-5">
     <div class="d-flex">
       <p class="caption text-cian-dark">{{ action }}</p>
@@ -164,10 +163,11 @@
             <label for="category" class="text-sm px-3">კატეგორია</label>
             <select
               #roleSelector
-              formControlName="category"
+              formControlName="categoryId"
               class="custom-dropdown text-md"
+
             >
-              <option *ngFor="let item of categories" [value]="item">
+              <option *ngFor="let item of categories" [value]="item.id">
                 {{ item.name }}
               </option>
             </select>
@@ -188,7 +188,6 @@
       </div>
       <div class="d-flex justify-content-end">
         <button
-          [disabled]="!isFormValid"
           type="submit"
           pButton
           label="{{ action }}"

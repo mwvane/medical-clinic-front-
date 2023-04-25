@@ -110,6 +110,7 @@ export class AdminPageComponent implements OnInit {
   onAdmin() {
     this.userTableFor = UserRole.admin;
     this.userService.getUsersByRole(UserRole.admin).subscribe((data) => {
+      debugger
       if (data.res) {
         this.users = data.res;
       }

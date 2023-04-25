@@ -27,13 +27,14 @@
       class="w-100"
     >
       <div
-        [ngClass]="!vertical ? ' d-none d-lg-block' : ''"
+        [ngClass]="!vertical ? ' d-none d-lg-block ml-3' : ''"
         style="width: 40%; max-width: 170px"
       >
         <img
           src="{{ user.imageUrl ? user.imageUrl : 'assets/doctorDefault.png' }}"
           alt=""
           class="w-100"
+          style="border-radius: 50%;"
         />
       </div>
       <div

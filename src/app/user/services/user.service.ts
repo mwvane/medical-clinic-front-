@@ -23,6 +23,7 @@ export class UserService {
   }
 
   editUser(user:User){
+    debugger
     return this.http.post<Result>(`${this.baseUrl}editUser`, user)
   }
 }

@@ -9,9 +9,12 @@ import { ModalService } from 'src/app/modals/modal.service';
 export class UsersModalComponent {
   @Input() data: any[] = []
   @Output() booking = new EventEmitter()
+  @Output() close = new EventEmitter()
   constructor(public modalService: ModalService){}
+
   onClose(){
     this.modalService.usersModal = false
+    this.close.emit()
   }
   
   onBooking(item: any){

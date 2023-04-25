@@ -1,7 +1,5 @@
 import {
-  AfterViewInit,
   Component,
-  ElementRef,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -19,6 +17,7 @@ import { CategoryService } from 'src/app/categories/category.service';
 import { DoctorService } from 'src/app/user/services/doctor.service';
 import { FileType } from 'src/app/upload-file/enum/fileType';
 import { FileService } from 'src/app/upload-file/file.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -36,7 +35,7 @@ export class RegisterComponent implements OnInit {
     password: new FormControl(),
     imageUrl: new FormControl(),
     role: new FormControl(),
-    category: new FormControl(),
+    categoryId: new FormControl(),
     id: new FormControl(),
   });
 
@@ -59,10 +58,10 @@ export class RegisterComponent implements OnInit {
   loggedUser: any;
   role = UserRole.client;
   action = ActionMode.create;
-  disabaled = true
+  disabaled = true;
   categories: Category[] = [];
-  selectedImage:any
-  selectedDocument:any
+  selectedImage: any;
+  selectedDocument: any;
 
   @ViewChild('roleSelector') roleSelector: any;
 
@@ -73,7 +72,9 @@ export class RegisterComponent implements OnInit {
     private doctorService: DoctorService,
     private messageService: MessageService,
     private categoriService: CategoryService,
-    private fileService: FileService
+    private fileService: FileService,
+    private router: Router,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -90,23 +91,22 @@ export class RegisterComponent implements OnInit {
         if (role == UserRole.doctor) {
           this.doctorService.getDoctors(id).subscribe((data) => {
             if (data.res) {
-              this.registerForm.patchValue(data.res)
+              this.registerForm.patchValue(data.res);
             }
           });
         }
 
-        
         this.userService.getUser(id).subscribe((data) => {
           if (data.res) {
-            this.registerForm.patchValue(data.res)
+            this.registerForm.patchValue(data.res);
           }
         });
       }
     });
   }
 
-  findCategory(id: number){
-    return this.categories.find(item => item.id === id);
+  findCategory(id: number) {
+    return this.categories.find((item) => item.id === id);
   }
 
   loadCategories() {
@@ -117,48 +117,76 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  onSelectImage(file: File){
-    this.selectedImage = file
+  onSelectImage(file: File) {
+    this.selectedImage = file;
   }
 
-  onSelectDocument(file: File){
-    this.selectedDocument = file
+  onSelectDocument(file: File) {
+    this.selectedDocument = file;
   }
 
   onSubmit() {
-    this.fileService.uploadImage({userId: 9,file: this.selectedImage}).subscribe(data => {
-      debugger
-    })
+    if (this.action === ActionMode.update) {
+      this.registerForm.value.identityNumber = String(
+        this.registerForm.value.identityNumber
+      );
+      this.userService.editUser(this.registerForm.value).subscribe((data) => {
+        if (data.res) {
+          debugger
+          if (this.selectedDocument) {
+            this.uploadDocument(this.registerForm.value.id);
+          }
+          if (this.selectedImage) {
+            this.uploadPhoto(this.registerForm.value.id);
+          }
+          this.location.back()
+        } else {
+          alert(data.errors.join('\n'));
+        }
+      });
+    }
+    if (this.action === ActionMode.create) {
+      this.authService.register(this.registerForm).subscribe((data) => {
+        if (data.res) {
+          if (this.selectedDocument) {
+            this.uploadDocument(data.res.id);
+          }
+          if (this.selectedImage) {
+            this.uploadPhoto(data.res.id);
+          }
 
-    // if (this.action === ActionMode.update) {
-    //   this.registerForm.value.identityNumber = String(
-    //     this.registerForm.value.identityNumber
-    //   );
-    //   this.userService.editUser(this.registerForm.value).subscribe((data) => {
-    //     if (data.res) {
-    //       alert(data.res);
-    //     } else {
-    //       alert(data.errors.join('\n'));
-    //     }
-    //   });
-    // }
-    // if (this.action === ActionMode.create) {
-    //   this.authService.register(this.registerForm).subscribe((data) => {
-    //     if (data.res) {
-    //       this.authService
-    //         .login({ username: data.res.email, password: data.res.password })
-    //         .subscribe((data) => {
-    //           this.authService.storeToken(data.res.token);
-    //           this.router.navigate([
-    //             'userProfile/',
-    //             this.authService.loggedUser.id,
-    //           ]);
-    //         });
-    //     } else {
-    //       alert(data.errors.join('\n'));
-    //     }
-    //   });
-    // }
+          if (!this.loggedUser) {
+            this.authService
+              .login({ username: data.res.email, password: data.res.password })
+              .subscribe((data) => {
+                this.authService.storeToken(data.res.token);
+                this.router.navigate([
+                  'userProfile/',
+                  this.authService.loggedUser.id,
+                ]);
+              });
+          } else {
+            this.location.back();
+          }
+        } else {
+          alert(data.errors.join('\n'));
+        }
+      });
+    }
+  }
+
+  uploadPhoto(userId: number) {
+    this.fileService
+      .uploadImage({ userId, file: this.selectedImage })
+      .subscribe((data) => {});
+  }
+  uploadDocument(userId: number) {
+    this.fileService
+      .uploadDocument({
+        userId,
+        file: this.selectedDocument,
+      })
+      .subscribe((data) => {});
   }
 
   onEmail() {
@@ -300,13 +328,10 @@ export class RegisterComponent implements OnInit {
     ) {
       return false;
     }
-    if (!this.registerForm.valid) {
-      return false;
-    }
     return true;
   }
 
-  get documentType(){
-    return FileType.Pdf
+  get documentType() {
+    return FileType.Pdf;
   }
 }

@@ -12,10 +12,16 @@ export class FileService {
   constructor(private http:HttpClient) { }
 
   uploadImage(file: FileUpload){
-    debugger
     let formData = new FormData()
     formData.append("file",file.file);
     formData.append("userId",String(file.userId));
     return this.http.post<Result>(`${this.baseUrl}uploadImage`,formData)
+  }
+
+  uploadDocument(file: FileUpload){
+    let formData = new FormData()
+    formData.append("file",file.file);
+    formData.append("userId",String(file.userId));
+    return this.http.post<Result>(`${this.baseUrl}uploadDocument`,formData)
   }
 }

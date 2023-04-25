@@ -113,9 +113,12 @@
 <!-- Modals -->
 <app-login></app-login>
 <app-settings></app-settings>
+
 <app-users-modal
+  *ngIf="showDocotrModal"
   [data]="searchedDoctors"
   (booking)="onBooking($event)"
+  (close)="onDoctorModalClose()"
 ></app-users-modal>
 
 <p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>

@@ -56,7 +56,15 @@
             (pin)="onPin($event)"
           ></app-user-card>
         </div>
+        <div *ngIf="showAll" class="d-flex justify-content-end mt-2">
+          <span class="text-md text-cian-dark" style="cursor: pointer;" (click)="onShowAll()">ყველას ნახვა</span>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- modals -->
+<ng-container *ngIf="showDocotrModal">
+  <app-users-modal [data]="allDoctors" (close)="onDoctorModalClose()" (booking)="onBooking($event)"></app-users-modal>
+</ng-container>
