@@ -90,7 +90,7 @@ export class HomeComponent implements OnInit {
   }
 
   onCategorySelect(category: Category) {
-    this.filteredDoctors = this.doctors.filter(
+    this.filteredDoctors = this.allDoctors.filter(
       (doctor) => doctor.category.id === category.id
     );
   }

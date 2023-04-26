@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DoctorService } from '../services/doctor.service';
 import { UserService } from '../services/user.service';
 import { ModalService } from 'src/app/modals/modal.service';
+import { BookService } from 'src/app/services/book.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -14,7 +15,7 @@ import { ModalService } from 'src/app/modals/modal.service';
   styleUrls: ['./user-profile.component.css'],
 })
 export class UserProfileComponent implements OnInit {
-  user: any;
+  currentUser: any;
   currentUserBookDays: Book[] = [];
   calendarMode = CalendarMode.clientMode;
 
@@ -24,6 +25,7 @@ export class UserProfileComponent implements OnInit {
     private UserService: UserService,
     private authService: AuthService,
     private modalService: ModalService,
+    private bookService: BookService
   ) {}
 
   ngOnInit(): void {
@@ -36,13 +38,13 @@ export class UserProfileComponent implements OnInit {
         if (role === UserRole.client) {
           this.UserService.getUser(id).subscribe((data) => {
             if (data.res) {
-              this.user = data.res;
+              this.currentUser = data.res;
             }
           });
         } else {
           this.doctorService.getDoctors(id).subscribe((data) => {
             if (data.res) {
-              this.user = data.res;
+              this.currentUser = data.res;
             }
           });
         }
@@ -57,16 +59,16 @@ export class UserProfileComponent implements OnInit {
   }
 
   get calendarmode() {
-    if (this.user.role === UserRole.client) {
+    if (this.currentUser.role === UserRole.client) {
       return CalendarMode.clientMode;
     }
-    if (this.user.role === UserRole.doctor) {
+    if (this.currentUser.role === UserRole.doctor) {
       return CalendarMode.doctorMode;
     }
     return CalendarMode.default;
   }
 
-  onForgetPassword(){
-    this.modalService.forgetPasswordModal = true
+  onForgetPassword() {
+    this.modalService.forgetPasswordModal = true;
   }
 }

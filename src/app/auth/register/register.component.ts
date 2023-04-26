@@ -57,9 +57,10 @@ export class RegisterComponent implements OnInit {
 
   loggedUser: any;
   role = UserRole.client;
-  action = ActionMode.create;
+  action = ActionMode.register;
   disabaled = true;
   categories: Category[] = [];
+  selectedUser:any
   selectedImage: any;
   selectedDocument: any;
 
@@ -92,6 +93,7 @@ export class RegisterComponent implements OnInit {
           this.doctorService.getDoctors(id).subscribe((data) => {
             if (data.res) {
               this.registerForm.patchValue(data.res);
+              this.selectedUser = data.res
             }
           });
         }
@@ -130,9 +132,9 @@ export class RegisterComponent implements OnInit {
       this.registerForm.value.identityNumber = String(
         this.registerForm.value.identityNumber
       );
+      this.registerForm.patchValue({categoryId: this.selectedUser.category.id})
       this.userService.editUser(this.registerForm.value).subscribe((data) => {
         if (data.res) {
-          debugger
           if (this.selectedDocument) {
             this.uploadDocument(this.registerForm.value.id);
           }
@@ -145,7 +147,7 @@ export class RegisterComponent implements OnInit {
         }
       });
     }
-    if (this.action === ActionMode.create) {
+    if (this.action === ActionMode.register) {
       this.authService.register(this.registerForm).subscribe((data) => {
         if (data.res) {
           if (this.selectedDocument) {

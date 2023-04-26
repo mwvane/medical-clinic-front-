@@ -117,6 +117,8 @@
 <app-users-modal
   *ngIf="showDocotrModal"
   [data]="searchedDoctors"
+  [searchable]="false"
+  [userMode]="doctor"
   (booking)="onBooking($event)"
   (close)="onDoctorModalClose()"
 ></app-users-modal>

@@ -4,9 +4,9 @@
       <div class="d-none d-md-block col-4 content-center">
         <app-user-card
           class="my-1"
-          [user]="user"
+          [user]="currentUser"
           [headerActions]="false"
-          [rating]="user.role === 'doctor' ? true : false"
+          [rating]="currentUser.role === 'doctor' ? true : false"
           [ratingReadOnly]="true"
           [footerActions]="false"
           [details]="true"
@@ -14,7 +14,7 @@
         ></app-user-card>
       </div>
       <div class="col">
-        <app-calendar [user]="user" [calendarMode]="calendarmode"></app-calendar>
+        <app-calendar [CalendarUser]="currentUser" [calendarMode]="calendarmode"></app-calendar>
       </div>
     </div>
   </div>

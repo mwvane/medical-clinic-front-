@@ -4,18 +4,21 @@ import { Day } from '../models/day';
 import { BookService } from 'src/app/services/book.service';
 import * as moment from 'moment';
 import { Book } from 'src/app/models/book';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { CalendarMode } from '../calendarMode';
 import { UserRole } from 'src/app/user/userRole';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ModalService } from 'src/app/modals/modal.service';
+import { UserService } from 'src/app/user/services/user.service';
+import { Doctor } from 'src/app/user/models/doctor';
+import { DoctorService } from 'src/app/user/services/doctor.service';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css'],
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, MessageService],
 })
 export class CalendarComponent implements OnInit {
   calendarItems: Day[][] = [];
@@ -26,23 +29,72 @@ export class CalendarComponent implements OnInit {
   bookModal = false;
   description: string = '';
   selectedDay: any;
+  searchData: any[] = [];
   @Input() calendarMode: CalendarMode = CalendarMode.default;
-  @Input() user: any
+  @Input() CalendarUser: any;
   @Input() doctorId: any;
-  @Output() addBook = new EventEmitter();
-  @Output() updateBook = new EventEmitter();
+  @Input() doctor: any;
+  @Input() user: any;
 
   constructor(
     private bookService: BookService,
     private dialog: ConfirmationService,
-    private router: Router,
     private authService: AuthService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private userService: UserService,
+    private doctorService: DoctorService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
     this.getBookedDays();
     this.getCurrentPageDays();
+    debugger;
+    if (this.CalendarUser.role === UserRole.doctor) {
+      this.doctor = this.CalendarUser;
+      if (!this.user) {
+        this.getUsers();
+      }
+    }
+    if (this.CalendarUser.role === UserRole.client) {
+      this.user = this.CalendarUser;
+      if (!this.doctor) {
+        this.getDoctors();
+      }
+    }
+  }
+
+  get canShowSearcModal() {
+    if (this.doctor && this.user) {
+      return false;
+    }
+    return true;
+  }
+
+  getUsers() {
+    this.userService.getUsersByRole(UserRole.client).subscribe((data) => {
+      if (data.res) {
+        this.searchData = data.res;
+      }
+    });
+  }
+  getDoctors() {
+    this.doctorService.getDoctors(0).subscribe((data) => {
+      if (data.res) {
+        this.searchData = data.res;
+      }
+    });
+  }
+
+  onUserSelect(user: any) {
+    this.modalService.usersModal = false;
+    debugger;
+    if (user.role === UserRole.client) {
+      this.user = user;
+    }
+    if (user.role === UserRole.doctor) {
+      this.doctor = user;
+    }
   }
 
   getCurrentPageDays() {
@@ -63,7 +115,6 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-
   getBook(day: Day): Book | null {
     for (let item of this.bookedDays) {
       if (moment(item.date).format() == moment(day.date).format()) return item;
@@ -72,7 +123,8 @@ export class CalendarComponent implements OnInit {
   }
 
   isCurentUserBook(day: Day, book: any): boolean {
-    if (day.book && this.user) {
+    debugger
+    if (day.book && this.CalendarUser) {
       if (this.user.id == book.userId) {
         return true;
       }
@@ -83,7 +135,7 @@ export class CalendarComponent implements OnInit {
   getBookedDays() {
     if (this.calendarMode === CalendarMode.clientMode) {
       this.bookService
-        .getClientBookedDays(this.user.id)
+        .getClientBookedDays(this.CalendarUser.id)
         .subscribe((data) => {
           if (data.res) {
             this.bookedDays = data.res;
@@ -104,7 +156,7 @@ export class CalendarComponent implements OnInit {
 
     if (this.calendarMode === CalendarMode.doctorMode) {
       this.bookService
-        .getDoctorBookedDays(this.user.id)
+        .getDoctorBookedDays(this.CalendarUser.id)
         .subscribe((data) => {
           if (data.res) {
             this.bookedDays = data.res;
@@ -122,6 +174,7 @@ export class CalendarComponent implements OnInit {
         for (let day of item) {
           for (let bookedDay of this.bookedDays) {
             if (moment(bookedDay.date).format() == moment(day.date).format()) {
+              debugger;
               day.book = bookedDay;
               day.isCurrentUserBook =
                 this.calendarMode === CalendarMode.doctorMode
@@ -177,18 +230,21 @@ export class CalendarComponent implements OnInit {
   }
 
   onDay(day: Day) {
-    if(this.authService.loggedUser){
-      if (this.user) {
+    if (this.authService.loggedUser) {
+      if (!day.book) {
+        this.modalService.usersModal = true;
+      }
+      if (this.CalendarUser) {
         this.description = '';
         this.selectedDay = day;
+        debugger;
         if (day.isCurrentUserBook) {
           this.description = day.book!.description!;
         }
         this.bookModal = true;
       }
-    }
-    else{
-      this.modalService.loginModal = true
+    } else {
+      this.modalService.loginModal = true;
     }
   }
 
@@ -222,16 +278,36 @@ export class CalendarComponent implements OnInit {
   }
 
   onBookModalConfirm() {
-    this.addBook.emit({
-      day: this.selectedDay,
+    const book: Book = {
+      date: this.selectedDay.date,
       description: this.description,
+      doctorId: this.doctor.id,
+      userId: this.user.id,
+    };
+    this.selectedDay.book = book;
+    this.selectedDay.isCurentUserBook = true;
+    this.bookService.addBook(book).subscribe((data) => {
+      if (data.res) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Booking',
+          detail: `თქვენ წარმატებით დაჯავშნეთ ვიზიტი ${this.doctor.firstname} ${this.doctor.lastname}-სთან`,
+          life: 3000,
+        });
+      } else {
+        alert(data.errors);
+      }
     });
     this.onBookDialogClose();
   }
 
   onBookUpdate() {
     this.selectedDay.book.description = this.description;
-    this.updateBook.emit(this.selectedDay);
+    this.bookService.updateBook(this.selectedDay.book).subscribe((data) => {
+      if (data.res) {
+        alert('updated');
+      }
+    });
     this.onBookDialogClose();
   }
 }

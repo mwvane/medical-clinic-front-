@@ -21,9 +21,9 @@
         <div class="col-sm-12 col-md-12 col-lg-8 my-4">
           <app-calendar
             [doctorId]="doctorId | async"
-            (addBook)="onBooking($event)"
-            (updateBook)="onBookUpdate($event)"
-            [user]="doctor"
+            [CalendarUser]="doctor"
+            [doctor]="doctor"
+            [user]="user"
             [calendarMode]="calendarMode"
           ></app-calendar>
         </div>
@@ -32,5 +32,3 @@
   </div>
 </div>
 
-<!-- toast -->
-<p-toast position="top-center"></p-toast>

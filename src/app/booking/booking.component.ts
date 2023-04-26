@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Doctor } from '../user/models/doctor';
-import { Day } from '../calendar-component/models/day';
-import { AuthService } from '../auth/auth.service';
 import { ActivatedRoute, Route } from '@angular/router';
 import { DoctorService } from '../user/services/doctor.service';
-import { BookService } from '../services/book.service';
-import { Book } from '../models/book';
 import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { CalendarMode } from '../calendar-component/calendarMode';
-import { ModalService } from '../modals/modal.service';
+import { User } from '../user/models/user';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-booking',
@@ -31,15 +28,14 @@ export class BookingComponent implements OnInit {
     category: { name: '' },
     views: 333,
   };
+  user: any
 
   calendarMode = CalendarMode.default;
 
   constructor(
-    private authService: AuthService,
     private route: ActivatedRoute,
     private docotorService: DoctorService,
-    private bookService: BookService,
-    private messageService: MessageService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +49,7 @@ export class BookingComponent implements OnInit {
         });
       }
     });
+    this.user = this.authService.loggedUser
   }
 
   get doctorId() {
@@ -61,35 +58,6 @@ export class BookingComponent implements OnInit {
         const id = params['id'];
         observer.next(id);
       });
-    });
-  }
-
-  onBooking(payload: any) {
-    if (this.doctor.id) {
-      const book: Book = {
-        date: payload.day.date,
-        description: payload.description,
-        doctorId: this.doctor.id,
-        userId: this.authService.loggedUser.id,
-      };
-      this.bookService.addBook(book).subscribe((data) => {
-        if (data.res) {
-          payload.day.isCurrentUserBook = true;
-          payload.day.book = data.res;
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Booking',
-            detail: `თქვენ წარმატებით დაჯავშნეთ ვიზიტი ${this.doctor.firstname} ${this.doctor.lastname}-სთან`,
-            life: 3000,
-          });
-        }
-      });
-    }
-  }
-
-  onBookUpdate(day: Day) {
-    this.bookService.updateBook(day.book!).subscribe((data) => {
-      alert(data.res);
     });
   }
 }

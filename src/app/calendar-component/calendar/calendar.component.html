@@ -101,3 +101,8 @@
     </div>
   </div>
 </p-dialog>
+<app-users-modal *ngIf="canShowSearcModal" [data]="searchData" [searchResult]="searchData" (booking)="onUserSelect($event)"></app-users-modal>
+
+
+<!-- toast -->
+<p-toast position="top-center"></p-toast>

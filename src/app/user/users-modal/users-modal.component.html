@@ -7,20 +7,24 @@
 >
   <div class="main-container">
     <div class="container">
+      <div *ngIf="searchable" class="w-25 mb-3" style="position: fixed; top: 1.4rem;">
+        <input (input) ="onSearch($event)" class="rounded-input text-sm" type="text" placeholder="ძებნა">
+      </div>
       <div
-        *ngIf="!data.length"
+        *ngIf="!searchResult.length"
         class="content-center text-cian-dark text-xlg mb-5"
       >
         <i class="pi pi-exclamation-circle mx-3"></i> ექიმი ვერ მოიძებნა
       </div>
       <div class="row g-3">
         <app-user-card
-          *ngFor="let item of data"
+          *ngFor="let item of searchResult"
           class="col-sm-6 col-md-4 col-lg-3"
           [details]="false"
           [rating]="true"
           [ratingReadOnly]="true"
           [footerActions]="true"
+          [footerActionText]="userMode === 'doctor' ? 'მიღებაზე ჩაწერა':'არჩევა'"
           [user]="item"
           (booking)="onBooking(item)"
         ></app-user-card>

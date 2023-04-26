@@ -16,12 +16,12 @@ import { UserRole } from 'src/app/user/userRole';
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
-  showDocotrModal:boolean = false;
-  searchedDoctors:Doctor[] = []
+  showDocotrModal: boolean = false;
+  searchedDoctors: Doctor[] = [];
   searchForm: FormGroup = new FormGroup({
     doctorName: new FormControl(),
-    category: new FormControl()
-  })
+    category: new FormControl(),
+  });
 
   get loggedUser() {
     return this.authService.loggedUser;
@@ -37,22 +37,22 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchForm.patchValue({
-      doctorName: "",
-      category: ""
-    })
+      doctorName: '',
+      category: '',
+    });
   }
 
-  onSearch(){
-    this.doctorService.search(this.searchForm.value).subscribe(data => {
-      if(data.res){
-        this.searchedDoctors = data.res
+  onSearch() {
+    this.doctorService.search(this.searchForm.value).subscribe((data) => {
+      if (data.res) {
+        this.searchedDoctors = data.res;
       }
-      this.showDocotrModal = true
-      this.modalService.usersModal = true
-    })
+      this.showDocotrModal = true;
+      this.modalService.usersModal = true;
+    });
   }
-  onDoctorModalClose(){
-    this.showDocotrModal = false
+  onDoctorModalClose() {
+    this.showDocotrModal = false;
   }
 
   onAvatar() {
@@ -79,6 +79,10 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  get doctor() {
+    return UserRole.doctor;
+  }
+
   onLogout(e: any) {
     e.stopPropagation();
     this.dialog.confirm({
@@ -92,7 +96,7 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  onSettings(){
-    this.modalService.settingsModal = true
+  onSettings() {
+    this.modalService.settingsModal = true;
   }
 }
