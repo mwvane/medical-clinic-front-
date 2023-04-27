@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Helper } from 'src/app/helper';
 import { Language } from '../models/language';
 
@@ -8,6 +8,7 @@ import { Language } from '../models/language';
   styleUrls: ['./language-selector.component.css'],
 })
 export class LanguageSelectorComponent {
+  @Output() change = new EventEmitter()
   data: Language[] = [
     { id: 1, name: 'ENG' },
     { id: 2, name: 'GEO' },
@@ -26,6 +27,7 @@ export class LanguageSelectorComponent {
         }
       }
       console.log(`selected languaage: ${this.selectedLanguage.name}`)
+      this.change.emit(this.selectedLanguage)
     }
   }
 }

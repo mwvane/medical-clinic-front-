@@ -27,7 +27,7 @@ export class SettingsComponent implements OnInit {
     this.modalService.forgetPasswordModal = true;
   }
 
-  onTwoFactoryVahnge() {
+  onTwoFactoryChange() {
     this.authService.twoFactory(this.twoFactory).subscribe((data) => {
       if (!data.res) {
         this.twoFactory = !this.twoFactory;
