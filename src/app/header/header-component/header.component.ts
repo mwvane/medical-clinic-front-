@@ -16,7 +16,7 @@ import { UserRole } from 'src/app/user/userRole';
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
-  showDocotrModal: boolean = false;
+  showDoctrModal: boolean = false;
   searchedDoctors: Doctor[] = [];
   searchForm: FormGroup = new FormGroup({
     doctorName: new FormControl(),
@@ -47,12 +47,12 @@ export class HeaderComponent implements OnInit {
       if (data.res) {
         this.searchedDoctors = data.res;
       }
-      this.showDocotrModal = true;
+      this.showDoctrModal = true;
       this.modalService.usersModal = true;
     });
   }
   onDoctorModalClose() {
-    this.showDocotrModal = false;
+    this.showDoctrModal = false;
   }
 
   onAvatar() {

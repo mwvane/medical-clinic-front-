@@ -1,28 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ModalService } from 'src/app/modals/modal.service';
 import { Validations } from '../validations';
 import { AuthService } from '../auth.service';
+import { UserRole } from 'src/app/user/userRole';
 
 @Component({
   selector: 'app-forget-password',
   templateUrl: './forget-password.component.html',
   styleUrls: ['./forget-password.component.css'],
 })
-export class ForgetPasswordComponent {
+export class ForgetPasswordComponent implements OnInit {
   verificationStatus: string = '';
   isPasswordTouched = false;
+  loggedUser: any;
 
   form: FormGroup = new FormGroup({
     newPassword: new FormControl(),
     confirmPassword: new FormControl(),
-    email: new FormControl()
+    email: new FormControl(),
   });
 
   constructor(
     public modalService: ModalService,
     private authService: AuthService
   ) {}
+
+  ngOnInit(): void {
+    if (
+      this.authService.loggedUser &&
+      this.authService.loggedUser.role === UserRole.admin
+    ) {
+      this.verificationStatus = 'done';
+    }
+  }
 
   onClose() {}
 
@@ -34,7 +45,7 @@ export class ForgetPasswordComponent {
         this.form.value.confirmPassword
       )
       .subscribe((data) => {
-        debugger
+        debugger;
         if (data.res) {
           alert('Password changed');
           this.modalService.forgetPasswordModal = false;
@@ -49,7 +60,7 @@ export class ForgetPasswordComponent {
     this.form.patchValue({
       email,
     });
-    debugger
+    debugger;
   }
 
   get isPasswordValid() {

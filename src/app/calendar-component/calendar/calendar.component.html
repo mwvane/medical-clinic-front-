@@ -1,4 +1,4 @@
-<div class="main-container" style="margin-left: 10px; user-select: none;">
+<div class="main-container" style="margin-left: 10px; user-select: none">
   <div class="calendar-header row">
     <div class="col-12 d-flex align-items-center">
       <span class="text-bold">2023</span>
@@ -61,6 +61,7 @@
 
 <p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
 <p-dialog
+  *ngIf="canShowDescriptionModal"
   [(visible)]="bookModal"
   [style]="{ width: '300px' }"
   [modal]="false"
@@ -101,8 +102,13 @@
     </div>
   </div>
 </p-dialog>
-<app-users-modal *ngIf="canShowSearcModal" [data]="searchData" [searchResult]="searchData" (booking)="onUserSelect($event)"></app-users-modal>
-
+<app-users-modal
+  *ngIf="canShowSearcModal"
+  [data]="searchData"
+  [searchResult]="searchData"
+  (booking)="onUserSelect($event)"
+  (close)="onUserModalClose()"
+></app-users-modal>
 
 <!-- toast -->
 <p-toast position="top-center"></p-toast>
