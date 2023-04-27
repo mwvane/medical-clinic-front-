@@ -1,8 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -60,7 +56,7 @@ export class RegisterComponent implements OnInit {
   action = ActionMode.register;
   disabaled = true;
   categories: Category[] = [];
-  selectedUser:any
+  selectedUser: any;
   selectedImage: any;
   selectedDocument: any;
 
@@ -93,16 +89,17 @@ export class RegisterComponent implements OnInit {
           this.doctorService.getDoctors(id).subscribe((data) => {
             if (data.res) {
               this.registerForm.patchValue(data.res);
-              this.selectedUser = data.res
+              this.selectedUser = data.res;
+            }
+          });
+        } else {
+          this.userService.getUser(id).subscribe((data) => {
+            if (data.res) {
+              this.registerForm.patchValue(data.res);
+              this.selectedUser = data.res;
             }
           });
         }
-
-        this.userService.getUser(id).subscribe((data) => {
-          if (data.res) {
-            this.registerForm.patchValue(data.res);
-          }
-        });
       }
     });
   }
@@ -132,7 +129,10 @@ export class RegisterComponent implements OnInit {
       this.registerForm.value.identityNumber = String(
         this.registerForm.value.identityNumber
       );
-      this.registerForm.patchValue({categoryId: this.selectedUser.category.id})
+      debugger;
+      this.registerForm.patchValue({
+        categoryId: this.selectedUser.categoryId,
+      });
       this.userService.editUser(this.registerForm.value).subscribe((data) => {
         if (data.res) {
           if (this.selectedDocument) {
@@ -141,7 +141,7 @@ export class RegisterComponent implements OnInit {
           if (this.selectedImage) {
             this.uploadPhoto(this.registerForm.value.id);
           }
-          this.location.back()
+          this.location.back();
         } else {
           alert(data.errors.join('\n'));
         }
@@ -301,7 +301,7 @@ export class RegisterComponent implements OnInit {
           field.setErrors(null);
           return true;
         } else {
-          field.setErrors({ incorect: true });
+          field.setErrors({ incorrect: true });
           return this.emailVerifyStatus.errors;
         }
       }
@@ -315,6 +315,7 @@ export class RegisterComponent implements OnInit {
   }
 
   get isFormValid() {
+    debugger;
     if (
       this.action === ActionMode.update &&
       this.registerForm.touched &&
