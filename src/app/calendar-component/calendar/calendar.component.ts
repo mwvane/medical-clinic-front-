@@ -30,7 +30,6 @@ export class CalendarComponent implements OnInit {
   description: string = '';
   selectedDay: any;
   searchData: any[] = [];
-  userModal: boolean = false
   @Input() calendarMode: CalendarMode = CalendarMode.default;
   @Input() CalendarUser: any;
   @Input() doctorId: any;
@@ -66,18 +65,18 @@ export class CalendarComponent implements OnInit {
   }
 
   get canShowSearcModal() {
-    if ((this.doctor && this.user) || !this.userModal) {
+    if (this.doctor && this.user) {
       return false;
     }
     return true;
   }
 
-  onUserModalClose(){
-    this.userModal = false
-  }
-
-  get canShowDescriptionModal(){
-    return this.doctor && this.user
+  get canShowDescriptionModal() {
+    return true;
+    if (this.selectedDay && this.selectedDay.isCurentUserBook) {
+      return true;
+    }
+    return this.doctor && this.user;
   }
 
   getUsers() {
@@ -97,13 +96,13 @@ export class CalendarComponent implements OnInit {
 
   onUserSelect(user: any) {
     this.modalService.usersModal = false;
-    debugger;
     if (user.role === UserRole.client) {
       this.user = user;
     }
     if (user.role === UserRole.doctor) {
       this.doctor = user;
     }
+    this.bookModal = true
   }
 
   getCurrentPageDays() {
@@ -131,7 +130,8 @@ export class CalendarComponent implements OnInit {
     return null;
   }
 
-  isCurrentUserBook(day: Day, book: any): boolean {
+  isCurentUserBook(day: Day, book: any): boolean {
+    debugger;
     if (day.book && this.CalendarUser) {
       if (this.user.id == book.userId) {
         return true;
@@ -187,7 +187,7 @@ export class CalendarComponent implements OnInit {
               day.isCurrentUserBook =
                 this.calendarMode === CalendarMode.doctorMode
                   ? true
-                  : this.isCurrentUserBook(day, bookedDay);
+                  : this.isCurentUserBook(day, bookedDay);
             }
           }
         }
@@ -238,7 +238,6 @@ export class CalendarComponent implements OnInit {
   }
 
   onDay(day: Day) {
-    this.userModal = true
     if (this.authService.loggedUser) {
       if (!day.book) {
         this.modalService.usersModal = true;
@@ -246,10 +245,13 @@ export class CalendarComponent implements OnInit {
       if (this.CalendarUser) {
         this.description = '';
         this.selectedDay = day;
+        if (this.user && this.doctor) {
+          this.bookModal = true;
+        }
         if (day.isCurrentUserBook) {
           this.description = day.book!.description!;
+          this.bookModal = true;
         }
-        this.bookModal = true;
       }
     } else {
       this.modalService.loginModal = true;

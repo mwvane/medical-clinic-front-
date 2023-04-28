@@ -61,7 +61,6 @@
 
 <p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
 <p-dialog
-  *ngIf="canShowDescriptionModal"
   [(visible)]="bookModal"
   [style]="{ width: '300px' }"
   [modal]="false"
@@ -107,7 +106,6 @@
   [data]="searchData"
   [searchResult]="searchData"
   (booking)="onUserSelect($event)"
-  (close)="onUserModalClose()"
 ></app-users-modal>
 
 <!-- toast -->
